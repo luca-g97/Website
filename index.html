@@ -1,1206 +1,386 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth"><head>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
     <meta charset="UTF-8">
-    <!-- Content Security Policy: only this site's own scripts run, and the page
-         may only talk to GitHub (publishing), Crossref and DataCite (DOI lookup).
-         Protects the editors' GitHub tokens against injected scripts. If a new
-         external service is ever added, it must be listed here. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://api.crossref.org https://api.datacite.org; form-action 'self'; base-uri 'self'; object-src 'none'">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DA Lab | Digital Arts Research Group</title>
-    <meta name="description" content="Research group at the University of Applied Sciences Upper Austria, Campus Hagenberg, exploring games &amp; interaction design and animation &amp; interactive art.">
+    <title>Luca G. | Personal Portfolio</title>
 
-    <!-- Link previews (Slack, LinkedIn, Mastodon, WhatsApp ...).
-         Bei einem Domain-Wechsel: die drei Adressen darunter
-         (canonical, og:url, og:image) auf die neue Domain umstellen. -->
-    <link rel="canonical" href="https://digitalarts-lab.at/">
-    <meta property="og:url" content="https://digitalarts-lab.at/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Digital Arts Lab">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="DA Lab | Digital Arts Research Group">
-    <meta property="og:description" content="Research group at the University of Applied Sciences Upper Austria, Campus Hagenberg, exploring games &amp; interaction design and animation &amp; interactive art.">
-    <meta property="og:image" content="https://digitalarts-lab.at/images/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Digital Arts Lab logo on the lab's teal and blue gradient.">
-    <meta name="twitter:card" content="summary_large_image">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
-    <link rel="apple-touch-icon" href="images/favicon-180.png">
-    <meta name="theme-color" content="#094669">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <link rel="stylesheet" href="assets/css/style.css?v=2026-08-25a">
+    <!-- Google Fonts: JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <!-- Configuration & Custom CSS -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {mono: ['"JetBrains Mono"', 'monospace']},
+                    colors: {
+                        base: '#0c0c0c',
+                        card: '#121212',
+                        border: '#2a2a2a',
+                        textMuted: '#888888',
+                    },
+                    animation: {
+                        'scroll-y': 'scrollY 30s linear infinite',
+                        'scroll-y-reverse': 'scrollYReverse 30s linear infinite',
+                    },
+                    keyframes: {
+                        scrollY: {'0%': {transform: 'translateY(0)'}, '100%': {transform: 'translateY(-50%)'}},
+                        scrollYReverse: {'0%': {transform: 'translateY(-50%)'}, '100%': {transform: 'translateY(0)'}}
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Hide Default Cursor */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, .interactive, canvas { cursor: none !important; }
+        }
+
+        body { background-color: #0c0c0c; color: #ffffff; }
+
+        /* --- Perfectly Locked Cursor --- */
+        #cursor-wrapper {
+            position: fixed; top: 0; left: 0;
+            width: 0; height: 0;
+            pointer-events: none; z-index: 99999;
+        }
+        #cursor-dot {
+            position: absolute; top: -4px; left: -4px;
+            width: 8px; height: 8px;
+            background-color: white; border-radius: 50%;
+        }
+        #cursor-halo {
+            position: absolute; top: -24px; left: -24px;
+            width: 48px; height: 48px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%; opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes pulseHalo {
+            0% { transform: scale(0.8); opacity: 1; border-width: 2px; }
+            100% { transform: scale(1.5); opacity: 0; border-width: 1px; }
+        }
+        body.hovering-interactive #cursor-halo {
+            opacity: 1;
+            animation: pulseHalo 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+
+        /* --- Premium Bento Cards --- */
+        .bento-card {
+            background-color: #121212; border: 1px solid #2a2a2a; border-radius: 1.5rem;
+            position: relative; overflow: hidden;
+            transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+        .bento-card:hover {
+            border-color: #4a4a4a; transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.03);
+        }
+        .card-link-btn { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; }
+        .bento-card:hover .card-link-btn { transform: scale(1.1) rotate(5deg); border-color: #3a3a3a; }
+
+        /* Marquee Mask */
+        .marquee-mask-y { mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Dropdown & Entrances */
+        #dropdown-menu { transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s; }
+        #dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+
+        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
-<body class="selection:bg-accent selection:text-white relative">
+<body class="font-mono h-screen flex flex-col overflow-hidden antialiased selection:bg-white selection:text-black">
 
-    
+<!-- Custom Cursor -->
+<div class="hidden md:block" id="cursor-wrapper">
+    <div id="cursor-halo"></div>
+    <div id="cursor-dot"></div>
+</div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-40 bg-[#f4f4f4]/90 backdrop-blur-md hairline-b">
-        <div class="px-6 py-5 flex justify-between items-center max-w-[1800px] mx-auto">
-            <a href="#" class="block interactive">
-                <div class="font-din text-xl md:text-2xl tracking-[0.15em] whitespace-nowrap">
-                    <span class="font-bold text-main">DIGITAL ARTS</span> <span class="font-light text-accent">LAB</span>
-                </div>
-            </a>
-            <div class="hidden lg:flex space-x-10 font-din text-xs tracking-[0.2em] font-medium text-main">
-                <a href="#news" class="hover:text-accent transition-colors interactive">NEWS</a>
-                <a href="#vision" class="hover:text-accent transition-colors interactive">LAB VISION</a>
-                <a href="#projects" class="hover:text-accent transition-colors interactive">PROJECTS</a>
-                <a href="#team" class="hover:text-accent transition-colors interactive">TEAM</a>
-                <a href="#publications" class="hover:text-accent transition-colors interactive">PUBLICATIONS</a>
-                <a href="#contact" data-action="open-route" data-route="contact" class="hover:text-accent transition-colors interactive">CONTACT</a>
+<div class="max-w-[1500px] mx-auto w-full h-full flex flex-col p-4 md:p-8 lg:p-10 relative">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center shrink-0 mb-8 z-50 fade-in-up">
+        <a href="#" class="flex items-center gap-4 interactive group">
+            <img id="profile-img" src="" alt="Profile" class="w-14 h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <div class="leading-tight">
+                <h2 id="profile-name" class="font-bold text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500"></h2>
+                <p id="profile-title" class="text-[12px] text-textMuted uppercase tracking-widest mt-1"></p>
             </div>
-            <button type="button" id="nav-toggle" data-action="toggle-nav" class="nav-toggle interactive" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-            </button>
-        </div>
-        <div id="mobile-nav" class="mobile-nav">
-            <a href="#news" class="mobile-nav-link interactive">NEWS</a>
-            <a href="#vision" class="mobile-nav-link interactive">LAB VISION</a>
-            <a href="#projects" class="mobile-nav-link interactive">PROJECTS</a>
-            <a href="#team" class="mobile-nav-link interactive">TEAM</a>
-            <a href="#publications" class="mobile-nav-link interactive">PUBLICATIONS</a>
-            <a href="#contact" data-action="open-route" data-route="contact" class="mobile-nav-link interactive">CONTACT</a>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <header class="relative h-screen flex flex-col justify-center items-center hairline-b overflow-hidden hero-gradient" id="hero-area">
-        <canvas id="canvas" class="interactive absolute inset-0 z-0" width="1920" height="998"></canvas>
-        <div class="px-6 relative z-10 max-w-[1800px] mx-auto w-full pointer-events-none flex justify-center">
-            <h1 class="sr-only">DIGITAL ARTS RESEARCH GROUP</h1>
-            <img id="main-hero-img" src="images/hero/DAlabLogo.png" alt="Digital Arts Research Group Logo" class="w-full max-w-[150px] md:max-w-[210px] lg:max-w-[260px] h-auto object-contain opacity-90 drop-shadow-2xl">
-        </div>
-        <a href="#news" class="scroll-cue interactive" aria-label="Scroll down to content">
-            <span class="scroll-cue-chevron" aria-hidden="true"></span>
         </a>
+
+        <div class="hidden md:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
+
+        <div class="relative">
+            <button id="menu-toggle" class="w-[50px] h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
+                <div class="relative w-[18px] h-[12px]">
+                    <span id="menu-line-1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                    <span id="menu-line-2" class="absolute left-0 bottom-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                </div>
+            </button>
+
+            <div id="dropdown-menu" class="absolute top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
+                <nav class="flex flex-col text-sm font-medium">
+                    <a href="../pages/about" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
+                    <a href="../pages/stack" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
+                    <a href="../pages/projects" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
+                    <a href="../pages/contact" data-action="open-route" data-route="contact" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <!-- News -->
-    <section id="news" class="py-32 hairline-b relative z-10">
-        <div class="px-6 max-w-[1800px] mx-auto">
-            <h2 class="text-2xl font-din font-bold tracking-widest mb-16 text-main flex items-center gap-4">
-                <span class="w-3 h-3 bg-accent block"></span> NEWS
-            </h2>
-            <div id="dynamic-news-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
-
-    <!-- Vision -->
-    <section id="vision" class="py-32 hairline-b bg-white relative z-10 overflow-hidden">
-        <div class="absolute top-0 right-0 w-[45vw] h-full bg-bglight/50 transform -skew-x-12 origin-top pointer-events-none border-l border-main/[0.03]"></div>
-
-        <div class="px-6 max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-            <div class="lg:col-span-4">
-                <h2 class="text-2xl font-din tracking-widest font-bold text-main flex items-start gap-4 sticky top-32">
-                    <span class="w-3 h-3 bg-accent block mt-1.5"></span> LAB VISION
-                </h2>
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-8 lg:gap-10 flex-1 overflow-hidden relative z-10">
+        <!-- Left Sidebar -->
+        <aside class="w-full lg:w-[260px] xl:w-[300px] h-full flex flex-col shrink-0 overflow-y-auto no-scrollbar pb-10">
+            <h1 class="text-[24px] font-bold mb-8 tracking-tight fade-in-up" style="animation-delay: 100ms;">Hey, I'm Luca <img class="inline-block origin-bottom-right cursor-default ml-1" src="../images/RockOnAndNamaste.png" onerror="this.style.display='none'" height="40" width="40" alt="🤟"/></h1>
+            <p class="text-[16px] text-textMuted leading-[1.8] mb-10 fade-in-up" style="animation-delay: 200ms;">
+                And as you will find out,<br>I am quite an <br><span class="text-white font-bold">Interactive Media Allrounder</span><br>
+                who's fascinated by gaining and sharing knowledge about complex topics, especially if they are related to the <br>
+                <span class="text-white font-bold">Combination of Sustainability and New Technologies</span>
+            </p>
+            <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 mb-10 interactive flex items-center gap-2 fade-in-up" style="animation-delay: 300ms;">
+                More about Me
+            </button>
+            <div class="flex gap-4 mb-16 fade-in-up" style="animation-delay: 400ms;">
+                <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive">
+                    <img src="../images/Icons/FHIcon.png" onerror="this.style.display='none'" class="w-6 h-6 object-contain" alt="FH">
+                </a>
+                <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive">
+                    <img src="../images/Icons/OrcidIcon.png" onerror="this.style.display='none'" class="w-6 h-6 object-contain" alt="ORCID">
+                </a>
+                <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                <a href="https://github.com/luca-g97" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
             </div>
-            <div class="lg:col-span-8">
-                <div class="mb-20 relative">
-                    <div class="w-12 h-1 bg-accent mb-8"></div>
-                    <p class="text-lg leading-[1.8] max-w-[70ch] text-main/80 font-light mb-8">
-                        The Digital Arts Lab explores the intersection of creative practice and digital technology. We investigate how emerging media shapes human experience, bridging the gap between artistic inquiry and technological innovation.
-                    </p>
-                    <p class="text-lg leading-[1.8] max-w-[70ch] text-main/80 font-light">
-                        Our work is driven by the belief that design and art are essential to understanding the digital future. This vision is built upon two core research areas. Both share a common foundation: a focus on design quality, artistic research, and the systematic examination of the aesthetic and experiential dimensions of digital media.
-                    </p>
-                </div>
+            <div class="mt-auto flex flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Licensing</a>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Privacy Policy</a>
+            </div>
+        </aside>
 
-                <div class="grid md:grid-cols-2 gap-8 lg:gap-12 relative items-stretch">
+        <!-- Right Bento Grid -->
+        <div class="flex-1 h-full overflow-y-auto no-scrollbar pb-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[260px] md:auto-rows-[300px]">
 
-                    <!-- Focus 01: Games -->
-                    <div class="group p-10 bg-[#f4f4f4] relative border border-transparent hover:border-[#d1d1d1] transition-all duration-500 interactive overflow-hidden shadow-sm hover:shadow-lg flex flex-col h-full">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-main scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20"></div>
-
-                        <div class="absolute bottom-8 right-8 opacity-[0.08] group-hover:opacity-20 transition-all duration-500 pointer-events-none grid grid-cols-2 gap-2.5 z-0 transform group-hover:scale-110">
-                            <div class="w-5 h-5 rounded-full border-2 border-main transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1"></div>
-                            <div class="w-5 h-5 relative transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
-                                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-main -translate-y-1/2"></div>
-                                <div class="absolute top-0 left-1/2 w-0.5 h-full bg-main -translate-x-1/2"></div>
-                            </div>
-                            <div class="w-5 h-5 bg-main transition-transform duration-300 group-hover:translate-y-1 group-hover:-translate-x-1"></div>
-                            <div class="w-5 h-5 border-2 border-main transition-transform duration-300 group-hover:translate-y-1 group-hover:translate-x-1"></div>
-                        </div>
-
-                        <div class="relative z-10 flex-grow">
-                            <span class="text-xs font-din text-accent tracking-widest mb-6 block font-bold">RESEARCH FOCUS</span>
-                            <h3 class="text-2xl font-bold mb-4 font-din text-main leading-tight">GAMES &amp;<br>INTERACTION DESIGN</h3>
-                            <p class="leading-[1.7] text-main/70 text-sm mt-6 font-light">
-                                Investigating playful systems, meaningful interaction paradigms, and the psychological impact of game mechanics on user behavior. We design and analyze novel interfaces that challenge traditional modes of interaction.
-                            </p>
+                <!-- 1. Interactive Media (Procedural) -->
+                <div class="bento-card col-span-1 md:col-span-6 h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 150ms;">
+                    <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                        <div id="interactive-marquee" class="w-full animate-scroll-y flex flex-col">
+                            <!-- Filled by JS -->
                         </div>
                     </div>
+                    <h2 class="relative z-10 text-[26px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Interactive<br>Media</h2>
+                    <a href="#projects" data-open="projects" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    </a>
+                </div>
 
-                    <!-- Focus 02: Animation -->
-                    <div class="group p-10 bg-[#f4f4f4] relative border border-transparent hover:border-[#d1d1d1] transition-all duration-500 interactive overflow-hidden shadow-sm hover:shadow-lg flex flex-col h-full">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left delay-75 z-20"></div>
-
-                        <div class="absolute bottom-8 right-12 opacity-[0.08] group-hover:opacity-20 transition-all duration-700 pointer-events-none z-0">
-                            <div class="relative w-9 h-9">
-                                <div class="absolute inset-0 border-2 border-accent transition-all duration-500 -translate-x-4 -translate-y-4 opacity-30 group-hover:-translate-x-6 group-hover:-translate-y-6"></div>
-                                <div class="absolute inset-0 border-2 border-accent transition-all duration-500 -translate-x-2 -translate-y-2 opacity-60 group-hover:-translate-x-3 group-hover:-translate-y-3"></div>
-                                <div class="absolute inset-0 border-2 border-accent transition-all duration-500 bg-[#f4f4f4] z-10"></div>
-                            </div>
-                        </div>
-                        <div class="relative z-10 flex-grow">
-                            <span class="text-xs font-din text-accent tracking-widest mb-6 block font-bold">RESEARCH FOCUS</span>
-                            <h3 class="text-2xl font-bold mb-4 font-din text-main leading-tight">ANIMATION &amp;<br>INTERACTIVE ART</h3>
-                            <p class="leading-[1.7] text-main/70 text-sm mt-6 font-light">
-                                Exploring motion graphics, generative visuals, and artistic applications of real-time computer graphics in virtual spaces. Our focus lies on immersive storytelling and aesthetic experiences in XR environments.
-                            </p>
+                <!-- 2. Academic Research (Procedural) -->
+                <div class="bento-card col-span-1 md:col-span-6 h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 250ms;">
+                    <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                        <div id="academic-marquee" class="w-full animate-scroll-y-reverse flex flex-col">
+                            <!-- Filled by JS -->
                         </div>
                     </div>
+                    <h2 class="relative z-10 text-[26px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Academic<br>Research</h2>
+                    <a href="#publications" data-open="publications" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Projects -->
-    <section id="projects" class="py-32 hairline-b relative z-10 overflow-hidden">
-        <div class="absolute top-1/2 left-0 w-full h-px bg-main/[0.03] -z-10 pointer-events-none"></div>
-        <div class="absolute top-0 left-1/2 w-px h-full bg-main/[0.03] -z-10 pointer-events-none"></div>
-        <div class="px-6 max-w-[1800px] mx-auto">
-            <h2 class="text-2xl font-din font-bold tracking-widest mb-16 text-main flex items-center gap-4">
-                <span class="w-3 h-3 bg-accent block"></span> PROJECTS
-            </h2>
-            <div id="dynamic-projects-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team" class="py-32 hairline-b bg-white relative z-10">
-        <div class="px-6 max-w-[1800px] mx-auto">
-            <h2 class="text-2xl font-din font-bold tracking-widest mb-16 text-main flex items-center gap-4">
-                <span class="w-3 h-3 bg-accent block"></span> TEAM
-            </h2>
-            <div id="dynamic-team-grid" class="team-grid"></div>
-        </div>
-    </section>
-
-    <!-- Publications -->
-    <section id="publications" class="py-32 hairline-b relative z-10">
-        <div class="px-6 max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <div class="lg:col-span-4">
-                <h2 class="text-2xl font-din font-bold tracking-widest text-main flex items-start gap-4 sticky top-32">
-                    <span class="w-3 h-3 bg-accent block mt-1.5"></span> PUBLICATIONS
-                </h2>
-            </div>
-            <div class="lg:col-span-8 relative">
-                <div class="absolute -left-6 top-2 w-1.5 h-1.5 bg-main/20 rounded-full hidden lg:block"></div>
-
-                <div id="dynamic-recent-pubs" class="space-y-6 border-l border-main/10 pl-6 lg:pl-0 lg:border-l-0"></div>
-                <button data-action="open-route" data-route="publications-archive" class="mt-12 border border-main px-8 py-4 font-din text-sm tracking-[0.2em] hover:bg-main hover:text-white transition-all interactive group relative overflow-hidden">
-                    <span class="relative z-10">VIEW ALL PUBLICATIONS</span>
-                    <div class="absolute inset-0 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0"></div>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-[#e8e8e8] text-main py-24 hairline-t cursor-default relative z-10 border-t-4 border-accent">
-        <div class="px-6 max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-                <a href="#" class="inline-block interactive mb-8">
-                    <div class="font-din text-2xl tracking-[0.15em] whitespace-nowrap">
-                        <span class="font-bold text-main">DIGITAL ARTS</span> <span class="font-light text-accent">LAB</span>
+                <!-- 3. Contact WebGL Globe -->
+                <a href="#contact" data-action="open-route" data-route="contact" class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] p-6 group block interactive fade-in-up" style="animation-delay: 350ms;">
+                    <h3 class="text-[20px] font-bold relative z-20 tracking-wide text-white">Contact</h3>
+                    <!-- WebGL Canvas Container -->
+                    <div class="absolute -bottom-[50%] -right-[20%] w-[130%] h-[150%] group-hover:scale-105 transition-transform duration-[1000ms] pointer-events-none">
+                        <canvas id="cobe-globe" class="w-full h-full opacity-90"></canvas>
+                    </div>
+                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
                     </div>
                 </a>
-                <p class="text-base font-light opacity-70 max-w-sm leading-relaxed">
-                    Digital Arts Research Group<br>
-                    University of Applied Sciences Upper Austria<br>
-                    Campus Hagenberg
-                </p>
-            </div>
-            <div class="flex md:justify-end items-end space-x-10 font-din text-sm tracking-widest opacity-70">
-                <button type="button" data-action="open-route" data-route="imprint" class="hover:opacity-100 hover:text-accent transition-colors interactive relative group">IMPRINT
-                    <span class="absolute -bottom-1 left-0 w-full h-[1px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </button>
-                <button type="button" data-action="open-route" data-route="privacy" class="hover:opacity-100 hover:text-accent transition-colors interactive relative group">PRIVACY
-                    <span class="absolute -bottom-1 left-0 w-full h-[1px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </button>
-                <button type="button" data-action="open-route" data-route="contact" class="hover:opacity-100 hover:text-accent transition-colors interactive relative group">CONTACT
-                    <span class="absolute -bottom-1 left-0 w-full h-[1px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </button>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Detail modals. Same vocabulary as the front page: wordmark in the top
-         bar, a white "sheet" with hairline border and accent top line (the
-         card language), eyebrow label -> title -> short accent bar. -->
-    <div id="news-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="nm-title">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE ARTICLE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1000px] mx-auto px-6 py-20">
-            <article class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-                <div id="nm-img-container" class="w-full h-[40vh] bg-[#e5e5e5] flex items-center justify-center overflow-hidden">
-                    <span class="text-main/40 font-din tracking-widest">NEWS_IMAGE</span>
-                </div>
-                <div class="p-6 md:p-12">
-                    <span id="nm-date" class="text-[10px] font-din tracking-widest text-accent font-bold block mb-4">DATE</span>
-                    <h2 id="nm-title" class="text-4xl md:text-6xl font-din font-bold mb-6 text-main leading-tight">Title</h2>
-                    <div class="w-12 h-1 bg-accent mb-8"></div>
-                    <div id="nm-content" class="text-lg leading-[1.8] text-main/90 space-y-6 max-w-[75ch] whitespace-pre-line font-light">Content</div>
-                </div>
-            </article>
-        </div>
-    </div>
-
-    <div id="project-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="pm-title">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1200px] mx-auto px-6 py-20">
-            <article class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-                <div id="pm-img-container" class="w-full h-[40vh] md:h-[60vh] bg-[#e5e5e5] flex items-center justify-center overflow-hidden">
-                    <span class="text-main/40 font-din tracking-widest">PROJECT_IMAGE</span>
-                </div>
-                <div class="p-6 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-                    <div class="lg:col-span-8">
-                        <span id="pm-status" class="text-[10px] font-din tracking-widest text-accent font-bold block mb-4">STATUS</span>
-                        <h2 id="pm-title" class="text-4xl md:text-6xl font-din font-bold mb-6 text-main leading-tight">Title</h2>
-                        <div class="w-12 h-1 bg-accent mb-8"></div>
-                        <div id="pm-content" class="text-lg leading-[1.8] text-main/90 space-y-6 max-w-[75ch] whitespace-pre-line font-light">Content</div>
-                    </div>
-                    <div class="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#d1d1d1] pt-8 lg:pt-0 lg:pl-12 space-y-6">
-                        <div class="border-l-2 border-main/10 pl-4">
-                            <h4 class="text-[10px] font-din tracking-widest text-accent font-bold mb-1">RESEARCHERS</h4>
-                            <p id="pm-team" class="font-light text-main/80">Names</p>
-                        </div>
-                        <div class="border-l-2 border-main/10 pl-4">
-                            <h4 class="text-[10px] font-din tracking-widest text-accent font-bold mb-1">FUNDING / PARTNERS</h4>
-                            <p id="pm-partners" class="font-light text-main/80">Partners</p>
-                        </div>
+                <!-- 4. My Stack (Procedural) -->
+                <div class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] p-6 flex flex-col items-center justify-center relative fade-in-up" style="animation-delay: 450ms;">
+                    <h3 class="text-[15px] font-bold absolute top-5 left-5 tracking-wide text-gray-300">My Stack</h3>
+                    <div id="stack-container" class="flex items-center justify-center relative z-10 mt-6">
+                        <!-- Filled by JS -->
                     </div>
                 </div>
-            </article>
-        </div>
-    </div>
 
-    <div id="team-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="tm-name">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE PROFILE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1200px] mx-auto px-6 py-20">
-            <article class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden p-6 md:p-12">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                    <div class="md:col-span-4">
-                        <div id="tm-img-container" class="w-2/3 aspect-square rounded-full mx-auto bg-[#e5e5e5] mb-8 flex items-center justify-center overflow-hidden border-4 border-accent"><span class="text-main/20 font-din font-bold text-6xl">XY</span></div>
-                        <div class="space-y-6">
-                            <div class="border-l-2 border-main/10 pl-4">
-                                <h4 class="text-[10px] font-din tracking-widest text-accent font-bold mb-1">ROLE</h4>
-                                <p id="tm-role" class="font-medium text-lg text-main"></p>
-                            </div>
-                            <div id="tm-contact-block" class="border-l-2 border-main/10 pl-4">
-                                <h4 class="text-[10px] font-din tracking-widest text-accent font-bold mb-1">CONTACT</h4>
-                                <a href="mailto:" id="tm-email" class="font-medium text-lg text-accent hover:text-main transition-colors interactive break-all"></a>
-                            </div>
-                            <div id="tm-links-block" class="border-l-2 border-main/10 pl-4 hidden">
-                                <h4 class="text-[10px] font-din tracking-widest text-accent font-bold mb-1">PROFILES</h4>
-                                <div id="tm-links" class="space-y-2"></div>
-                            </div>
-                        </div>
+                <!-- 5. Featured Project (Procedural) -->
+                <a id="featured-link" href="#" data-open="projects" class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] group block interactive overflow-hidden fade-in-up" style="animation-delay: 550ms;">
+                    <div class="absolute inset-0">
+                        <img id="featured-img" src="../images/LudaViz.png" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent"></div>
                     </div>
-                    <div class="md:col-span-8 md:pl-8">
-                        <span class="text-[10px] font-din tracking-widest text-accent font-bold block mb-4">TEAM</span>
-                        <h2 id="tm-name" class="text-4xl md:text-6xl font-din font-bold mb-6 text-main leading-tight"></h2>
-                        <div class="w-12 h-1 bg-accent mb-8"></div>
-                        <div id="tm-bio" class="text-lg leading-[1.8] text-main/90 space-y-6 max-w-[65ch] whitespace-pre-line font-light"></div>
+                    <h3 id="featured-title" class="text-base font-bold absolute top-5 left-5 z-10 drop-shadow-lg tracking-wide text-white"></h3>
+                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
                     </div>
-                </div>
-            </article>
-        </div>
-    </div>
+                </a>
 
-    <div id="pubs-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="pubs-archive-title">
-        <div class="sticky top-0 w-full flex flex-wrap justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <div class="flex flex-wrap items-center gap-6">
-                <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-                <div id="pubs-year-nav" class="flex flex-wrap gap-2" aria-label="Jump to year"></div>
-            </div>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2 ml-auto">
-                CLOSE ARCHIVE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1200px] mx-auto px-6 py-20">
-            <h2 id="pubs-archive-title" class="text-4xl md:text-6xl font-din font-bold mb-4 text-main flex items-center gap-6">
-                <span class="w-4 h-4 bg-accent block"></span> PUBLICATION ARCHIVE
-            </h2>
-            <p id="pubs-count" class="font-din text-xs tracking-widest text-main/50 mb-16"></p>
-            <div id="pubs-archive-list"></div>
-        </div>
-    </div>
-
-    <!-- Legal pages.
-         Imprint mirrors the one of digitalmedialab.at (same legal entity: FH OÖ
-         Forschungs & Entwicklungs GmbH). Please have the whole block confirmed
-         once before going live. -->
-    <div id="imprint-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="imprint-title">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1000px] mx-auto px-6 py-20">
-            <div class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden p-6 md:p-12">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-            <h2 id="imprint-title" class="text-4xl md:text-6xl font-din font-bold mb-16 text-main flex items-center gap-6">
-                <span class="w-4 h-4 bg-accent block"></span> IMPRINT
-            </h2>
-            <div class="space-y-6">
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">MEDIA OWNER AND PUBLISHER</h3>
-                    <p class="text-base font-light leading-relaxed">FH Upper Austria Research and Development GmbH<br>Digital Arts Lab<br>Roseggerstrasse 15<br>4600 Wels, Austria</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">CONTACT INFORMATION</h3>
-                    <p class="text-base font-light leading-relaxed">E-mail: <a href="mailto:contact-digitalarts-lab@uap.at" class="text-accent hover:text-main transition-colors interactive font-medium break-all">contact-digitalarts-lab@uap.at</a></p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">COMPANY DETAILS</h3>
-                    <p class="text-base font-light leading-relaxed">UID: ATU 57300236<br>FN: 236733m<br>Commercial register court: Landesgericht Wels</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">IMAGE CREDITS</h3>
-                    <p class="text-base font-light leading-relaxed">Digital Arts Lab if not stated otherwise.</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">TECHNICAL IMPLEMENTATION AND SUPPORT</h3>
-                    <p class="text-base font-light leading-relaxed">In the event of technical problems send an e-mail to: <a href="mailto:contact-digitalarts-lab@uap.at" class="text-accent hover:text-main transition-colors interactive font-medium break-all">contact-digitalarts-lab@uap.at</a></p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">LIABILITY</h3>
-                    <p class="text-base font-light leading-relaxed">The texts on the website of the Digital Arts Lab have been carefully checked. We cannot, however, guarantee the accuracy, completeness and currency of the information provided. The Digital Arts Lab can therefore not be held responsible for the content of the texts. Links to other websites have been carefully selected. As the Digital Arts Lab has no influence over their content, it cannot be held liable for it.</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">COPYRIGHT</h3>
-                    <p class="text-base font-light leading-relaxed">© Digital Arts Lab and respective authors.</p>
-                </div>
-            </div>
             </div>
         </div>
-    </div>
+    </main>
+</div>
 
-    <!-- Privacy: digitalmedialab.at has no privacy notice to mirror. This is a
-         draft for a static site on GitHub Pages (no cookies, no tracking, no
-         third-party embeds). Please have it confirmed before going live. -->
-    <div id="privacy-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1000px] mx-auto px-6 py-20">
-            <div class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden p-6 md:p-12">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-            <h2 id="privacy-title" class="text-4xl md:text-6xl font-din font-bold mb-16 text-main flex items-center gap-6">
-                <span class="w-4 h-4 bg-accent block"></span> PRIVACY
-            </h2>
-            <p class="text-lg leading-[1.8] max-w-[70ch] text-main/80 font-light mb-12">
-                Information on the processing of personal data pursuant to Art. 13 GDPR.
-            </p>
-            <div class="space-y-6">
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">CONTROLLER</h3>
-                    <p class="text-base font-light leading-relaxed">FH Upper Austria Research and Development GmbH<br>Digital Arts Lab<br>Roseggerstrasse 15<br>4600 Wels, Austria<br>E-mail: <a href="mailto:contact-digitalarts-lab@uap.at" class="text-accent hover:text-main transition-colors interactive font-medium break-all">contact-digitalarts-lab@uap.at</a></p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">NO COOKIES, NO TRACKING</h3>
-                    <p class="text-base font-light leading-relaxed">This website does not set cookies, does not use analytics or tracking services and does not embed third-party content. Fonts are served from the website itself; in particular, no connection to Google Fonts is made. Visiting this website therefore transmits no data to third parties beyond the hosting described below.</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">HOSTING AND SERVER LOGS</h3>
-                    <p class="text-base font-light leading-relaxed">This website is hosted on GitHub Pages, a service of GitHub Inc. (USA). When the site is accessed, GitHub technically processes access data (in particular IP address, time of access, requested file, browser identification) to deliver and secure the service. The legal basis is Art. 6 (1) (f) GDPR (legitimate interest in the secure and efficient operation of the website). Details: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-accent hover:text-main transition-colors interactive font-medium break-all">GitHub General Privacy Statement</a>.</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">LOCAL STORAGE IN YOUR BROWSER</h3>
-                    <p class="text-base font-light leading-relaxed">For editing its content, this site uses the browser's local storage (localStorage). Data stored there remains solely on the respective device, is not transmitted and does not allow any conclusions about individual persons. For visitors, nothing is stored.</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">CONTACT BY E-MAIL</h3>
-                    <p class="text-base font-light leading-relaxed">If you contact us by e-mail, we process your details solely to handle your enquiry. The legal basis is Art. 6 (1) (f) GDPR (legitimate interest in responding to enquiries).</p>
-                </div>
-                <div class="border-l-2 border-main/10 pl-4">
-                    <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">YOUR RIGHTS</h3>
-                    <p class="text-base font-light leading-relaxed">You have the right to access, rectification, erasure, restriction of processing, data portability and to object to processing. Please contact the controller named above. You also have the right to lodge a complaint with the Austrian Data Protection Authority (Datenschutzbehörde).</p>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
+<!-- WebGL Globe Generation (Cobe) -->
+<script type="module">
+    import createGlobe from "https://cdn.jsdelivr.net/npm/cobe@0.6.3/+esm";
 
-    <div id="contact-modal" class="modal fixed inset-0 z-[100] bg-bglight overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="contact-title">
-        <div class="sticky top-0 w-full flex justify-between items-center p-6 z-10 bg-bglight/90 backdrop-blur-sm hairline-b gap-4">
-            <button data-action="close-modal" class="font-din text-sm tracking-widest text-main hover:text-accent transition-colors interactive flex items-center gap-2 whitespace-nowrap"><span aria-hidden="true">←</span> BACK</button>
-            <button data-action="close-modal" class="font-din text-sm tracking-widest btn-solid px-6 py-2 interactive flex items-center gap-2">
-                CLOSE <span aria-hidden="true">✕</span>
-            </button>
-        </div>
-        <div class="max-w-[1000px] mx-auto px-6 py-20">
-            <div class="bg-white border border-[#d1d1d1] shadow-sm relative overflow-hidden p-6 md:p-12">
-                <div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
-            <h2 id="contact-title" class="text-4xl md:text-6xl font-din font-bold mb-16 text-main flex items-center gap-6">
-                <span class="w-4 h-4 bg-accent block"></span> CONTACT
-            </h2>
-            <p class="text-lg leading-[1.8] max-w-[70ch] text-main/80 font-light mb-12">
-                We welcome collaborations, student projects and press enquiries. Get in touch – we are happy to hear from you.
-            </p>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-6">
-                    <div class="border-l-2 border-main/10 pl-4">
-                        <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">EMAIL</h3>
-                        <p class="text-base font-light leading-relaxed">
-                            <a href="mailto:contact-digitalarts-lab@uap.at" class="text-accent hover:text-main transition-colors interactive font-medium break-all">contact-digitalarts-lab@uap.at</a>
-                        </p>
-                    </div>
-                    <div class="border-l-2 border-main/10 pl-4">
-                        <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">ADDRESS</h3>
-                        <p class="text-base font-light leading-relaxed">
-                            Digital Arts Lab<br>
-                            University of Applied Sciences Upper Austria<br>
-                            School of Informatics, Communication and Media<br>
-                            Softwarepark 13<br>
-                            4232 Hagenberg im Mühlkreis<br>
-                            Austria
-                        </p>
-                    </div>
-                </div>
-                <div class="space-y-6">
-                    <div class="border-l-2 border-main/10 pl-4">
-                        <h3 class="font-din tracking-widest text-xs opacity-50 mb-1">TEAM</h3>
-                        <p class="text-base font-light leading-relaxed">Individual contact details are listed with each team member in the <a href="#team" class="text-accent hover:text-main transition-colors interactive font-medium">team section</a>.</p>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
+    let phi = 0;
+    let canvas = document.getElementById("cobe-globe");
 
-    <!-- Admin login -->
-    <div id="admin-login-modal" class="modal fixed inset-0 z-[150] bg-main/40 backdrop-blur-sm flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
-        <div class="bg-white p-10 max-w-sm w-full mx-6 shadow-2xl border-t-4 border-accent">
-            <h2 id="admin-login-title" class="font-din font-bold text-2xl mb-2 text-main">ADMIN LOGIN</h2>
-            <p class="text-sm text-main/70 font-light mb-6">Bitte Passwort eingeben, um das CMS zu öffnen.</p>
-            <form id="admin-login-form">
-                <label class="admin-label" for="admin-password">Passwort</label>
-                <input type="password" id="admin-password" class="admin-input" autocomplete="current-password">
-                <p id="admin-login-error" class="text-red-600 text-xs mb-4 hidden">Falsches Passwort.</p>
-                <div class="flex gap-4">
-                    <button type="submit" class="bg-accent text-white px-6 py-2 font-din tracking-widest text-sm interactive">LOGIN</button>
-                    <button type="button" data-action="close-modal" class="border border-gray-400 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-gray-100">ABBRECHEN</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Admin modal -->
-    <div id="admin-modal" class="modal fixed inset-0 z-[200] bg-white overflow-y-auto" role="dialog" aria-modal="true">
-        <div class="sticky top-0 w-full flex flex-col md:flex-row justify-between items-center p-6 z-10 bg-white border-b border-gray-200 shadow-sm gap-4">
-            <h2 class="font-din font-bold text-2xl text-accent">DA LAB <span class="font-light">CMS</span></h2>
-            <div class="flex flex-wrap items-center gap-2 md:gap-4">
-                <button data-action="publish" id="btn-publish" class="bg-accent hover:bg-main text-white px-6 py-2 font-din tracking-widest text-sm interactive flex items-center gap-2" title="Schreibt die Änderungen direkt ins GitHub-Repo. Nach etwa einer Minute online.">
-                    🚀 VERÖFFENTLICHEN
-                </button>
-                <button data-action="close-modal" class="font-din text-sm tracking-widest border border-gray-400 px-6 py-2 hover:bg-gray-100 transition-colors interactive">
-                    EXIT
-                </button>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row min-h-screen">
-            <div class="w-full md:w-64 bg-gray-50 border-r border-gray-200 p-6">
-                <p class="font-din tracking-widest text-xs opacity-50 mb-3">INHALTE</p>
-                <ul class="space-y-4 font-din tracking-widest text-sm">
-                    <li><button data-action="admin-tab" data-tab="news" class="w-full text-left font-bold hover:text-accent py-2 border-b border-gray-200">NEWS</button></li>
-                    <li><button data-action="admin-tab" data-tab="projects" class="w-full text-left font-bold hover:text-accent py-2 border-b border-gray-200">PROJECTS</button></li>
-                    <li><button data-action="admin-tab" data-tab="team" class="w-full text-left font-bold hover:text-accent py-2 border-b border-gray-200">TEAM</button></li>
-                    <li><button data-action="admin-tab" data-tab="publications" class="w-full text-left font-bold hover:text-accent py-2 border-b border-gray-200">PUBLICATIONS</button></li>
-                    <li><button data-action="admin-tab" data-tab="hero" class="w-full text-left font-bold hover:text-accent py-2 border-b border-gray-200">HERO LOGO</button></li>
-                </ul>
-                <p class="font-din tracking-widest text-xs opacity-50 mb-3 mt-12">WEITERE</p>
-                <ul class="space-y-2 font-din tracking-widest text-xs">
-                    <li><button data-action="edit-token" class="w-full text-left hover:text-accent py-2" title="GitHub-Token für das Veröffentlichen eintragen oder entfernen.">🔑 GITHUB-TOKEN</button></li>
-                    <li><button data-action="export" class="w-full text-left hover:text-accent py-2" title="Lädt die index.html herunter – als Sicherung oder für den manuellen Upload ins Repo.">💾 EXPORTIEREN (SICHERUNG)</button></li>
-                    <li><button data-action="discard-local" class="w-full text-left text-red-600 hover:underline py-2" title="Verwirft alle lokal im Browser gespeicherten Änderungen und zeigt wieder den Stand aus der index.html.">↺ LOKALE ÄNDERUNGEN VERWERFEN</button></li>
-                </ul>
-            </div>
-
-            <div class="flex-grow p-6 md:p-12">
-                <div class="flex justify-between items-center mb-8">
-                    <h3 id="admin-section-title" class="text-3xl font-din font-bold">TEAM</h3>
-                    <button data-action="add-new" id="btn-add-new" class="bg-accent text-white px-4 py-2 font-din tracking-widest text-sm interactive">
-                        + ADD NEW
-                    </button>
-                </div>
-
-                <div id="admin-hero-view" class="max-w-2xl hidden">
-                    <div class="bg-main p-10 flex items-center justify-center mb-6">
-                        <img id="admin-hero-preview" src="images/hero/DAlabLogo.png" alt="" class="max-w-[150px] w-full h-auto object-contain">
-                    </div>
-                    <input type="file" id="hero-logo-upload" accept="image/png, image/jpeg" class="hidden">
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <button data-action="upload-hero" class="bg-accent text-white px-6 py-2 font-din tracking-widest text-sm interactive">LOGO HOCHLADEN</button>
-                        <button data-action="reset-hero" class="border border-gray-400 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-gray-100">STANDARD-LOGO WIEDERHERSTELLEN</button>
-                    </div>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Das Logo erscheint weiß auf dem farbigen Hintergrund der Startseite – am besten eine PNG-Datei mit
-                        transparentem Hintergrund. Hochgeladene Logos werden verkleinert und direkt in der Seite gespeichert.
-                        Sauberer ist es, die Datei <span class="font-bold">images/hero/DAlabLogo.png</span> im Repo zu ersetzen
-                        und danach mit <span class="font-bold">make-images.ps1</span> Favicon und Vorschaubild neu zu erzeugen.
-                    </p>
-                </div>
-
-                <div id="admin-list-view" class="space-y-2"></div>
-
-                <div id="admin-editor-form" class="max-w-2xl bg-gray-50 p-6 border border-gray-200 hidden">
-                    <h4 id="admin-form-title" class="font-din font-bold mb-6 text-xl">Add New team</h4>
-                    <input type="hidden" id="edit-id" value="">
-                    <div id="image-upload-section" class="mb-6">
-                        <label class="admin-label">Image</label>
-                        <div class="flex items-center gap-4 mb-3">
-                            <div id="admin-img-preview" class="w-24 h-24 bg-gray-200 border border-gray-300 flex items-center justify-center overflow-hidden"><span class="text-xs text-gray-400">No Image</span></div>
-                            <div>
-                                <input type="file" id="image-upload-input" accept="image/*" class="text-sm">
-                                <p class="text-xs text-gray-500 mt-2">Upload: wird automatisch verkleinert (max. 1600&nbsp;px). Ein neues Bild <strong>ersetzt</strong> das bisherige beim Speichern – vorheriges Löschen ist nicht nötig.</p>
-                                <button type="button" data-action="clear-image" class="mt-2 text-xs font-din tracking-widest text-red-600 hover:underline interactive">✕ BILD ENTFERNEN</button>
-                            </div>
-                        </div>
-                        <label class="admin-label" for="image-path-input">Oder Bildpfad im Website-Ordner (empfohlen, z.B. images/team/maxi.jpg)</label>
-                        <input type="text" id="image-path-input" class="admin-input" placeholder="images/...">
-                    </div>
-                    <div id="form-fields-container" class="space-y-4"></div>
-                    <div class="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
-                        <button data-action="save-item" class="bg-accent text-white px-6 py-2 font-din tracking-widest text-sm interactive">SAVE</button>
-                        <button data-action="cancel-edit" class="border border-gray-400 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-gray-100">CANCEL</button>
-                        <button data-action="delete-item" id="btn-delete" class="border border-red-500 text-red-500 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-red-50 ml-auto hidden">DELETE</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- GitHub token for publishing straight from the CMS (admin-only, never in the history) -->
-    <div id="admin-token-modal" class="modal fixed inset-0 z-[300] bg-main/40 backdrop-blur-sm flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="admin-token-title">
-        <div class="bg-white p-10 max-w-lg w-full mx-6 shadow-2xl border-t-4 border-accent overflow-y-auto">
-            <h2 id="admin-token-title" class="font-din font-bold text-2xl mb-2 text-main">GITHUB-TOKEN</h2>
-            <p class="text-sm text-main/70 font-light mb-4">
-                Zum Veröffentlichen direkt aus dem CMS braucht dein Browser einmalig ein persönliches
-                GitHub-Token. Es bleibt nur auf diesem Gerät gespeichert und kann jederzeit entfernt werden.
-            </p>
-            <p id="admin-token-hint" class="text-red-600 text-xs mb-4 hidden"></p>
-            <div class="text-xs text-main/70 font-light leading-relaxed mb-6 border-l-2 border-main/10 pl-4">
-                <p class="mb-2"><span class="font-bold text-main">So erstellst du es (2 Minuten):</span></p>
-                <p class="mb-1">1. Auf GitHub anmelden und <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" class="text-accent hover:underline break-all">github.com/settings/personal-access-tokens/new</a> öffnen.</p>
-                <p class="mb-1">2. <span class="font-bold text-main">Resource owner: DigitalArtsLab</span> auswählen (Dropdown oben im Formular – nicht das eigene Konto). Nur dann ist das Repo in Schritt 4 wählbar.</p>
-                <p class="mb-1">3. Token name: z.B. <span class="font-bold text-main">DA Lab Website</span>, Expiration: 1 Jahr.</p>
-                <p class="mb-1">4. Repository access: <span class="font-bold text-main">Only select repositories</span> → <span class="font-bold text-main">dalab-website</span>.</p>
-                <p class="mb-1">5. Permissions → Repository permissions → <span class="font-bold text-main">Contents: Read and write</span>. Sonst nichts.</p>
-                <p class="mb-1">6. Generate token, den Text kopieren (wird nur einmal angezeigt) und unten einfügen.</p>
-                <p class="mt-2">Falls <span class="font-bold text-main">DigitalArtsLab</span> als Resource owner nicht angeboten wird: Die Organisation muss Fine-grained Tokens erst erlauben (Org-Owner: Settings → Personal access tokens). Übergangsweise geht ein <span class="font-bold text-main">Classic Token</span> mit dem Scope <span class="font-bold text-main">public_repo</span> (Tokens (classic) → Generate new token).</p>
-                <p class="mt-2">Ein Token von vor dem Umzug des Repos (August 2026) funktioniert nicht mehr – bitte einmal neu anlegen.</p>
-            </div>
-            <form id="admin-token-form">
-                <label class="admin-label" for="admin-token-input">Token</label>
-                <input type="password" id="admin-token-input" class="admin-input" autocomplete="off" spellcheck="false" placeholder="github_pat_… oder ghp_…">
-                <div class="flex flex-wrap gap-4">
-                    <button type="submit" class="bg-accent text-white px-6 py-2 font-din tracking-widest text-sm interactive">SPEICHERN</button>
-                    <button type="button" data-action="close-modal" class="border border-gray-400 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-gray-100">ABBRECHEN</button>
-                    <button type="button" id="btn-clear-token" data-action="clear-token" class="border border-red-500 text-red-500 px-6 py-2 font-din tracking-widest text-sm interactive hover:bg-red-50 ml-auto hidden">TOKEN ENTFERNEN</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Initial content data. The CMS export rewrites the body of this tag. -->
-    <script type="application/json" id="initial-data">
-{
-  "heroImage": "images/hero/DAlabLogo.png",
-  "projects": [
-    {
-      "id": "proj_thermalvr",
-      "title": "Thermal VR",
-      "status": "FWF-FUNDED PROJECT · ONGOING",
-      "team": "Michael Lankes (FH Upper Austria), Martin Kocur (University of Central Florida), Niels Henze (University of Tübingen), Lisa Reichl, Florian Horak",
-      "partners": "Austrian Science Fund (FWF), Grant DOI 10.55776/PIN3928525",
-      "link": "https://www.fwf.ac.at/en/research-radar/10.55776/PIN3928525",
-      "shortDesc": "Can virtual worlds make us feel warmer or cooler? Thermal VR studies how virtual environments and avatars shape temperature perception – and how this can help save energy.",
-      "content": "What we see has a stronger impact on us than we often realize: colors, environments, and even virtual bodies can change how warm or cold we feel – without any change in actual room temperature. Thermal VR investigates how virtual worlds and digital avatars influence thermal perception, and how this knowledge can be used to reduce energy consumption through immersive technologies.\n\nHeating and cooling are among the largest energy consumers in homes, offices, and public buildings, while people spend ever more time in digital and virtual environments. The core idea is simple: if virtual experiences can influence whether we feel warm or cool, they could reduce the demand for air conditioning and heating without sacrificing comfort. Imagine working in a virtual winter landscape while the physical room is slightly warmer – or relaxing in a warm virtual beach scene while the real room is a bit cooler. Previous studies show that such visual impressions have measurable effects on thermal sensation and even skin temperature.\n\nThe project systematically examines how virtual environments (snow, sun, ice, fire) and avatar features (goosebumps, sweat, clothing) affect the perception of warmth and cold, combining subjective ratings with objective measurements such as skin temperature. Based on these findings, we are developing a design toolkit that helps developers of immersive applications shape environments and avatars so that they influence temperature perception in the desired direction – enabling future VR applications, games, and digital workspaces to contribute to a more energy-efficient society.\n\nThis project is funded by the Austrian Science Fund (FWF) under Grant DOI 10.55776/PIN3928525.",
-      "imageUrl": "images/projects/thermal-vr-projthermalvr.jpg"
-    },
-    {
-      "id": "proj_1",
-      "title": "Expanded Conference Series",
-      "status": "CONFERENCE SERIES · SINCE 2013",
-      "team": "Jürgen Hagler (Conference Chair)",
-      "partners": "Ars Electronica · ACM SIGGRAPH",
-      "link": "https://www.expandedanimation.com/",
-      "shortDesc": "EXPANDED – Conference on Animation and Interactive Art: an academic platform at the intersection of media art, animation, and interactive experiments, held with Ars Electronica.",
-      "content": "Since 2013, the Expanded Animation Symposium has been part of the Ars Electronica Animation Festival. Building on early discussions about Expanded Cinema and Computer Animation at the media art festival, it has become a fixture for artists, curators, and scholars working at the intersection of media art, animation, and immersive and interactive experiments. The format also played a significant role in rethinking the Prix Ars Electronica category of Computer Animation, whose renaming to New Animation Art in 2023 marked a symbolic step in this transformation.\n\nOver the years, the symposium has evolved into an academic platform and, since 2024, has found its form as EXPANDED – Conference on Animation and Interactive Art, with a dedicated call for papers and peer-reviewed proceedings. Since 2025, EXPANDED is held in cooperation with ACM SIGGRAPH, and the proceedings are published open access in the ACM Digital Library. Contributions are sought in two tracks: Research Papers, emphasizing scientific aspects such as interdisciplinary research projects, artist-based research, or HCI studies, and Art Papers, focusing on the artistic work itself.",
-      "imageUrl": "images/projects/Expanded.webp"
-    },
-    {
-      "id": "proj_0",
-      "title": "LudaViz",
-      "status": "FWF-FUNDED PROJECT · ONGOING",
-      "team": "Michael Lankes (Upper Austria), Günter Wallner (JKU Linz), Shashvat Singh (JKU Linz), Luca Geiger (FH Upper Austria)",
-      "partners": "Johannes Kepler University Linz · Austrian Science Fund (FWF), Grant DOI 10.55776/PAT5836824",
-      "link": "https://ludaviz.games.cg.jku.at/",
-      "shortDesc": "What can data visualization learn from video games? LudaViz explores ludic visualizations – data woven directly into game worlds instead of charts and dashboards.",
-      "content": "Traditional charts and dashboards are made for experts – yet today everyone is exposed to data. LudaViz (Ludic Data Visualization) asks what visualization design can learn from video games, which routinely represent data through their virtual worlds. We call these seamlessly integrated representations ludic visualizations: in a city-building game, pollution is not a bar chart at the edge of the screen – roads visibly congest and buildings turn run-down as air quality drops. Players read crucial information simply by observing the world around them.\n\nThe project investigates whether such integrated design helps people absorb and remember information more effectively, and whether it adds to their enjoyment. Beyond game data, we also study how to represent player data itself – for instance, achievements that visibly transform a game's landscape, opening new possibilities for social interaction and collective storytelling.\n\nTo this end, we analyze commercial games, interview designers, build our own prototypes, and run user studies combining surveys, interviews, and in-game metrics. While the core focus is on entertainment games, the findings are expected to carry over to education, health, and museum contexts – turning raw numbers into engaging, user-centered data narratives.\n\nThis project is funded by the Austrian Science Fund (FWF) under Grant DOI 10.55776/PAT5836824.",
-      "imageUrl": "images/projects/ludaviz-proj0.jpg"
-    },
-    {
-      "title": "Brosch AI – Distorted Dreams",
-      "status": "AI-ANIMATED SHORT FILM · COMPLETED",
-      "team": "Celine Pham, Jürgen Hagler, Victoria Wolfersberger, Jolanda Abasolo",
-      "partners": "Upper Austrian State Museum (OÖ Landesmuseum) · Lentos Art Museum Linz",
-      "link": "https://animaplus.at/projekte/brosch-ai-distorted-dreams/",
-      "shortDesc": "A six-minute AI-animated short film inspired by Austrian artist Klemens Brosch (1894–1926), bringing his existential imagery into motion for a contemporary audience.",
-      "content": "Brosch AI – Distorted Dreams is a roughly six-minute animated short film created with the help of artificial intelligence. The project draws on the work of Austrian artist Klemens Brosch (1894–1926), whose striking visual language moves between hyperrealism, symbolism, and surrealism. His drawings reflect themes of war, transience, and inner decay – most powerfully in his final creative period, which was marked by illness and personal suffering.\n\nThe film was realized in close collaboration with experts from the Upper Austrian State Museum and the Lentos Art Museum Linz. Selected works by Brosch were animated, extended, and reinterpreted using AI tools. The result is a dream-like film that sets Brosch's existential imagery in motion and makes his timeless work accessible to a contemporary audience.",
-      "imageUrl": "images/projects/BroschAI.png",
-      "id": "id_1785397181376"
-    },
-    {
-      "title": "Theaterautomat",
-      "status": "INTERACTIVE AI INSTALLATION · SINCE 2026",
-      "team": "Jürgen Hagler (Project Lead), Nils Gallist (Technical Lead & Team Lead), Celine Pham (Programmer & AI Artist), Jolanda Abasolo (Tech Artist & AI Artist) · Landestheater Linz: David Baldessari (Dramaturgy), Nele Neitzke (Dramaturgy), Dorothea Christine Gritsch",
-      "partners": "Landestheater Linz · Funded by the Austrian Federal Ministry for Housing, Arts, Culture, Media and Sport (“AI in Arts and Culture” programme)",
-      "shortDesc": "An interactive, AI-powered installation in the foyer of the Kammerspiele at Landestheater Linz: visitors bring theater characters from different epochs to life with their own movements.",
-      "content": "The Theaterautomat is an interactive, AI-powered installation in the foyer of the Kammerspiele at Landestheater Linz that invites visitors to rediscover theater in a playful yet informative way.\n\nAt its heart are ten theater characters from different theatrical epochs, each paired with matching scenic backdrops. Characters and settings can be freely combined, creating theatrical snapshots that have never existed before – and the installation responds in real time: the movements of the person standing in front of the screen are captured and instantly transferred to the selected figure. A deep-dive option offers further insights into how the theater's departments have evolved over time, with AI helping to present historical contexts, aesthetic shifts, and institutional developments in an accessible way.\n\nThe Theaterautomat is a cooperation between Landestheater Linz and the University of Applied Sciences Upper Austria, funded by the Austrian Federal Ministry for Housing, Arts, Culture, Media and Sport as part of its “AI in Arts and Culture” programme. Alongside its artistic ambition, the project pursues a clear research and educational mission: it conveys the basics of how AI works, demonstrates its application in a theater context, and teaches audiences about key theatrical epochs and iconic stage roles.\n\nDesigned as a low-threshold experience for a broad audience aged 13 and up, the installation launched on 24 February 2026. On social media, it is visible under #theaterautomat.",
-      "imageUrl": "images/projects/Theaterautoemt.jpg",
-      "id": "id_1785397200877"
-    }
-  ],
-  "team": [
-    {
-      "id": "team_0",
-      "initials": "XY",
-      "name": "Michael Lankes",
-      "role": "Head of Lab · Game & Interaction Design",
-      "email": "michael.lankes@fh-ooe.at",
-      "bio": "FH-Prof. PD Dr. Michael Lankes is working as a professor at the Digital Media department (FHOOE) on the topics game art & design as well as usability & interaction design . Since 2026 he is also the head of the research group Digital Arts. In 2021, he became the study coordinator of the Digital Arts master program. His expertise ranges from user interface/interaction design in games, designing eudaimonic game experiences, VR/MR in games, to playful interactions supported by nonverbal communication channels, which has been documented in various publications (e.g., CHI, CHI PLAY, FDG). Lankes, together with his research network, established a strong track record in the field of gaze-based interactions in games, disseminating his work to journals (i.e., MDPI special issue: Novel User Interfaces and Interaction Techniques in the Games Context) as well as a successfully carried out a workshops. He is an active member in the HCI games community by serving, for instance, as an AC at CHI and by co-organizing conferences, such as the CHI PLAY or the Expanded Conference. ",
-      "imageUrl": "images/team/michael-lankes-team0.jpg",
-      "pure": "https://pure.fh-ooe.at/de/persons/michael-lankes/",
-      "scholar": "https://scholar.google.com/citations?user=kL3UGdsAAAAJ&hl=en"
-    },
-    {
-      "id": "team_1",
-      "initials": "TM",
-      "name": "Juergen Hagler",
-      "role": "Co-Head of Lab · Animation & Interactive Art",
-      "email": "juergen.hagler@fh-ooe.at",
-      "bio": "Juergen Hagler is a researcher, educator, artist, and curator working at the intersection of animation, media art, interactive art, and digital culture. He is Professor of Animation and Media Studies and Head of the Digital Arts degree programs at the University of Applied Sciences Upper Austria, Hagenberg Campus. His research focuses on expanded animation, interactive and immersive media, artificial intelligence, digital cultural heritage, and experimental approaches to artistic research. Since 2017, he has served as Director of the Ars Electronica Animation Festival. He is also co-founder and General Chair of Expanded – Conference on Animation and Interactive Art, which evolved from the Expanded Animation Symposium, initiated in 2013. Hagler has initiated and led numerous interdisciplinary research and artistic projects and regularly collaborates with international cultural and academic institutions. His work combines critical reflection on emerging technologies with experimental artistic practice, exploring new forms of animation, interaction, archives, and digital storytelling.",
-      "imageUrl": "images/team/juergen.webp",
-      "pure": "https://pure.fh-ooe.at/de/persons/j%C3%BCrgen-hagler/",
-      "scholar": "https://scholar.google.com/citations?user=02NcFYgAAAAJ&hl=de"
-    },
-    {
-      "name": "Jolanda Abasolo",
-      "role": "Junior Researcher Animation & Interactive Art",
-      "email": "jolanda.abasolo@fh-hagenberg.at",
-      "pure": "",
-      "scholar": "",
-      "bio": "Jolanda Abasolo focuses on animation, interactive media, AI and generative arts. Currently pursuing a Master in Digital Arts, she combines these different fields of specialisation in order to challenge the boundaries of contemporary art tools and to create immersive experiences.",
-      "imageUrl": "images/team/jolanda-abasolo-1790342372688.jpg",
-      "id": "id_1790342372688"
-    },
-    {
-      "name": "Lino Brunmayr",
-      "role": "Junior Researcher · Game & Interaction Design",
-      "email": "Lino.Brunmayr@fh-hagenberg.at",
-      "pure": "",
-      "scholar": "",
-      "bio": "Lino is currently working towards the Digital Arts Master's Degree at the University of Applied Sciences Upper Austria, Campus Hagenberg.\nHis expertise spans Game Art and Animation, encompassing both 2D and 3D techniques across digital and traditional media. His previous projects include the stop-motion and 2D animation hybrid short film \"Ink & Paint\", as well as the interactive installation \"WIMML\", both of which are rooted in his interest in art- and animationhistory. He has also contributed to the XR theatre production of Doctor Faustus at Staatstheater Nürnberg as a 3D Artist and hosts the Hagenberg Animation Jam at the UAP Hagenberg.\n ",
-      "imageUrl": "images/team/lino-brunmayr-1790707776960.jpg",
-      "id": "id_1790707776960"
-    },
-    {
-      "name": "Christian Feichtinger",
-      "role": "Researcher · Game & Interaction Design",
-      "email": "christian.feichtinger@students.fh-hagenberg.at",
-      "pure": "",
-      "scholar": "",
-      "bio": "",
-      "imageUrl": "images/team/christian-feichtinger-1787514993070.jpg",
-      "id": "id_1787514993070"
-    },
-    {
-      "name": "Nils Gallist",
-      "initials": "",
-      "role": "Researcher · Animation & Interactive Art",
-      "email": "nils.gallist@fh-ooe.at",
-      "bio": "Nils Gallist is a researcher and media artist focusing on interactive media, Generative Artificial Inteligence, and immersive experiences. His work combines artistic practice, technological experimentation and research into playful forms of interaction.",
-      "imageUrl": "images/team/Nils.jpg",
-      "id": "id_1785397327368",
-      "pure": "https://pure.fh-ooe.at/en/persons/nils-martin-gallist/",
-      "scholar": "https://scholar.google.com/citations?user=QRx-9AwAAAAJ&hl=en"
-    },
-    {
-      "name": "Luca Geiger",
-      "initials": "",
-      "role": "Researcher · Game & Interaction Design",
-      "email": "luca.geiger@fh-hagenberg.at",
-      "bio": "Luca's academic background is in Interactive Media at the University of Applied Sciences Upper Austria, Campus Hagenberg. His professional experience encompasses roles as a developer, lecturer, and researcher in the domains of game development, real-time technology, and interactive visualization. He is currently engaged in full-time study for the Ludaviz project, with his primary focus being the investigation of visualisations of player-based behavioural data as a constituent element of the game's mechanics.",
-      "imageUrl": "images/team/luca-geiger-1785397396078.jpg",
-      "id": "id_1785397396078",
-      "pure": "https://pure.fh-ooe.at/de/persons/luca-geiger/",
-      "scholar": ""
-    },
-    {
-      "name": "Florian Alexander Horak",
-      "initials": "",
-      "role": "Junior Researcher · Game & Interaction Design",
-      "email": "florian.horak@fh-ooe.at",
-      "bio": "",
-      "imageUrl": "images/team/Florian.jpg",
-      "id": "id_1785397421240",
-      "pure": "",
-      "scholar": ""
-    },
-    {
-      "name": "Alina Menten",
-      "initials": "",
-      "role": "Researcher · Game & Interaction Design",
-      "email": "alina.menten@fh-hagenberg.at",
-      "bio": "Alina Menten is a lecturer and researcher in the Digital Media department at the University of Applied Sciences Upper Austria, Campus Hagenberg. Her research spans game studies, game design, transmedia reconstruction, and environmental design, with a particular focus on the representation of history, landscapes, and space in digital games. Alongside her academic work, she is an active game and visual designer. She also serves on the board of the Working Group Humanities and Digital Games (AKGWDS).",
-      "imageUrl": "images/team/Alina.jpg",
-      "id": "id_1785397455324",
-      "pure": "https://pure.fh-ooe.at/en/persons/alina-menten/",
-      "scholar": "https://scholar.google.com/citations?user=qIiAbLwAAAAJ&hl=en"
-    },
-    {
-      "name": "Lisa Reichl",
-      "initials": "",
-      "role": "Researcher · Game & Interaction Design",
-      "email": "lisa.reichl@fh-hagenberg.at",
-      "bio": "Lisa is a researcher and Unity developer with a background in Interactive Media from the University of Applied Sciences Upper Austria. Her research focuses on multisensory experiences in virtual reality, with a particular interest in the effects of odors and thermal cues. Currently, she is investigating thermal perception in virtual reality, exploring how thermal cues influence perception, interaction, and the sense of thermal comfort in virtual environments. ",
-      "imageUrl": "images/team/Lisa.jpg",
-      "id": "id_1785397482112",
-      "pure": "",
-      "scholar": "https://scholar.google.com/citations?user=cPjajTUAAAAJ&hl=de"
-    },
-    {
-      "name": "Lukas Schmalzer",
-      "initials": "",
-      "role": "Researcher · Animation & Interactive Art",
-      "email": "lukas.schmalzer@fhooe.at",
-      "bio": "",
-      "imageUrl": "images/team/Lukas.jpg",
-      "id": "id_1785397513424",
-      "pure": "",
-      "scholar": ""
-    },
-    {
-      "name": "Victoria Wolfersberger",
-      "initials": "",
-      "role": "Researcher · Animation & Interactive Art",
-      "email": "victoria.wolfersberger@fh-hagenberg.at",
-      "bio": "Victoria Wolfersberger is a lecturer in the Digital Media department at the University of Applied Sciences Upper Austria, Campus Hagenberg. Her expertise spans producing, sound design, and motion graphics. Her research focuses on AI literacy within the context of media education. She also serves on the board of ANIMA PLUS, an association dedicated to supporting animation artists in Upper Austria and beyond.",
-      "imageUrl": "images/team/Vici.jpg",
-      "id": "id_1785399953744",
-      "pure": "https://pure.fh-ooe.at/de/persons/victoria-maria-wolfersberger/",
-      "scholar": "https://scholar.google.com/citations?user=TzNueZAAAAAJ&hl=en"
-    }
-  ],
-  "publications": [
-    {
-      "id": "pub_01",
-      "title": "Breaking Rotational Symmetry: Minimal Landmarks Stabilize Orientation in Screen-Based 3D Games",
-      "authors": "Christian Feichtinger and Michael Lankes",
-      "year": "2026",
-      "journal": "CHI '26 (Proc. of the 2026 CHI Conference on Human Factors in Computing Systems)",
-      "details": "845:1–845:15",
-      "doi": "10.1145/3772318.3791522"
-    },
-    {
-      "id": "pub_02",
-      "title": "Transient Weapons, Ambivalent Play: A Case Study of Durability in Breath of the Wild",
-      "authors": "Michael Lankes and Luca Geiger",
-      "year": "2026",
-      "journal": "FDG 2026 (21st International Conference on the Foundations of Digital Games)",
-      "details": "1–11",
-      "doi": "10.1145/3815598.3815601"
-    },
-    {
-      "id": "pub_03",
-      "title": "How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite's Swarm Visualization",
-      "authors": "Shashvat Singh, Luca Geiger, Michael Lankes, and Günter Wallner",
-      "year": "2026",
-      "journal": "CHI '26 Extended Abstracts",
-      "details": "377:1–377:5",
-      "doi": "10.1145/3772363.3799313"
-    },
-    {
-      "id": "pub_04",
-      "title": "Unfinished Decay: Animating Historical Images from Gigapixel Digitizations via Fragment-Based AI Workflows",
-      "authors": "Jürgen Hagler and Celine Pham",
-      "year": "2026",
-      "journal": "Proc. ACM Comput. Graph. Interact. Tech. 9(3)",
-      "details": "40:1–40:8",
-      "doi": "10.1145/3816085"
-    },
-    {
-      "id": "pub_05",
-      "title": "Pathways of Desire: Enhancing Navigation and Sense of Community Through Player-Generated Desire Paths",
-      "authors": "Michael Lankes, Günter Wallner, and Martin Kocur",
-      "year": "2025",
-      "journal": "CHI '25 (Proc. of the 2025 CHI Conference on Human Factors in Computing Systems)",
-      "details": "462:1–462:19",
-      "doi": "10.1145/3706598.3713191"
-    },
-    {
-      "id": "pub_06",
-      "title": "Enhancing Player Satisfaction Through Personality-Based Narrative Adaptation in Digital Games",
-      "authors": "Celina Auer and Michael Lankes",
-      "year": "2025",
-      "journal": "FDG 2025",
-      "details": "11:1–11:11",
-      "doi": "10.1145/3723498.3723798"
-    },
-    {
-      "id": "pub_07",
-      "title": "Where am I? Design Pointers for Enhanced Spatial Orientation in 3D Games",
-      "authors": "Christian Feichtinger and Michael Lankes",
-      "year": "2025",
-      "journal": "FDG 2025",
-      "details": "54:1–54:4",
-      "doi": "10.1145/3723498.3723826"
-    },
-    {
-      "id": "pub_08",
-      "title": "Divine Machinery – Making the Transhuman Experience Tangible",
-      "authors": "Sebastian Grundherr, Julia Posch, Selina Behrens, Florian Horak, Simone Feldbacher, Michelle Treziak, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "Expanded 2025 (Conference on Animation and Interactive Art)",
-      "details": "103–108",
-      "doi": "10.1145/3749893.3749962"
-    },
-    {
-      "id": "pub_09",
-      "title": "Animating an Archive: AI and the Limits of Cultural Heritage Interpretation",
-      "authors": "Celine Pham, Jolanda Abasolo, Victoria Wolfersberger, Philipp Wintersberger, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "Expanded 2025 (Conference on Animation and Interactive Art)",
-      "details": "149–156",
-      "doi": "10.1145/3749893.3749967"
-    },
-    {
-      "id": "pub_10",
-      "title": "The Theater Machine: An Interactive Generative-AI-Based Installation for Participatory Cultural Mediation",
-      "authors": "Nils Gallist, Jolanda Abasolo, Celine Pham, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "SIGGRAPH Asia 2025 Posters",
-      "details": "123:1–123:3",
-      "doi": "10.1145/3757374.3771519"
-    },
-    {
-      "id": "pub_11",
-      "title": "Interactive Augmented Reality Experiences for Urban Art Spaces Using Markerless Tracking",
-      "authors": "Axel Bauer, Jürgen Hagler, and Martin Kocur",
-      "year": "2025",
-      "journal": "VINCI 2025",
-      "details": "46:1–46:6",
-      "doi": "10.1145/3769534.3769544"
-    },
-    {
-      "id": "pub_12",
-      "title": "ANIVAE-2025: Workshop Series on Animation in Virtual and Augmented Environments",
-      "authors": "Franziska Proksa, Thomas Moser, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "IEEE VR Workshops (VRW) 2025",
-      "details": "1–2",
-      "doi": "10.1109/VRW66409.2025.00007"
-    },
-    {
-      "id": "pub_13",
-      "title": "Immersive Motorcycle Visualization Using Motion Capture: A Proof of Concept for an Online Motorcycle Configurator",
-      "authors": "Patrick Proier, Martin Kocur, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "IEEE VR Workshops (VRW) 2025",
-      "details": "3–7",
-      "doi": "10.1109/VRW66409.2025.00008"
-    },
-    {
-      "id": "pub_14",
-      "title": "Augmenting Murals: Creating Playful AR Experiences for Wall Art Exhibitions",
-      "authors": "Axel Bauer, Martin Kocur, and Jürgen Hagler",
-      "year": "2025",
-      "journal": "IEEE VR Workshops (VRW) 2025",
-      "details": "8–12",
-      "doi": "10.1109/VRW66409.2025.00009"
-    },
-    {
-      "id": "pub_15",
-      "title": "Effects of Rendering a Virtual Nose on Odor Perception and Presence in Mixed Reality",
-      "authors": "Lisa Reichl and Martin Kocur",
-      "year": "2025",
-      "journal": "VRST '25 (31st ACM Symposium on Virtual Reality Software and Technology)",
-      "details": "134:1–134:2",
-      "doi": "10.1145/3756884.3768387"
-    },
-    {
-      "id": "pub_16",
-      "title": "AI Literacy in Higher Media Education: Exploring the Balance Between Generative Content Creation and Artistic Expression",
-      "authors": "Victoria Wolfersberger and Jürgen Hagler",
-      "year": "2025",
-      "journal": "EDULEARN25 Proceedings",
-      "details": "9142–9151",
-      "doi": "10.21125/edulearn.2025.2364"
-    },
-    {
-      "id": "pub_17",
-      "title": "Proceedings of the Conference on Animation and Interactive Art, Expanded 2025",
-      "authors": "Jürgen Hagler, Margarita Köhl, Philippe Pasquier, Philipp Wintersberger, Birgitta Hosea, June Kim, and Martin Kocur (Eds.)",
-      "year": "2025",
-      "journal": "ACM",
-      "details": "",
-      "doi": "10.1145/3749893"
-    },
-    {
-      "id": "pub_18",
-      "title": "Stage & Play: Using Game Technologies in the Context of Digitally-mediated Theater Performances",
-      "authors": "Nils Gallist, Manuel Lattner, Michael Lankes, and Jürgen Hagler",
-      "year": "2024",
-      "journal": "CHI PLAY Companion 2024",
-      "details": "85–90",
-      "doi": "10.1145/3665463.3678805"
-    },
-    {
-      "id": "pub_19",
-      "title": "Day 'n' Nite: Investigating the Effects of Day and Night Time in the Real World and Game Worlds on Cognitive Performance",
-      "authors": "Emma Sophie Reichert, Anna-Lena Babl, Michael Pickl, Michael Lankes, and Martin Kocur",
-      "year": "2024",
-      "journal": "CHI PLAY Companion 2024",
-      "details": "235–241",
-      "doi": "10.1145/3665463.3678796"
-    },
-    {
-      "id": "pub_20",
-      "title": "Morigami: Exploring Control Schemes in Narrative-driven Gaming Contexts",
-      "authors": "Marlien Hauser, Johann Hauser, Martin Kocur, and Michael Lankes",
-      "year": "2024",
-      "journal": "Mensch und Computer 2024 – Workshopband",
-      "details": "",
-      "doi": ""
-    },
-    {
-      "id": "pub_21",
-      "title": "Exploring the Cinematic Elements of ScreenX 270° – A Case Study: Adaptation of an Animated Short",
-      "authors": "Marius Oelsch, Alessa Wolfram, and Jürgen Hagler",
-      "year": "2024",
-      "journal": "IEEE VR Workshops (VRW) 2024",
-      "details": "80–85",
-      "doi": "10.1109/VRW62533.2024.00020"
-    },
-    {
-      "id": "pub_22",
-      "title": "Investigating the Impact of Odors and Visual Congruence on Motion Sickness in Virtual Reality",
-      "authors": "Lisa Reichl and Martin Kocur",
-      "year": "2024",
-      "journal": "VRST '24 (30th ACM Symposium on Virtual Reality Software and Technology)",
-      "details": "25:1–25:12",
-      "doi": "10.1145/3641825.3687731"
-    },
-    {
-      "id": "pub_23",
-      "title": "Proceedings of the Expanded 2024 – Conference on Animation and Interactive Art",
-      "authors": "Jürgen Hagler, Victoria Szabo, Philipp Wintersberger, Varvara Guljajeva, Bonnie Mitchell, and Martin Kocur (Eds.)",
-      "year": "2024",
-      "journal": "Ars Electronica Linz",
-      "details": "142 pages",
-      "doi": "10.5281/zenodo.13382838"
-    },
-    {
-      "id": "pub_24",
-      "title": "Tourism in the Metaverse: Digital Twin of a City in the Alps",
-      "authors": "Nils Gallist and Jürgen Hagler",
-      "year": "2023",
-      "journal": "MUM 2023 (22nd International Conference on Mobile and Ubiquitous Multimedia)",
-      "details": "568–570",
-      "doi": "10.1145/3626705.3631880"
-    },
-    {
-      "id": "pub_25",
-      "title": "Eudaimonic Player Interaction: A Reflection on Input Diegesis and Meaning",
-      "authors": "Argenis Ramirez Gomez and Michael Lankes",
-      "year": "2023",
-      "journal": "Games: Research and Practice 1(3)",
-      "details": "20:1–20:3",
-      "doi": "10.1145/3617670"
-    },
-    {
-      "id": "pub_26",
-      "title": "The Ludic Potentials of Player Data",
-      "authors": "Günter Wallner and Michael Lankes",
-      "year": "2023",
-      "journal": "CHI PLAY Companion 2023",
-      "details": "209–211",
-      "doi": "10.1145/3573382.3616043"
-    },
-    {
-      "id": "pub_27",
-      "title": "Game Reviews Reviewed: A Game Designer's Perspective on AI-generated Game Review Analyses",
-      "authors": "Michael Lankes and Andreas Stöckl",
-      "year": "2023",
-      "journal": "IEEE Conference on Games (CoG) 2023",
-      "details": "1–8",
-      "doi": "10.1109/CoG57401.2023.10333238"
-    },
-    {
-      "id": "pub_28",
-      "title": "Telling Eyes: Linking Eye-Tracking Indicators to Affective Variables",
-      "authors": "Andreas Winkelbauer, Barbara Stiglbauer, Michael Lankes, and Maurice Sporn",
-      "year": "2023",
-      "journal": "FDG 2023",
-      "details": "19:1–19:11",
-      "doi": "10.1145/3582437.3582458"
-    },
-    {
-      "id": "pub_29",
-      "title": "A SandBox to Sandbox: A Tangible Terrain Generator for Prototyping Game Worlds",
-      "authors": "Sebastian Schwarz, Benedikt Strasser, Michael Lankes, and Martin Kocur",
-      "year": "2023",
-      "journal": "ICEC 2023 (Entertainment Computing, LNCS 14455)",
-      "details": "315–325",
-      "doi": "10.1007/978-981-99-8248-6_26"
-    },
-    {
-      "id": "pub_30",
-      "title": "Build Your World – Meaningful Choices in a Hybrid Stage Play",
-      "authors": "Nils Gallist, Manuel Lattner, Michael Lankes, and Jürgen Hagler",
-      "year": "2022",
-      "journal": "ICIDS 2022 (Interactive Storytelling, LNCS 13762)",
-      "details": "697–704",
-      "doi": "10.1007/978-3-031-22298-6_45"
-    },
-    {
-      "id": "pub_31",
-      "title": "Behind the Curtains: Comparing Mozilla Hubs with Microsoft Teams in a Guided Virtual Theatre Experience",
-      "authors": "Jürgen Hagler, Michael Lankes, and Nils Gallist",
-      "year": "2022",
-      "journal": "IEEE VR Workshops (VRW) 2022",
-      "details": "19–22",
-      "doi": "10.1109/VRW55335.2022.00011"
-    },
-    {
-      "id": "pub_32",
-      "title": "GazeCues: Exploring the Effects of Gaze-based Visual Cues in Virtual Reality Exploration Games",
-      "authors": "Michael Lankes and Argenis Ramirez Gomez",
-      "year": "2022",
-      "journal": "Proc. ACM Hum.-Comput. Interact. 6(CHI PLAY)",
-      "details": "237:1–237:25",
-      "doi": "10.1145/3549500"
-    },
-    {
-      "id": "pub_33",
-      "title": "Digital Puppetry: Utilizing Extended Reality Technologies for Animations",
-      "authors": "Milad Tousi, Katja Gallhuber, and Michael Lankes",
-      "year": "2022",
-      "journal": "IEEE VR Workshops (VRW) 2022",
-      "details": "27–30",
-      "doi": "10.1109/VRW55335.2022.00013"
-    },
-    {
-      "id": "pub_34",
-      "title": "Eyesthetics: Making Sense of the Aesthetics of Playing with Gaze",
-      "authors": "Argenis Ramirez Gomez and Michael Lankes",
-      "year": "2021",
-      "journal": "Proc. ACM Hum.-Comput. Interact. 5(CHI PLAY)",
-      "details": "259:1–259:24",
-      "doi": "10.1145/3474686"
-    },
-    {
-      "id": "pub_35",
-      "title": "Blind Spot: An Interactive Gaze-aware Experience",
-      "authors": "Michael Lankes and Florian Berger",
-      "year": "2021",
-      "journal": "CHI '21 Extended Abstracts",
-      "details": "205:1–205:4",
-      "doi": "10.1145/3411763.3451570"
-    },
-    {
-      "id": "pub_36",
-      "title": "I will stand by you: Measuring the perceived Social Presence towards Semi-Autonomous Companions in a 2D game",
-      "authors": "Patrick Brandstätter, Sarah Hagmann, Daniela Krückl, Martina Maurer, and Michael Lankes",
-      "year": "2021",
-      "journal": "CHI PLAY '21 Extended Abstracts",
-      "details": "5–9",
-      "doi": "10.1145/3450337.3483488"
-    },
-    {
-      "id": "pub_37",
-      "title": "The Door: Timing Effects of Fourth Wall Breaks on Immersion and Game Experience in an Adventure Game",
-      "authors": "Martin Kocur, Pascal Lindemann, Tim Pfeil, and Michael Lankes",
-      "year": "2021",
-      "journal": "CHI PLAY '21 Extended Abstracts",
-      "details": "43–48",
-      "doi": "10.1145/3450337.3483489"
-    },
-    {
-      "id": "pub_38",
-      "title": "SpEYEders: Adults' and children's affective responses during immersive playful gaze interactions transforming virtual spiders",
-      "authors": "Theresa F. Wechsler, Martin Brockelmann, Konstantin Kulik, Felicitas M. Kopf, Martin Kocur, Michael Lankes, Andreas Mühlberger, and Christian Wolff",
-      "year": "2021",
-      "journal": "CHI PLAY '21 Extended Abstracts",
-      "details": "74–79",
-      "doi": "10.1145/3450337.3483463"
-    },
-    {
-      "id": "pub_39",
-      "title": "Menti's Journey",
-      "authors": "Christian Feichtinger, Elias Duda, Florian Buger, Jakob Johann Franz Indra, Anna Maschek, and Florian Neugebauer",
-      "year": "2021",
-      "journal": "CHI PLAY '21 Extended Abstracts",
-      "details": "368–370",
-      "doi": "10.1145/3450337.3483504"
-    }
-  ],
-  "news": [
-    {
-      "id": "news_launch_2026",
-      "title": "Welcome to the Digital Arts Lab!",
-      "date": "September 2026",
-      "shortDesc": "Our new research group at the University of Applied Sciences Upper Austria, Campus Hagenberg, is officially up and running – and so is this website.",
-      "content": "We are excited to announce the founding of the Digital Arts Lab, a new research group at the University of Applied Sciences Upper Austria, Campus Hagenberg. The lab explores the intersection of creative practice and digital technology, building on two research areas: Games & Interaction Design, led by Michael Lankes, and Animation & Interactive Art, led by Jürgen Hagler.\n\nOur team brings together researchers, artists, and designers working on playful systems, meaningful interaction, gaze-based interfaces, extended reality, AI-supported animation, and interactive art. What unites this work is a shared foundation: a focus on design quality, artistic research, and the systematic study of the aesthetic and experiential dimensions of digital media.\n\nWith the launch of this website, you can now explore our current projects, browse our publications, and get to know the people behind the lab. This news section is where you will hear from us first – starting with the Expanded Conference 2026, which we co-organize as part of the Ars Electronica Festival this September. We are looking forward to what lies ahead!",
-      "imageUrl": "images/news/welcome-to-the-digital-arts-lab-newslaunch2026.jpg",
-      "link": ""
-    },
-    {
-      "id": "news_0",
-      "title": "We are part of the Expanded Conference 2026!",
-      "date": "September 2026",
-      "shortDesc": "Our lab co-organizes The Expanded Conference 2026! It will take place from September 9th to 11th as part of the Ars Electronica Festival 2026. and turns Linz into the hub of animation, interactive and media art, and cutting-edge technology.",
-      "content": "We are thrilled to announce that the Digital Arts Research Group co-organizes the Expanded Conference (Expanded 2026), which will take place from September 9th to 11th as part of the Ars Electronica Festival 2026. It features academic papers in the field of Expanded Animation and Interactive Art that explore and experiment with media expression at the intersection of art, technology, and society. We will have four categories (Research Paper, Art Paper, Doctoral Consortium, Play Gallery).",
-      "imageUrl": "images/news/Expanded.png",
-      "link": "https://expanded-conf.org/"
-    }
-  ]
-}
+    // Use ResizeObserver to ensure the globe only renders once the container has a physical width
+    const resizeObserver = new ResizeObserver(() => {
+        if (canvas.offsetWidth > 0) {
+            createGlobe(canvas, {
+                devicePixelRatio: 2,
+                width: canvas.offsetWidth * 2,
+                height: canvas.offsetHeight * 2,
+                phi: 0,
+                theta: 0.3,
+                dark: 1,
+                diffuse: 1.2,
+                mapSamples: 20000,
+                mapBrightness: 6,
+                baseColor: [0.08, 0.08, 0.08],
+                markerColor: [0.7, 0.1, 0.1], // Hagenberg Red
+                glowColor: [0.03, 0.03, 0.03],
+                markers: [
+                    { location: [48.368, 14.513], size: 0.07 }
+                ],
+                onRender: (state) => {
+                    state.phi = phi;
+                    phi += 0.004;
+                }
+            });
+            resizeObserver.disconnect(); // Stop observing once rendered
+        }
+    });
+    resizeObserver.observe(canvas.parentElement);
 </script>
 
-    <script src="assets/js/app.js?v=2026-09-25a"></script>
-    <script src="assets/js/effects.js?v=2026-08-25a"></script>
+<!-- UI Logic Scripts -->
+<script>
+    async function loadAndRenderPortfolio() {
+        try {
+            const response = await fetch('data.json');
+            const allData = await response.json();
 
+            // Profile
+            document.getElementById('profile-name').textContent = allData.profile.name;
+            document.getElementById('profile-title').textContent = allData.profile.title;
+            document.getElementById('profile-img').src = allData.profile.image;
 
+            // Marquee Builder
+            const buildMarqueeBlock = (projects) => {
+                if (!projects || projects.length === 0) return '';
+                const half = Math.ceil(projects.length / 2);
 
-</body></html>
+                const col1 = projects.slice(0, half).map((p, i) =>
+                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-36 md:h-44 object-cover rounded-[14px] bg-border grayscale hover:grayscale-0 transition-all duration-500 ${i > 0 ? 'mt-2' : ''}"></div>`
+                ).join('');
+
+                const col2 = projects.slice(half).map((p, i) =>
+                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-36 md:h-44 object-cover rounded-[14px] bg-border grayscale hover:grayscale-0 transition-all duration-500 ${i > 0 ? 'mt-2' : ''}"></div>`
+                ).join('');
+
+                return `
+                    <div class="w-full p-2">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="flex flex-col gap-2">${col1}</div>
+                            <div class="flex flex-col gap-2 mt-4 md:mt-8">${col2}</div>
+                        </div>
+                    </div>`;
+            };
+
+            document.getElementById('interactive-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'interactive')).repeat(2);
+            document.getElementById('academic-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'academic')).repeat(2);
+
+            // Stack
+            document.getElementById('stack-container').innerHTML = allData.stack.map((s, i) => `
+                <a href="${s.link}" target="_blank" class="group/icon relative w-12 h-12 md:w-[52px] md:h-[52px] rounded-[14px] bg-white flex items-center justify-center shadow-xl border-4 border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 interactive" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-16px' : '0'};">
+                    <i class="ph-fill ${s.icon} ${s.color} text-2xl group-hover/icon:rotate-12 transition-transform duration-300"></i>
+                    <span class="absolute -top-10 bg-white text-black text-[10px] font-bold px-2.5 py-1 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg whitespace-nowrap">${s.name}</span>
+                </a>
+            `).join('');
+
+            // Featured Project
+            document.getElementById('featured-img').src = allData.featuredProject.imageUrl;
+            document.getElementById('featured-title').textContent = allData.featuredProject.title;
+            document.getElementById('featured-link').setAttribute('data-id', allData.featuredProject.id);
+
+            // Bind Cursor Events AFTER DOM injection
+            document.querySelectorAll('a, button, .interactive').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-interactive'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-interactive'));
+            });
+
+        } catch (error) {
+            console.error('Failed to load project data:', error);
+        }
+    }
+    loadAndRenderPortfolio();
+
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        document.getElementById('clock').textContent = `${hours}:${minutes} ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    // Cursor
+    const cursorWrapper = document.getElementById('cursor-wrapper');
+    window.addEventListener('mousemove', (e) => {
+        cursorWrapper.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+
+    // Menu Toggle
+    const menuBtn = document.getElementById('menu-toggle');
+    const line1 = document.getElementById('menu-line-1');
+    const line2 = document.getElementById('menu-line-2');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    let isMenuOpen = false;
+
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isMenuOpen = !isMenuOpen;
+        dropdownMenu.classList.toggle('open', isMenuOpen);
+        line1.style.transform = isMenuOpen ? 'translateY(5px) rotate(45deg)' : 'translateY(0) rotate(0)';
+        line2.style.transform = isMenuOpen ? 'translateY(-5px) rotate(-45deg)' : 'translateY(0) rotate(0)';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (isMenuOpen && !dropdownMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+            isMenuOpen = false;
+            dropdownMenu.classList.remove('open');
+            line1.style.transform = 'translateY(0) rotate(0)';
+            line2.style.transform = 'translateY(0) rotate(0)';
+        }
+    });
+</script>
+</body>
+</html>
