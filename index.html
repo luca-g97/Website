@@ -21,35 +21,46 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {mono: ['"JetBrains Mono"', 'monospace']},
+                    screens: {
+                        'md': '600px',
+                        'lg': '1280px',
+                        'xl': '1600px',
+                    },
+                    fontFamily: { mono: ['"JetBrains Mono"', 'monospace'] },
                     colors: {
                         base: '#0c0c0c',
                         card: '#121212',
                         border: '#2a2a2a',
                         textMuted: '#888888',
                     },
+                    gridTemplateRows: {
+                        'desktop': '3fr 2fr', 'tablet': '3fr 2fr',
+                    },
                     animation: {
                         'scroll-y': 'scrollY 30s linear infinite',
                         'scroll-y-reverse': 'scrollYReverse 30s linear infinite',
                     },
                     keyframes: {
-                        scrollY: {'0%': {transform: 'translateY(0)'}, '100%': {transform: 'translateY(-50%)'}},
-                        scrollYReverse: {'0%': {transform: 'translateY(-50%)'}, '100%': {transform: 'translateY(0)'}}
+                        scrollY: { '0%': { transform: 'translateY(0)' }, '100%': { transform: 'translateY(-50%)' } },
+                        scrollYReverse: { '0%': { transform: 'translateY(-50%)' }, '100%': { transform: 'translateY(0)' } }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Hide Default Cursor */
         @media (pointer: fine) {
             body { cursor: none; }
             a, button, .interactive, canvas { cursor: none !important; }
         }
 
-        body { background-color: #0c0c0c; color: #ffffff; }
+        body {
+            background-color: #0c0c0c;
+            color: #ffffff;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
 
-        /* --- Perfectly Locked Cursor --- */
         #cursor-wrapper {
             position: fixed; top: 0; left: 0;
             width: 0; height: 0;
@@ -79,7 +90,6 @@
             animation: pulseHalo 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
         }
 
-        /* --- Premium Bento Cards --- */
         .bento-card {
             background-color: #121212; border: 1px solid #2a2a2a; border-radius: 1.5rem;
             position: relative; overflow: hidden;
@@ -92,12 +102,10 @@
         .card-link-btn { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; }
         .bento-card:hover .card-link-btn { transform: scale(1.1) rotate(5deg); border-color: #3a3a3a; }
 
-        /* Marquee Mask */
         .marquee-mask-y { mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Dropdown & Entrances */
         #dropdown-menu { transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s; }
         #dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
 
@@ -105,18 +113,49 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="font-mono h-screen flex flex-col overflow-hidden antialiased selection:bg-white selection:text-black">
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<!-- CMS Data Block -->
+<script type="application/json" id="initial-data">
+    {
+        "profile": {
+            "name": "Luca Geiger",
+            "title": "M.Sc. B.Eng.",
+            "image": "images/Portrait.jpg"
+        },
+        "projects": [
+            { "id": "proj_1", "category": "interactive", "imageUrl": "images/InteractiveMedia/PartyTime.png" },
+            { "id": "proj_2", "category": "interactive", "imageUrl": "images/InteractiveMedia/BlackTideProtocol.png" },
+            { "id": "proj_3", "category": "interactive", "imageUrl": "images/InteractiveMedia/FishingSimulator.jpg" },
+            { "id": "proj_4", "category": "interactive", "imageUrl": "images/InteractiveMedia/MotionCapturing.png" },
+            { "id": "proj_5", "category": "academic", "imageUrl": "images/ScientificContributions/ASTLecture.png" },
+            { "id": "proj_6", "category": "academic", "imageUrl": "images/Lectures/ASTLogo.png" }
+        ],
+        "featuredProject": {
+            "id": "proj_ludaviz",
+            "title": "LudaViz",
+            "imageUrl": "images/LudaViz.png"
+        },
+        "stack": [
+            { "name": "Slack", "icon": "ph-slack-logo", "color": "text-black", "link": "#" },
+            { "name": "Figma", "icon": "ph-figma-logo", "color": "text-black", "link": "#" },
+            { "name": "Framer", "icon": "ph-framer-logo", "color": "text-black", "link": "#" },
+            { "name": "React", "icon": "ph-atom", "color": "text-purple-600", "link": "#" },
+            { "name": "Google", "icon": "ph-google-logo", "color": "text-blue-500", "link": "#" }
+        ]
+    }
+</script>
 
 <!-- Custom Cursor -->
-<div class="hidden md:block" id="cursor-wrapper">
+<div class="hidden lg:block" id="cursor-wrapper">
     <div id="cursor-halo"></div>
     <div id="cursor-dot"></div>
 </div>
 
-<div class="max-w-[1500px] mx-auto w-full h-full flex flex-col p-4 md:p-8 lg:p-10 relative">
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
 
-    <!-- Header -->
-    <header class="flex justify-between items-center shrink-0 mb-8 z-50 fade-in-up">
+    <!-- Header (Locked sizing) -->
+    <header class="flex justify-between items-center shrink-0 mb-6 md:mb-8 z-50 fade-in-up">
         <a href="#" class="flex items-center gap-4 interactive group">
             <img id="profile-img" src="" alt="Profile" class="w-14 h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
             <div class="leading-tight">
@@ -125,7 +164,7 @@
             </div>
         </a>
 
-        <div class="hidden md:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
+        <div class="hidden lg:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
 
         <div class="relative">
             <button id="menu-toggle" class="w-[50px] h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
@@ -137,78 +176,98 @@
 
             <div id="dropdown-menu" class="absolute top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
                 <nav class="flex flex-col text-sm font-medium">
-                    <a href="../pages/about" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
-                    <a href="../pages/stack" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
-                    <a href="../pages/projects" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
-                    <a href="../pages/contact" data-action="open-route" data-route="contact" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
+                    <a href="pages/about.html" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
+                    <a href="pages/stack.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
+                    <a href="pages/projects.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
+                    <a href="pages/contact.html" data-action="open-route" data-route="contact" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <!-- Main Layout -->
-    <main class="flex flex-col lg:flex-row gap-8 lg:gap-10 flex-1 overflow-hidden relative z-10">
-        <!-- Left Sidebar -->
-        <aside class="w-full lg:w-[260px] xl:w-[300px] h-full flex flex-col shrink-0 overflow-y-auto no-scrollbar pb-10">
-            <h1 class="text-[24px] font-bold mb-8 tracking-tight fade-in-up" style="animation-delay: 100ms;">Hey, I'm Luca <img class="inline-block origin-bottom-right cursor-default ml-1" src="../images/RockOnAndNamaste.png" height="40" width="40" alt="🤟"/></h1>
-            <p class="text-[16px] text-textMuted leading-[1.8] mb-10 fade-in-up" style="animation-delay: 200ms;">
-                And as you will find out,<br>I am quite an <br><span class="text-white font-bold">Interactive Media Allrounder</span><br>
-                who's fascinated by gaining and sharing knowledge about complex topics, especially if they are related to the <br>
-                <span class="text-white font-bold">Combination of Sustainability and New Technologies</span>
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+
+        <!-- Left Sidebar (Locked sizing) -->
+        <aside class="w-full lg:w-[280px] xl:w-[280px] flex flex-col shrink-0 lg:h-full lg:overflow-y-auto no-scrollbar lg:pb-0">
+            <h1 class="text-[20px] font-bold mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
+                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="images/RockOnAndNamaste.png" height="40" width="40" alt="🤟"/>
+            </h1>
+
+            <p class="text-[16px] text-textMuted leading-[1.8] mb-8 fade-in-up" style="animation-delay: 200ms;">
+                And as you will find out, <br class="hidden lg:block"> I am quite an <span class="hidden lg:inline">experienced</span><br>
+                <span class="text-white font-bold">Interactive Media Allrounder</span><br>
+                who's fascinated by gaining and sharing <br class="block md:hidden lg:hidden"> knowledge about <br class="hidden md:block"> complex topics,
+                especially <br class="block md:hidden lg:block"> if they are related to the <br>
+                <span class="text-white font-bold">Combination of Sustainability <br class="block md:hidden lg:hidden"> and New Technologies</span>
             </p>
-            <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 mb-10 interactive flex items-center gap-2 fade-in-up" style="animation-delay: 300ms;">
-                More about Me
-            </button>
-            <div class="flex gap-4 mb-16 fade-in-up" style="animation-delay: 400ms;">
-                <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive">
-                    <img src="../images/Icons/FHIcon.png" class="w-6 h-6 object-contain" alt="FH">
-                </a>
-                <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive">
-                    <img src="../images/Icons/OrcidIcon.png" class="w-6 h-6 object-contain" alt="ORCID">
-                </a>
-                <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
-                <a href="https://github.com/luca-g97" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
+
+            <div class="flex flex-row flex-wrap lg:flex-col justify-between items-center lg:items-start gap-4 lg:gap-8 mb-8 lg:mb-16 w-full">
+
+                <!-- Buttons (Locked sizing) -->
+                <div class="flex gap-4 fade-in-up" style="animation-delay: 300ms;">
+                    <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <a href="pages/about.html">About Me</a>
+                    </button>
+                    <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <a href="https://drive.google.com/file/d/1DycAck25TK2zfhSOt1q6Ir1gv6Po1ChS/view?usp=drive_link">Download CV</a>
+                    </button>
+                </div>
+
+                <!-- Socials (Locked sizing) -->
+                <div class="flex gap-4 fade-in-up" style="animation-delay: 400ms;">
+                    <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="images/Icons/FHIcon.png" class="w-6 h-6 object-contain" alt="FH">
+                    </a>
+                    <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="images/Icons/OrcidIcon.png" class="w-6 h-6 object-contain" alt="ORCID">
+                    </a>
+                    <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    <a href="https://github.com/luca-g97" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
+                </div>
             </div>
-            <div class="mt-auto flex flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
+
+            <!-- Footer: Desktop -->
+            <div class="hidden lg:flex mt-auto flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
                 <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
                 <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Licensing</a>
                 <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Privacy Policy</a>
             </div>
         </aside>
 
-        <!-- Right Bento Grid -->
-        <div class="flex-1 h-full overflow-y-auto no-scrollbar pb-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[260px] md:auto-rows-[300px]">
+        <!-- Right Bento Grid Container -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-6 lg:pb-0">
+            <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-5 auto-rows-[250px] md:auto-rows-[280px] lg:grid-rows-desktop md:grid-rows-tablet lg:h-full">
 
-                <!-- 1. Interactive Media (Procedural) -->
-                <div class="bento-card col-span-1 md:col-span-6 h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 150ms;">
+                <!-- 1. Interactive Media (Locked text size) -->
+                <div class="bento-card col-span-1 md:col-span-3 lg:col-span-6 lg:h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 150ms;">
                     <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                         <div id="interactive-marquee" class="w-full animate-scroll-y flex flex-col">
                             <!-- Filled by JS -->
                         </div>
                     </div>
-                    <h2 class="relative z-10 text-[26px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Interactive<br>Media</h2>
+                    <h2 class="relative z-10 text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Interactive<br>Media</h2>
                     <a href="#projects" data-open="projects" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
                         <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
                     </a>
                 </div>
 
-                <!-- 2. Academic Research (Procedural) -->
-                <div class="bento-card col-span-1 md:col-span-6 h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 250ms;">
+                <!-- 2. Academic Research (Locked text size) -->
+                <div class="bento-card col-span-1 md:col-span-3 lg:col-span-6 lg:h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 250ms;">
                     <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                         <div id="academic-marquee" class="w-full animate-scroll-y-reverse flex flex-col">
                             <!-- Filled by JS -->
                         </div>
                     </div>
-                    <h2 class="relative z-10 text-[26px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Academic<br>Research</h2>
+                    <h2 class="relative z-10 text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Academic<br>Research</h2>
                     <a href="#publications" data-open="publications" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
                         <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
                     </a>
                 </div>
 
                 <!-- 3. Contact WebGL Globe -->
-                <a href="#contact" data-action="open-route" data-route="contact" class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] p-6 group block interactive fade-in-up" style="animation-delay: 350ms;">
-                    <h3 class="text-[20px] font-bold relative z-20 tracking-wide text-white">Contact</h3>
+                <a href="#contact" data-action="open-route" data-route="contact" class="bento-card col-span-1 md:col-span-2 lg:col-span-3 lg:h-full p-6 group block interactive fade-in-up group-hover:opacity-100" style="animation-delay: 350ms;">
+                    <h3 class="text-base font-bold absolute top-5 left-5 z-20 tracking-wide text-gray-300">Contact</h3>
                     <!-- WebGL Canvas Container -->
                     <div class="absolute -bottom-[50%] -right-[20%] w-[130%] h-[150%] group-hover:scale-105 transition-transform duration-[1000ms] pointer-events-none">
                         <canvas id="cobe-globe" class="w-full h-full opacity-90"></canvas>
@@ -218,27 +277,40 @@
                     </div>
                 </a>
 
-                <!-- 4. My Stack (Procedural) -->
-                <div class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] p-6 flex flex-col items-center justify-center relative fade-in-up" style="animation-delay: 450ms;">
-                    <h3 class="text-[15px] font-bold absolute top-5 left-5 tracking-wide text-gray-300">My Stack</h3>
-                    <div id="stack-container" class="flex items-center justify-center relative z-10 mt-6">
+                <!-- 4. My Stack (Locked icon sizes handled via JS block) -->
+                <a href="#stack" data-action="open-route" data-route="stack" class="bento-card col-span-1 md:col-span-2 lg:col-span-5 lg:h-full p-6 flex flex-col items-center justify-center interactive relative fade-in-up group-hover:opacity-100" style="animation-delay: 450ms;">
+                    <h3 class="text-base font-bold absolute top-5 left-5 tracking-wide text-gray-300">My Stack</h3>
+                    <div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full">
                         <!-- Filled by JS -->
                     </div>
-                </div>
+                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    </div>
+                </a>
 
-                <!-- 5. Featured Project (Procedural) -->
-                <a id="featured-link" href="#" data-open="projects" class="bento-card col-span-1 md:col-span-4 h-48 md:h-[180px] group block interactive overflow-hidden fade-in-up" style="animation-delay: 550ms;">
+                <!-- 5. Featured Project -->
+                <a id="featured-link" href="#" data-open="projects" class="bento-card col-span-1 md:col-span-2 lg:col-span-4 lg:h-full group block interactive overflow-hidden fade-in-up group-hover:opacity-100" style="animation-delay: 550ms;">
                     <div class="absolute inset-0">
-                        <img id="featured-img" src="imageUrl" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000">
+                        <img id="featured-img" src="" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000">
                         <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent"></div>
                     </div>
-                    <h3 id="featured-title" class="text-base font-bold absolute top-5 left-5 z-10 drop-shadow-lg tracking-wide text-white"></h3>
+                    <h3 id="featured-title" class="text-base font-bold absolute top-5 left-5 z-10 drop-shadow-lg tracking-wide text-gray-300"></h3>
                     <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
                         <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
                     </div>
                 </a>
 
             </div>
+
+            <!-- Footer: Mobile & Tablet -->
+            <div class="flex lg:hidden flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase mt-10 pb-8 items-center text-center fade-in-up" style="animation-delay: 650ms;">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Licensing</a>
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Privacy Policy</a>
+                </div>
+            </div>
+
         </div>
     </main>
 </div>
@@ -249,16 +321,16 @@
 
     let phi = 0;
     let canvas = document.getElementById("cobe-globe");
+    let globe = null;
 
-    // Use ResizeObserver to ensure the globe only renders once the container has a physical width
     const resizeObserver = new ResizeObserver(() => {
-        if (canvas.offsetWidth > 0) {
-            createGlobe(canvas, {
+        if (canvas.offsetWidth > 0 && !globe) {
+            globe = createGlobe(canvas, {
                 devicePixelRatio: 2,
                 width: canvas.offsetWidth * 2,
                 height: canvas.offsetHeight * 2,
                 phi: 0,
-                theta: 0.3,
+                theta: 0.1,
                 dark: 1,
                 diffuse: 1.2,
                 mapSamples: 20000,
@@ -272,9 +344,11 @@
                 onRender: (state) => {
                     state.phi = phi;
                     phi += 0.004;
+                    // Dynamically adjusts internal canvas buffers when resized preventing flicker
+                    state.width = canvas.offsetWidth * 2;
+                    state.height = canvas.offsetHeight * 2;
                 }
             });
-            resizeObserver.disconnect(); // Stop observing once rendered
         }
     });
     resizeObserver.observe(canvas.parentElement);
@@ -284,32 +358,37 @@
 <script>
     async function loadAndRenderPortfolio() {
         try {
-            const response = await fetch('data.json');
-            const allData = await response.json();
+            let allData;
+            try {
+                const response = await fetch('data.json');
+                allData = await response.json();
+            } catch (e) {
+                allData = JSON.parse(document.getElementById('initial-data').textContent);
+            }
 
             // Profile
             document.getElementById('profile-name').textContent = allData.profile.name;
             document.getElementById('profile-title').textContent = allData.profile.title;
             document.getElementById('profile-img').src = allData.profile.image;
 
-            // Marquee Builder
+            // Locked Marquee image sizes
             const buildMarqueeBlock = (projects) => {
                 if (!projects || projects.length === 0) return '';
                 const half = Math.ceil(projects.length / 2);
 
                 const col1 = projects.slice(0, half).map((p, i) =>
-                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-36 md:h-44 object-cover rounded-[14px] bg-border grayscale hover:grayscale-0 transition-all duration-500 ${i > 0 ? 'mt-2' : ''}"></div>`
+                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-44 object-cover rounded-[14px] bg-border transition-transform duration-500 hover:scale-[1.02] ${i > 0 ? 'mt-2' : ''}"></div>`
                 ).join('');
 
                 const col2 = projects.slice(half).map((p, i) =>
-                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-36 md:h-44 object-cover rounded-[14px] bg-border grayscale hover:grayscale-0 transition-all duration-500 ${i > 0 ? 'mt-2' : ''}"></div>`
+                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-44 object-cover rounded-[14px] bg-border transition-transform duration-500 hover:scale-[1.02] ${i > 0 ? 'mt-2' : ''}"></div>`
                 ).join('');
 
                 return `
                     <div class="w-full p-2">
                         <div class="grid grid-cols-2 gap-2">
                             <div class="flex flex-col gap-2">${col1}</div>
-                            <div class="flex flex-col gap-2 mt-4 md:mt-8">${col2}</div>
+                            <div class="flex flex-col gap-2 mt-8">${col2}</div>
                         </div>
                     </div>`;
             };
@@ -317,12 +396,12 @@
             document.getElementById('interactive-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'interactive')).repeat(2);
             document.getElementById('academic-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'academic')).repeat(2);
 
-            // Stack
+            // Stack - Locked sizing applied here
             document.getElementById('stack-container').innerHTML = allData.stack.map((s, i) => `
-                <a href="${s.link}" target="_blank" class="group/icon relative w-12 h-12 md:w-[52px] md:h-[52px] rounded-[14px] bg-white flex items-center justify-center shadow-xl border-4 border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 interactive" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-16px' : '0'};">
+                <div class="group/icon relative w-[52px] h-[52px] rounded-[14px] bg-white flex items-center justify-center shadow-xl border-4 border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 interactive flex-shrink-0" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-12px' : '0'};">
                     <i class="ph-fill ${s.icon} ${s.color} text-2xl group-hover/icon:rotate-12 transition-transform duration-300"></i>
                     <span class="absolute -top-10 bg-white text-black text-[10px] font-bold px-2.5 py-1 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg whitespace-nowrap">${s.name}</span>
-                </a>
+                </div>
             `).join('');
 
             // Featured Project
@@ -348,11 +427,12 @@
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        document.getElementById('clock').textContent = `${hours}:${minutes} ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
+        const clockEl = document.getElementById('clock');
+        if (clockEl) clockEl.textContent = `${hours}:${minutes} ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
     }
     setInterval(updateClock, 1000); updateClock();
 
-    // Cursor
+    // Cursor Movement
     const cursorWrapper = document.getElementById('cursor-wrapper');
     window.addEventListener('mousemove', (e) => {
         cursorWrapper.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
