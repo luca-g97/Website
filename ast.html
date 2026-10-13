@@ -69,10 +69,11 @@
 
             <div id="dropdown-menu" class="absolute top-14 md:top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
                 <nav class="flex flex-col text-sm font-medium">
-                    <a href="index.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Home</a>
-                    <a href="#" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">Lectures <i class="ph ph-arrow-right"></i></a>
-                    <a href="#" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
-                    <a href="#" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
+                    <a href="pages/about.html" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
+                    <a href="pages/stack.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
+                    <a href="pages/projects.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
+                    <a href="pages/contact.html" data-action="open-route" data-route="contact" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
+                    <a href="ast.html" data-action="open-route" data-route="ast" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">AST</a>
                 </nav>
             </div>
         </div>
@@ -133,55 +134,20 @@
                 <h1 class="text-3xl md:text-[32px] lg:text-[40px] font-bold text-white tracking-wide mb-6">Applied Software Techniques</h1>
                 <div class="relative w-full max-w-lg">
                     <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-textMuted text-lg"></i>
-                    <input type="text" placeholder="Search..." class="w-full bg-[#121212] border border-[#2a2a2a] rounded-[1rem] py-3.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                    <input id="lecture-search" type="text" placeholder="Search lectures..." class="w-full bg-[#121212] border border-[#2a2a2a] rounded-[1rem] py-3.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
                 </div>
             </div>
 
             <!-- Bento Grid Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pb-6 relative">
 
-                <!-- Left Column: Video Lecture Feed -->
-                <div class="lg:col-span-8 flex flex-col gap-5 fade-in-up" style="animation-delay: 250ms;">
-
-                    <!-- Video Card 1 -->
-                    <a href="#" class="bento-card p-4 md:p-5 group block interactive">
-                        <div class="relative w-full aspect-[21/9] md:aspect-[16/7] rounded-xl overflow-hidden mb-4 bg-border">
-                            <img src="images/Lectures/UE_Overview.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-white mb-2">01 - Full Overview over Unreal Engine 5</h3>
-                        <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed max-w-[90%]">Begin your game development journey. Master the Unreal Engine 5 interface, configure projects, and learn the essential tools needed for the 3D transition ahead.</p>
-                        <div class="flex justify-between items-end mt-auto">
-                            <div class="text-[10px] md:text-xs text-textMuted font-mono">
-                                <p>Oct 22, 2024</p>
-                                <p class="mt-1">1:12:39</p>
-                            </div>
-                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                <i class="ph-fill ph-play text-black text-lg ml-0.5"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Video Card 2 -->
-                    <a href="#" class="bento-card p-4 md:p-5 group block interactive">
-                        <div class="relative w-full aspect-[21/9] md:aspect-[16/7] rounded-xl overflow-hidden mb-4 bg-border">
-                            <img src="images/Lectures/Stockfish.png"  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-white mb-2">02 - Plain C++ Code Stockfish-API</h3>
-                        <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed max-w-[90%]">Dive deep into backend logic. We implement an efficient C++ connection to the world-renowned Stockfish chess engine API directly inside the Unreal framework.</p>
-                        <div class="flex justify-between items-end mt-auto">
-                            <div class="text-[10px] md:text-xs text-textMuted font-mono">
-                                <p>Nov 05, 2024</p>
-                                <p class="mt-1">0:58:14</p>
-                            </div>
-                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                <i class="ph-fill ph-play text-black text-lg ml-0.5"></i>
-                            </div>
-                        </div>
-                    </a>
+                <!-- Left Column: Procedurally Filled Video Lecture Feed -->
+                <div id="lecture-feed" class="lg:col-span-8 flex flex-col gap-5">
+                    <!-- Cards will dynamically appear here via app.js -->
                 </div>
 
                 <!-- Right Column: Sidebar Widgets -->
-                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up" style="animation-delay: 350ms;">
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
 
                     <!-- Featured Widget (Ludic Visualizations) -->
                     <a href="#" class="bento-card p-6 flex flex-col items-center justify-center text-center group block interactive h-auto aspect-square lg:aspect-auto lg:h-[340px]">
@@ -196,17 +162,14 @@
                     </a>
 
                     <!-- Stack Widget -->
-                    <a href="#stack" class="bento-card p-5 md:p-6 flex flex-col items-center justify-center interactive relative group h-[220px] lg:h-[260px] overflow-hidden">
+                    <a href="#stack" class="bento-card p-5 md:p-6 flex flex-col items-center justify-center interactive relative group h-[120px] lg:h-[160px] overflow-hidden">
                         <!-- Custom Dotted Overlay for this card -->
                         <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)]" style="background-size: 14px 14px;"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
 
                         <h3 class="text-[15px] font-bold absolute top-5 left-5 tracking-wide text-gray-300 z-20">My Stack</h3>
                         <div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full">
-                            <!-- Filled dynamically by app.js -->
-                        </div>
-                        <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
-                            <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
+                            <!-- Filled dynamically by app.js --><
                         </div>
                     </a>
 
