@@ -5,146 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luca G. | Personal Portfolio</title>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS & Phosphor Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Google Fonts: JetBrains Mono -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
 
-    <!-- Configuration & Custom CSS -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    screens: {
-                        'md': '600px',
-                        'lg': '1280px',
-                        'xl': '1600px',
-                    },
-                    fontFamily: { mono: ['"JetBrains Mono"', 'monospace'] },
-                    colors: {
-                        base: '#0c0c0c',
-                        card: '#121212',
-                        border: '#2a2a2a',
-                        textMuted: '#888888',
-                    },
-                    gridTemplateRows: {
-                        'desktop': '3fr 2fr', 'tablet': '3fr 2fr',
-                    },
-                    animation: {
-                        'scroll-y': 'scrollY 30s linear infinite',
-                        'scroll-y-reverse': 'scrollYReverse 30s linear infinite',
-                    },
-                    keyframes: {
-                        scrollY: { '0%': { transform: 'translateY(0)' }, '100%': { transform: 'translateY(-50%)' } },
-                        scrollYReverse: { '0%': { transform: 'translateY(-50%)' }, '100%': { transform: 'translateY(0)' } }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @media (pointer: fine) {
-            body { cursor: none; }
-            a, button, .interactive, canvas { cursor: none !important; }
-        }
-
-        body {
-            background-color: #0c0c0c;
-            color: #ffffff;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-
-        #cursor-wrapper {
-            position: fixed; top: 0; left: 0;
-            width: 0; height: 0;
-            pointer-events: none; z-index: 99999;
-        }
-        #cursor-dot {
-            position: absolute; top: -4px; left: -4px;
-            width: 8px; height: 8px;
-            background-color: white; border-radius: 50%;
-        }
-        #cursor-halo {
-            position: absolute; top: -24px; left: -24px;
-            width: 48px; height: 48px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50%; opacity: 0;
-            transform: scale(0.5);
-            transition: opacity 0.3s ease;
-        }
-
-        @keyframes pulseHalo {
-            0% { transform: scale(0.8); opacity: 1; border-width: 2px; }
-            100% { transform: scale(1.5); opacity: 0; border-width: 1px; }
-        }
-        body.hovering-interactive #cursor-halo {
-            opacity: 1;
-            animation: pulseHalo 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-        }
-
-        .bento-card {
-            background-color: #121212; border: 1px solid #2a2a2a; border-radius: 1.5rem;
-            position: relative; overflow: hidden;
-            transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-        }
-        .bento-card:hover {
-            border-color: #4a4a4a; transform: translateY(-4px);
-            box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.03);
-        }
-        .card-link-btn { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; }
-        .bento-card:hover .card-link-btn { transform: scale(1.1) rotate(5deg); border-color: #3a3a3a; }
-
-        .marquee-mask-y { mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        #dropdown-menu { transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s; }
-        #dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
-
-        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    </style>
+    <!-- External Config & Styles -->
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
-
-<!-- CMS Data Block -->
-<script type="application/json" id="initial-data">
-    {
-        "profile": {
-            "name": "Luca Geiger",
-            "title": "M.Sc. B.Eng.",
-            "image": "images/Portrait.jpg"
-        },
-        "projects": [
-            { "id": "proj_1", "category": "interactive", "imageUrl": "images/InteractiveMedia/PartyTime.png" },
-            { "id": "proj_2", "category": "interactive", "imageUrl": "images/InteractiveMedia/BlackTideProtocol.png" },
-            { "id": "proj_3", "category": "interactive", "imageUrl": "images/InteractiveMedia/FishingSimulator.jpg" },
-            { "id": "proj_4", "category": "interactive", "imageUrl": "images/InteractiveMedia/MotionCapturing.png" },
-            { "id": "proj_5", "category": "academic", "imageUrl": "images/ScientificContributions/ASTLecture.png" },
-            { "id": "proj_6", "category": "academic", "imageUrl": "images/Lectures/ASTLogo.png" }
-        ],
-        "featuredProject": {
-            "id": "proj_ludaviz",
-            "title": "LudaViz",
-            "imageUrl": "images/LudaViz.png"
-        },
-        "stack": [
-            { "name": "Slack", "icon": "ph-slack-logo", "color": "text-black", "link": "#" },
-            { "name": "Figma", "icon": "ph-figma-logo", "color": "text-black", "link": "#" },
-            { "name": "Framer", "icon": "ph-framer-logo", "color": "text-black", "link": "#" },
-            { "name": "React", "icon": "ph-atom", "color": "text-purple-600", "link": "#" },
-            { "name": "Google", "icon": "ph-google-logo", "color": "text-blue-500", "link": "#" }
-        ]
-    }
-</script>
 
 <!-- Custom Cursor -->
 <div class="hidden lg:block" id="cursor-wrapper">
@@ -154,27 +28,28 @@
 
 <div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
 
-    <!-- Header (Locked sizing) -->
+    <!-- Header -->
     <header class="flex justify-between items-center shrink-0 mb-6 md:mb-8 z-50 fade-in-up">
         <a href="#" class="flex items-center gap-4 interactive group">
-            <img id="profile-img" src="" alt="Profile" class="w-14 h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <img id="profile-img" src="" alt="Profile" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
             <div class="leading-tight">
-                <h2 id="profile-name" class="font-bold text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500"></h2>
-                <p id="profile-title" class="text-[12px] text-textMuted uppercase tracking-widest mt-1"></p>
+                <h2 id="profile-name" class="font-bold text-lg md:text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500"></h2>
+                <p id="profile-title" class="text-[10px] md:text-[12px] text-textMuted uppercase tracking-widest mt-1"></p>
             </div>
         </a>
 
+        <!-- Clock -->
         <div class="hidden lg:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
 
         <div class="relative">
-            <button id="menu-toggle" class="w-[50px] h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
+            <button id="menu-toggle" class="w-10 h-10 md:w-[50px] md:h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
                 <div class="relative w-[18px] h-[12px]">
                     <span id="menu-line-1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
                     <span id="menu-line-2" class="absolute left-0 bottom-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
                 </div>
             </button>
 
-            <div id="dropdown-menu" class="absolute top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
+            <div id="dropdown-menu" class="absolute top-14 md:top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
                 <nav class="flex flex-col text-sm font-medium">
                     <a href="pages/about.html" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
                     <a href="pages/stack.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
@@ -188,13 +63,13 @@
     <!-- Main Layout -->
     <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
 
-        <!-- Left Sidebar (Locked sizing) -->
+        <!-- Left Sidebar -->
         <aside class="w-full lg:w-[280px] xl:w-[280px] flex flex-col shrink-0 lg:h-full lg:overflow-y-auto no-scrollbar lg:pb-0">
-            <h1 class="text-[20px] font-bold mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
-                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="images/RockOnAndNamaste.png" height="40" width="40" alt="🤟"/>
+            <h1 class="text-2xl md:text-[24px] xl:text-[28px] font-bold mb-4 md:mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
+                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="images/RockOnAndNamaste.png" height="32" width="32" alt="🤟"/>
             </h1>
 
-            <p class="text-[16px] text-textMuted leading-[1.8] mb-8 fade-in-up" style="animation-delay: 200ms;">
+            <p class="text-sm md:text-[16px] text-textMuted leading-[1.8] mb-6 md:mb-8 fade-in-up" style="animation-delay: 200ms;">
                 And as you will find out, <br class="hidden lg:block"> I am quite an <span class="hidden lg:inline">experienced</span><br>
                 <span class="text-white font-bold">Interactive Media Allrounder</span><br>
                 who's fascinated by gaining and sharing <br class="block md:hidden lg:hidden"> knowledge about <br class="hidden md:block"> complex topics,
@@ -204,30 +79,27 @@
 
             <div class="flex flex-row flex-wrap lg:flex-col justify-between items-center lg:items-start gap-4 lg:gap-8 mb-8 lg:mb-16 w-full">
 
-                <!-- Buttons (Locked sizing) -->
-                <div class="flex gap-4 fade-in-up" style="animation-delay: 300ms;">
-                    <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
-                        <a href="pages/about.html">About Me</a>
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 300ms;">
+                    <button class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        About Me <i class="ph ph-arrow-right"></i>
                     </button>
-                    <button class="w-max px-6 py-3 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
-                        <a href="https://drive.google.com/file/d/1DycAck25TK2zfhSOt1q6Ir1gv6Po1ChS/view?usp=drive_link">Download CV</a>
+                    <button class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        Download CV
                     </button>
                 </div>
 
-                <!-- Socials (Locked sizing) -->
-                <div class="flex gap-4 fade-in-up" style="animation-delay: 400ms;">
-                    <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
-                        <img src="images/Icons/FHIcon.png" class="w-6 h-6 object-contain" alt="FH">
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 400ms;">
+                    <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="images/Icons/FHIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="FH">
                     </a>
-                    <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
-                        <img src="images/Icons/OrcidIcon.png" class="w-6 h-6 object-contain" alt="ORCID">
+                    <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="images/Icons/OrcidIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="ORCID">
                     </a>
-                    <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
-                    <a href="https://github.com/luca-g97" target="_blank" class="w-11 h-11 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
+                    <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    <a href="https://github.com/luca-g97" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
                 </div>
             </div>
 
-            <!-- Footer: Desktop -->
             <div class="hidden lg:flex mt-auto flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
                 <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
                 <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Licensing</a>
@@ -239,52 +111,44 @@
         <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-6 lg:pb-0">
             <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-5 auto-rows-[250px] md:auto-rows-[280px] lg:grid-rows-desktop md:grid-rows-tablet lg:h-full">
 
-                <!-- 1. Interactive Media (Locked text size) -->
+                <!-- 1. Interactive Media -->
                 <div class="bento-card col-span-1 md:col-span-3 lg:col-span-6 lg:h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 150ms;">
                     <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                        <div id="interactive-marquee" class="w-full animate-scroll-y flex flex-col">
-                            <!-- Filled by JS -->
-                        </div>
+                        <div id="interactive-marquee" class="w-full animate-scroll-y flex flex-col"></div>
                     </div>
-                    <h2 class="relative z-10 text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Interactive<br>Media</h2>
-                    <a href="#projects" data-open="projects" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
-                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    <h2 class="relative z-10 text-[24px] md:text-[26px] xl:text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Interactive<br>Media</h2>
+                    <a href="#projects" data-open="projects" class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
                     </a>
                 </div>
 
-                <!-- 2. Academic Research (Locked text size) -->
+                <!-- 2. Academic Research -->
                 <div class="bento-card col-span-1 md:col-span-3 lg:col-span-6 lg:h-full flex items-center justify-center group relative fade-in-up" style="animation-delay: 250ms;">
                     <div class="absolute inset-0 marquee-mask-y opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                        <div id="academic-marquee" class="w-full animate-scroll-y-reverse flex flex-col">
-                            <!-- Filled by JS -->
-                        </div>
+                        <div id="academic-marquee" class="w-full animate-scroll-y-reverse flex flex-col"></div>
                     </div>
-                    <h2 class="relative z-10 text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Academic<br>Research</h2>
-                    <a href="#publications" data-open="publications" class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
-                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    <h2 class="relative z-10 text-[24px] md:text-[26px] xl:text-[32px] font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] text-center tracking-tight pointer-events-none">Academic<br>Research</h2>
+                    <a href="#publications" data-open="publications" class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a] interactive">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
                     </a>
                 </div>
 
                 <!-- 3. Contact WebGL Globe -->
-                <a href="#contact" data-action="open-route" data-route="contact" class="bento-card col-span-1 md:col-span-2 lg:col-span-3 lg:h-full p-6 group block interactive fade-in-up group-hover:opacity-100" style="animation-delay: 350ms;">
+                <a href="#contact" data-action="open-route" data-route="contact" class="bento-card col-span-1 md:col-span-2 lg:col-span-3 lg:h-full p-5 md:p-6 group block interactive fade-in-up group-hover:opacity-100" style="animation-delay: 350ms;">
                     <h3 class="text-base font-bold absolute top-5 left-5 z-20 tracking-wide text-gray-300">Contact</h3>
-                    <!-- WebGL Canvas Container -->
                     <div class="absolute -bottom-[50%] -right-[20%] w-[130%] h-[150%] group-hover:scale-105 transition-transform duration-[1000ms] pointer-events-none">
                         <canvas id="cobe-globe" class="w-full h-full opacity-90"></canvas>
                     </div>
-                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
-                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
                     </div>
                 </a>
 
-                <!-- 4. My Stack (Locked icon sizes handled via JS block) -->
-                <a href="#stack" data-action="open-route" data-route="stack" class="bento-card col-span-1 md:col-span-2 lg:col-span-5 lg:h-full p-6 flex flex-col items-center justify-center interactive relative fade-in-up group-hover:opacity-100" style="animation-delay: 450ms;">
-                    <h3 class="text-base font-bold absolute top-5 left-5 tracking-wide text-gray-300">My Stack</h3>
-                    <div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full">
-                        <!-- Filled by JS -->
-                    </div>
-                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
-                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                <!-- 4. My Stack -->
+                <a href="#stack" data-action="open-route" data-route="stack" class="bento-card col-span-1 md:col-span-2 lg:col-span-5 lg:h-full p-5 md:p-6 flex flex-col items-center justify-center interactive relative fade-in-up group-hover:opacity-100" style="animation-delay: 450ms;">
+                    <h3 class="text-base font-bold absolute top-5 left-5 tracking-wide text-gray-300">My Stack</h3><div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full"></div>
+                    <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
                     </div>
                 </a>
 
@@ -295,17 +159,17 @@
                         <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent"></div>
                     </div>
                     <h3 id="featured-title" class="text-base font-bold absolute top-5 left-5 z-10 drop-shadow-lg tracking-wide text-gray-300"></h3>
-                    <div class="card-link-btn absolute bottom-5 right-5 w-10 h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
-                        <i class="ph ph-arrow-up-right text-black font-bold text-lg"></i>
+                    <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                        <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
                     </div>
                 </a>
 
             </div>
 
             <!-- Footer: Mobile & Tablet -->
-            <div class="flex lg:hidden flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase mt-10 pb-8 items-center text-center fade-in-up" style="animation-delay: 650ms;">
+            <div class="flex lg:hidden flex-col gap-2 md:gap-3 text-[10px] md:text-[11px] text-textMuted font-bold tracking-widest uppercase mt-8 md:mt-10 pb-6 items-center text-center fade-in-up" style="animation-delay: 650ms;">
                 <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
-                <div class="flex gap-6">
+                <div class="flex gap-4 md:gap-6">
                     <a href="#" class="hover:text-white transition-colors duration-300 interactive">Licensing</a>
                     <a href="#" class="hover:text-white transition-colors duration-300 interactive">Privacy Policy</a>
                 </div>
@@ -315,152 +179,8 @@
     </main>
 </div>
 
-<!-- WebGL Globe Generation (Cobe) -->
-<script type="module">
-    import createGlobe from "https://cdn.jsdelivr.net/npm/cobe@0.6.3/+esm";
-
-    let phi = 0;
-    let canvas = document.getElementById("cobe-globe");
-    let globe = null;
-
-    const resizeObserver = new ResizeObserver(() => {
-        if (canvas.offsetWidth > 0 && !globe) {
-            globe = createGlobe(canvas, {
-                devicePixelRatio: 2,
-                width: canvas.offsetWidth * 2,
-                height: canvas.offsetHeight * 2,
-                phi: 0,
-                theta: 0.1,
-                dark: 1,
-                diffuse: 1.2,
-                mapSamples: 20000,
-                mapBrightness: 6,
-                baseColor: [0.08, 0.08, 0.08],
-                markerColor: [0.7, 0.1, 0.1], // Hagenberg Red
-                glowColor: [0.03, 0.03, 0.03],
-                markers: [
-                    { location: [48.368, 14.513], size: 0.07 }
-                ],
-                onRender: (state) => {
-                    state.phi = phi;
-                    phi += 0.004;
-                    // Dynamically adjusts internal canvas buffers when resized preventing flicker
-                    state.width = canvas.offsetWidth * 2;
-                    state.height = canvas.offsetHeight * 2;
-                }
-            });
-        }
-    });
-    resizeObserver.observe(canvas.parentElement);
-</script>
-
-<!-- UI Logic Scripts -->
-<script>
-    async function loadAndRenderPortfolio() {
-        try {
-            let allData;
-            try {
-                const response = await fetch('data.json');
-                allData = await response.json();
-            } catch (e) {
-                allData = JSON.parse(document.getElementById('initial-data').textContent);
-            }
-
-            // Profile
-            document.getElementById('profile-name').textContent = allData.profile.name;
-            document.getElementById('profile-title').textContent = allData.profile.title;
-            document.getElementById('profile-img').src = allData.profile.image;
-
-            // Locked Marquee image sizes
-            const buildMarqueeBlock = (projects) => {
-                if (!projects || projects.length === 0) return '';
-                const half = Math.ceil(projects.length / 2);
-
-                const col1 = projects.slice(0, half).map((p, i) =>
-                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-44 object-cover rounded-[14px] bg-border transition-transform duration-500 hover:scale-[1.02] ${i > 0 ? 'mt-2' : ''}"></div>`
-                ).join('');
-
-                const col2 = projects.slice(half).map((p, i) =>
-                    `<div data-open="projects" data-id="${p.id}" class="interactive cursor-none"><img src="${p.imageUrl}" class="w-full h-44 object-cover rounded-[14px] bg-border transition-transform duration-500 hover:scale-[1.02] ${i > 0 ? 'mt-2' : ''}"></div>`
-                ).join('');
-
-                return `
-                    <div class="w-full p-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="flex flex-col gap-2">${col1}</div>
-                            <div class="flex flex-col gap-2 mt-8">${col2}</div>
-                        </div>
-                    </div>`;
-            };
-
-            document.getElementById('interactive-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'interactive')).repeat(2);
-            document.getElementById('academic-marquee').innerHTML = buildMarqueeBlock(allData.projects.filter(p => p.category === 'academic')).repeat(2);
-
-            // Stack - Locked sizing applied here
-            document.getElementById('stack-container').innerHTML = allData.stack.map((s, i) => `
-                <div class="group/icon relative w-[52px] h-[52px] rounded-[14px] bg-white flex items-center justify-center shadow-xl border-4 border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 interactive flex-shrink-0" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-12px' : '0'};">
-                    <i class="ph-fill ${s.icon} ${s.color} text-2xl group-hover/icon:rotate-12 transition-transform duration-300"></i>
-                    <span class="absolute -top-10 bg-white text-black text-[10px] font-bold px-2.5 py-1 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg whitespace-nowrap">${s.name}</span>
-                </div>
-            `).join('');
-
-            // Featured Project
-            document.getElementById('featured-img').src = allData.featuredProject.imageUrl;
-            document.getElementById('featured-title').textContent = allData.featuredProject.title;
-            document.getElementById('featured-link').setAttribute('data-id', allData.featuredProject.id);
-
-            // Bind Cursor Events AFTER DOM injection
-            document.querySelectorAll('a, button, .interactive').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-interactive'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-interactive'));
-            });
-
-        } catch (error) {
-            console.error('Failed to load project data:', error);
-        }
-    }
-    loadAndRenderPortfolio();
-
-    // Clock
-    function updateClock() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const clockEl = document.getElementById('clock');
-        if (clockEl) clockEl.textContent = `${hours}:${minutes} ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
-    }
-    setInterval(updateClock, 1000); updateClock();
-
-    // Cursor Movement
-    const cursorWrapper = document.getElementById('cursor-wrapper');
-    window.addEventListener('mousemove', (e) => {
-        cursorWrapper.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-
-    // Menu Toggle
-    const menuBtn = document.getElementById('menu-toggle');
-    const line1 = document.getElementById('menu-line-1');
-    const line2 = document.getElementById('menu-line-2');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    let isMenuOpen = false;
-
-    menuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        isMenuOpen = !isMenuOpen;
-        dropdownMenu.classList.toggle('open', isMenuOpen);
-        line1.style.transform = isMenuOpen ? 'translateY(5px) rotate(45deg)' : 'translateY(0) rotate(0)';
-        line2.style.transform = isMenuOpen ? 'translateY(-5px) rotate(-45deg)' : 'translateY(0) rotate(0)';
-    });
-
-    document.addEventListener('click', (e) => {
-        if (isMenuOpen && !dropdownMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-            isMenuOpen = false;
-            dropdownMenu.classList.remove('open');
-            line1.style.transform = 'translateY(0) rotate(0)';
-            line2.style.transform = 'translateY(0) rotate(0)';
-        }
-    });
-</script>
+<!-- Scripts Link -->
+<script type="module" src="assets/js/globe.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
