@@ -1,0 +1,956 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Luca G.</title>
+
+    <!-- Tailwind CSS & Phosphor Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- External Config & Styles -->
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        /* Smooth Accordion ("Details on Demand") Transition */
+        .details-grid {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        .timeline-card.expanded .details-grid {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+        .timeline-card.expanded .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .timeline-card.expanded {
+            border-color: #4a4a4a;
+            background-color: #161616;
+        }
+        /* Subtle glowing timeline spine */
+        .timeline-spine::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            bottom: 0;
+            left: 15px;
+            width: 1px;
+            background: linear-gradient(to bottom, #4a4a4a 0%, #2a2a2a 85%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<!-- Fallback Initial Data -->
+<script type="application/json" id="initial-data">
+    {
+        "profile": {
+            "name": "Luca Geiger",
+            "title": "M.Sc. B.Eng.",
+            "image": "../images/Portrait.jpg"
+        },
+        "stack": [
+            { "name": "Slack", "icon": "ph-slack-logo", "color": "text-black", "link": "#" },
+            { "name": "Figma", "icon": "ph-figma-logo", "color": "text-black", "link": "#" },
+            { "name": "Framer", "icon": "ph-framer-logo", "color": "text-black", "link": "#" },
+            { "name": "React", "icon": "ph-atom", "color": "text-purple-600", "link": "#" },
+            { "name": "Google", "icon": "ph-google-logo", "color": "text-blue-500", "link": "#" }
+        ]
+    }
+</script>
+
+<!-- Custom Cursor -->
+<div class="hidden lg:block" id="cursor-wrapper">
+    <div id="cursor-halo"></div>
+    <div id="cursor-dot"></div>
+</div>
+
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center shrink-0 mb-6 md:mb-8 z-50 fade-in-up">
+        <a href="../index.html" class="flex items-center gap-4 interactive group">
+            <img id="profile-img" src="../images/Portrait.jpg" alt="Profile" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <div class="leading-tight">
+                <h2 id="profile-name" class="font-bold text-lg md:text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500">Luca Geiger</h2>
+                <p id="profile-title" class="text-[10px] md:text-[12px] text-textMuted uppercase tracking-widest mt-1">M.Sc. B.Eng.</p>
+            </div>
+        </a>
+
+        <!-- Clock -->
+        <div class="hidden lg:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
+
+        <div class="relative">
+            <button id="menu-toggle" class="w-10 h-10 md:w-[50px] md:h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
+                <div class="relative w-[16px] h-[10px] md:w-[18px] md:h-[12px]">
+                    <span id="menu-line-1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                    <span id="menu-line-2" class="absolute left-0 bottom-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                </div>
+            </button>
+
+            <div id="dropdown-menu" class="absolute top-14 md:top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
+                <nav class="flex flex-col text-sm font-medium">
+                    <a href="../index.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Home</a>
+                    <a href="about.html" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">About Me <i class="ph ph-arrow-right"></i></a>
+                    <a href="stack.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
+                    <a href="projects.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
+                    <a href="contact.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Contact</a>
+                    <a href="../ast.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">AST</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+
+        <!-- Left Sidebar -->
+        <aside class="w-full lg:w-[280px] xl:w-[280px] flex flex-col shrink-0 lg:h-full lg:overflow-y-auto no-scrollbar lg:pb-0">
+            <h1 class="text-2xl md:text-[24px] xl:text-[28px] font-bold mb-4 md:mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
+                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="../images/RockOnAndNamaste.png" height="32" width="32" alt="🤟"/>
+            </h1>
+
+            <p class="text-sm md:text-[16px] text-textMuted leading-[1.8] mb-6 md:mb-8 fade-in-up" style="animation-delay: 200ms;">
+                And as you will find out, <br class="hidden lg:block"> I am quite an <span class="hidden lg:inline">experienced</span><br>
+                <span class="text-white font-bold">Interactive Media Allrounder</span><br>
+                who's fascinated by gaining and sharing <br class="block md:hidden lg:hidden"> knowledge about <br class="hidden md:block"> complex topics,
+                especially <br class="block md:hidden lg:block"> if they are related to the <br>
+                <span class="text-white font-bold">Combination of Sustainability <br class="block md:hidden lg:hidden"> and New Technologies</span>
+            </p>
+
+            <div class="flex flex-row flex-wrap lg:flex-col justify-between items-center lg:items-start gap-4 lg:gap-8 mb-8 lg:mb-16 w-full">
+
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 300ms;">
+                    <a href="../index.html" class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive flex items-center gap-2">
+                        <i class="ph ph-arrow-left"></i> Home
+                    </a>
+                    <a href="https://drive.google.com/file/d/1DycAck25TK2zfhSOt1q6Ir1gv6Po1ChS/view?usp=drive_link" target="_blank" class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        Download CV
+                    </a>
+                </div>
+
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 400ms;">
+                    <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="../images/Icons/FHIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="FH">
+                    </a>
+                    <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="../images/Icons/OrcidIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="ORCID">
+                    </a>
+                    <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    <a href="https://github.com/luca-g97" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex mt-auto flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Licensing</a>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Privacy Policy</a>
+            </div>
+        </aside>
+
+        <!-- Right Content Area: Overview First, Details on Demand -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
+
+            <!-- 1. EXECUTIVE OVERVIEW HEADER & KPI BENTO STRIP -->
+            <div class="mb-6 fade-in-up" style="animation-delay: 150ms;">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">About Me</h1>
+                        <!-- <p class="text-xs uppercase tracking-widest text-textMuted mb-1">Curriculum Vitae & Academic Dossier</p> -->
+                    </div>
+                    <p class="text-xs text-textMuted max-w-md">
+                        <span class="text-white font-bold">Overview first, details on demand:</span><br>Filter by domain or click any milestone card to inspect full responsibilities, theses, and research abstracts.
+                    </p>
+                </div>
+
+                <!-- 4 Executive Summary Bento Cards (Clickable to filter) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <button data-filter-trigger="work" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Current Role</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white group-hover:text-gray-200">PhD Researcher</div>
+                            <div class="text-xs text-textMuted mt-0.5">FWF LudaViz • FH OÖ</div>
+                        </div>
+                    </button>
+
+                    <button data-filter-trigger="education" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Academic Track</span>
+                            <i class="ph ph-graduation-cap text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">M.Sc. & B.Eng.</div>
+                            <div class="text-xs text-textMuted mt-0.5">+ Siemens Apprenticeship</div>
+                        </div>
+                    </button>
+
+                    <button data-filter-trigger="publications" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Publications</span>
+                            <i class="ph ph-article text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">CHI '26 & FDG '26</div>
+                            <div class="text-xs text-textMuted mt-0.5">Ludic & Diegetic Visualization</div>
+                        </div>
+                    </button>
+
+                    <button data-filter-trigger="leadership" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Honours & Service</span>
+                            <i class="ph ph-medal text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">2 Awards</div>
+                            <div class="text-xs text-textMuted mt-0.5">Reviewer • 7+ Mentorships</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 2. ZOOM & FILTER BAR (Search + Category Pills + Expand All Toggle) -->
+                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-[#121212] border border-[#2a2a2a] rounded-2xl p-3">
+                    <!-- Category Filter Pills -->
+                    <div id="cv-filter-Group" class="flex flex-wrap gap-1.5">
+                        <button data-cat="all" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-white text-black transition-all interactive">All (21)</button>
+                        <button data-cat="work" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive">Work (6)</button>
+                        <button data-cat="education" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive">Education (4)</button>
+                        <button data-cat="publications" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive">Publications (2)</button>
+                        <button data-cat="projects" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive">Projects & Awards (3)</button>
+                        <button data-cat="leadership" class="cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive">Service & Teaching (7)</button>
+                    </div>
+
+                    <!-- Search & Expand/Collapse Controls -->
+                    <div class="flex items-center gap-2">
+                        <div class="relative flex-1 lg:w-60">
+                            <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                            <input id="cv-search" type="text" placeholder="Filter skills, thesis, role..." class="w-full bg-base border border-[#2a2a2a] rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                        </div>
+                        <button id="toggle-all-details" class="px-3.5 py-2 rounded-xl border border-[#2a2a2a] bg-base hover:bg-white/10 text-xs font-bold text-white whitespace-nowrap transition-all interactive flex items-center gap-1.5">
+                            <i id="toggle-all-icon" class="ph ph-arrows-out-line-vertical"></i>
+                            <span id="toggle-all-text">Expand All</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MAIN GRID: INTERACTIVE TIMELINE (8 Cols) + STICKY SIDEBAR (4 Cols) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pb-6">
+
+                <!-- Left 8 Columns: Interactive Timeline Feed -->
+                <div class="lg:col-span-8 relative timeline-spine pl-9 flex flex-col gap-4 fade-in-up" id="cv-timeline-feed" style="animation-delay: 250ms;">
+                    <!-- Populated dynamically below -->
+                </div>
+
+                <!-- Right 4 Columns: Sticky Highlights & Widgets -->
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
+
+                    <!-- Core Research & Engineering Domains Card -->
+                    <div class="bento-card p-6 flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-[15px] font-bold text-white tracking-wide">Core Domains</h3>
+                            <span class="text-[11px] text-textMuted uppercase tracking-wider">Overview</span>
+                        </div>
+
+                        <div class="flex flex-col gap-3 text-xs">
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>Ludic & Diegetic Visualization</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">PhD / LudaViz</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Player behavior visualization.</p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>Game Engineering & XAI</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">UE5 / Unity / C++</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Unreal Engine 5 C++ & Blueprints, Stockfish AI integration, VR (Oculus), and PyTorch Explainable AI (LLM kNN).</p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>Hardware & Systems Testing</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">Siemens / VDE</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Automated test rack engineering.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer: Mobile & Tablet -->
+            <div class="flex lg:hidden flex-col gap-2 md:gap-3 text-[10px] md:text-[11px] text-textMuted font-bold tracking-widest uppercase mt-8 md:mt-10 pb-6 items-center text-center fade-in-up">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <div class="flex gap-4 md:gap-6">
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Licensing</a>
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Privacy Policy</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- Timeline Data & Interactive Controller -->
+<script>
+    const cvEntries = [
+        // --- PUBLICATIONS (2026) ---
+        /*{
+            id: "pub-chiplay-2026",
+            category: "publications",
+            categoryLabel: "Publication",
+            icon: "ph-article",
+            accent: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+            dotColor: "bg-amber-400",
+            period: "11/2026",
+            location: "York, UK",
+            title: "Transient Gear, Persistent Impact: A Mixed-Methods Study with Design Implications for Transient Game Systems",
+            organization: "CHI Play (International Conference on the Foundations of Digital Games)",
+            badge: "Accepted for Publication",
+            overview: "Mixed-methods study examining weapon durability in The Legend of Zelda: Breath of the Wild and six design patterns for planned transience in HCI.",
+            tags: ["HCI", "Post-Mortem Visualization", "Mixed-Methods", "Zelda: BotW"],
+            details: [
+                "Accepted for publication at the International Conference on the Foundations of Digital Games (FDG).",
+                "Conducted a mixed-methods study exploring how weapon durability in The Legend of Zelda: Breath of the Wild affects player behavior and emotion.",
+                "Culminated in six actionable design patterns for integrating planned transience into broader Human-Computer Interaction (HCI) contexts."
+            ]
+        },*/
+        {
+            id: "pub-fdg-2026",
+            category: "publications",
+            categoryLabel: "Publication",
+            icon: "ph-article",
+            accent: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+            dotColor: "bg-amber-400",
+            period: "08/2026",
+            location: "Copenhagen, Denmark",
+            title: "Transient Gear, Persistent Impact: A Mixed-Methods Study with Design Implications for Transient Game Systems",
+            organization: "FDG (International Conference on the Foundations of Digital Games)",
+            badge: "<a class='interactive' href='https://doi.org/10.1145/3815598.3815601'>DOI: 10.1145/3815598.3815601</a>",
+            link: "https://doi.org/10.1145/3815598.3815601",
+            overview: "Mixed-methods study examining weapon durability in The Legend of Zelda: Breath of the Wild and six design patterns for planned transience in HCI.",
+            tags: ["HCI", "Game Design Patterns", "Mixed-Methods", "Zelda: BotW"],
+            details: [
+                "Conducted a mixed-methods study exploring how weapon durability in The Legend of Zelda: Breath of the Wild affects player behavior and emotion.",
+                "Culminated in six actionable design patterns for integrating planned transience into broader Human-Computer Interaction (HCI) contexts."
+            ]
+        },
+        {
+            id: "pub-chi-2026",
+            category: "publications",
+            categoryLabel: "Publication",
+            icon: "ph-article",
+            accent: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+            dotColor: "bg-amber-400",
+            period: "04/2026",
+            location: "Barcelona, Spain",
+            title: "How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite’s Swarm Visualization",
+            organization: "CHI EA '26: Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems",
+            badge: "<a class='interactive' href='https://doi.org/10.1145/3772363.3799313'>DOI: 10.1145/3772363.3799313</a>",
+            link: "https://doi.org/10.1145/3772363.3799313",
+            overview: "Survey-based study analyzing how players recognize, interpret, and behaviorally adapt to diegetic hazard visualizations in Fortnite.",
+            tags: ["CHI '26", "Diegetic Visualization", "Player Behavior", "Fortnite"],
+            details: [
+                "Published in CHI EA '26: Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (Barcelona, Spain).",
+                "Conducted a survey-based study analyzing how players recognize, interpret, and behaviorally adapt to diegetic data visualizations representing spreading map hazards in Fortnite."
+            ]
+        },
+
+        // --- PROFESSIONAL ACTIVITIES (2025 - 2026) ---
+        {
+            id: "act-chi-reviewer",
+            category: "leadership",
+            categoryLabel: "Academic Service",
+            icon: "ph-seal-check",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "12/2025 – 02/2026",
+            location: "International / Academic Service",
+            title: "Peer Reviewer (CHI 2026) & Conference Volunteer (VINCI 2025)",
+            organization: "ACM CHI Conference & VINCI Symposium",
+            badge: "Peer Review & Volunteering",
+            overview: "Active contributor to the international HCI and Visualization research communities as a CHI 2026 Poster Reviewer and VINCI 2025 Volunteer.",
+            tags: ["CHI 2026", "VINCI 2025", "Peer Review", "Academic Community"],
+            details: [
+                "02/2026 — REVIEWER | CHI 2026 (Posters): Peer reviewing extended abstracts and poster submissions for the premier international conference on Human-Computer Interaction.",
+                "12/2025 — VOLUNTEER | VINCI 2025: Supporting session operations and attendees at the International Symposium on Visual Information Communication and Interaction."
+            ]
+        },
+
+        // --- WORK EXPERIENCE & HIGHER EDUCATION (2023 - PRESENT) ---
+        {
+            id: "work-phd-ludaviz",
+            category: "work",
+            categoryLabel: "Work Experience",
+            icon: "ph-flask",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "08/2025 – PRESENT",
+            location: "Hagenberg im Mühlkreis, Austria",
+            title: "PhD Student (LudaViz Project – FWF funded)",
+            organization: "University of Applied Sciences Upper Austria (FH OÖ)",
+            badge: "Current Position",
+            overview: "Researcher in an FWF-funded pioneer project investigating Ludic Visualizations in video games and player behavior analytics.",
+            tags: ["Ludic Visualization", "Player Behavior", "FWF Research", "Information Visualization"],
+            details: [
+                "Researcher in the Pioneer Project Team studying Ludic Visualizations in Video Games (FWF-funded LudaViz project).",
+                "Specifically researching novel visualization paradigms and options for representing complex player behaviour."
+            ]
+        },
+        {
+            id: "work-teacher-fhooe",
+            category: "work",
+            categoryLabel: "Work & Teaching",
+            icon: "ph-chalkboard-teacher",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "10/2024 – 09/2025",
+            location: "Hagenberg im Mühlkreis, Austria",
+            title: "Part-Time Teacher (Game Programming & Applied Software Techniques)",
+            organization: "University of Applied Sciences Upper Austria (FH OÖ)",
+            badge: "University Lecturer",
+            overview: "Taught Interaction & Game Programming (SS) and Applied Software Techniques (WS) using custom C++, Stockfish AI, and Unreal Engine 5 projects.",
+            tags: ["Unreal Engine 5", "C++", "Blueprints", "Stockfish API", "Game Design"],
+            details: [
+                "Interaction & Game Programming (Summer Semester): Explained methods of Advanced Game Design covering state-of-the-art engines and guided students through the complete Game Design & Development lifecycle.",
+                "Applied Software Techniques (Winter Semester): Introduced Game and Level Design through three custom-engineered teaching projects:",
+                "• Console-Chess (Plain C++): A fully functional chess program operating with keyboard inputs.",
+                "• Chess-Party (Unreal Engine C++ & Blueprints): 3D upgrade in Unreal Engine 5 supporting Player vs. Player, Player vs. AI, and AI vs. AI using the Stockfish engine connected via local pipe.",
+                "• Darts (Blueprints): Designed and analyzed multiple architectural variants of a physics-based dart game."
+            ]
+        },
+        {
+            id: "edu-msc-fhooe",
+            category: "education",
+            categoryLabel: "Education",
+            icon: "ph-graduation-cap",
+            accent: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+            dotColor: "bg-blue-400",
+            period: "10/2023 – 09/2025",
+            location: "Hagenberg im Mühlkreis, Austria",
+            title: "Master of Science (M.Sc.) — Interactive Media",
+            organization: "University of Applied Sciences Upper Austria (FH OÖ)",
+            badge: "Final Grade: 1.49",
+            overview: "Graduated with distinction (1.49). Specialized in Explainable AI (Compressed LLM Activations), PyTorch, Unreal Engine 5 multiplayer, and Unity RL.",
+            tags: ["Explainable AI", "PyTorch", "LLMs", "Unreal Engine 5", "Unity RL"],
+            details: [
+                "Master's Thesis: \"A White-Box Approach to Scalable AI-Explainability: High-Fidelity kNN-Analysis via Compressed LLM-Activations\".",
+                "Developed real-time local multiplayer games in Unreal Engine 5 and Reinforcement Learning-based games in Unity.",
+                "Acquired advanced specialization in Explainable AI (XAI) and deep neural network architectures in PyTorch."
+            ]
+        },
+        {
+            id: "work-oog-ai",
+            category: "work",
+            categoryLabel: "Work Experience",
+            icon: "ph-cpu",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "05/2024 – 08/2024",
+            location: "Linz, Austria",
+            title: "Work Student (AI Pilot Project)",
+            organization: "Oberösterreichische Gesundheitsholding (OÖG)",
+            badge: "AI & Data Security",
+            overview: "Primary contact and domain expert evaluating secure AI workflow integration within healthcare administration.",
+            tags: ["AI Workflows", "Data Security", "Healthcare IT", "Pilot Study"],
+            details: [
+                "Served as Contact Person and Technical Expert for the enterprise AI pilot project.",
+                "Researched and evaluated methods to introduce AI into organizational workflows while strictly guaranteeing data security and compliance."
+            ]
+        },
+
+        // --- NUREMBERG / FÜRTH ERA: B.ENG., PROJECTS, TEACHING & INDUSTRY ---
+        {
+            id: "edu-beng-thn",
+            category: "education",
+            categoryLabel: "Education",
+            icon: "ph-graduation-cap",
+            accent: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+            dotColor: "bg-blue-400",
+            period: "10/2019 – 09/2023",
+            location: "Nuremberg, Germany",
+            title: "Bachelor of Engineering (B.Eng.) — Media Engineering",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "Final Grade: 1.4",
+            overview: "Graduated with 1.4. Broad engineering foundation spanning C/C++, Java, Web/SQL, 3D Graphics (Blender/OpenGL), Cryptography, and VR.",
+            tags: ["C/C++", "Java", "OpenGL & Blender", "Cybersecurity", "SQL & Web"],
+            details: [
+                "Bachelor's Thesis: \"Bridging Cybersecurity Awareness: A Try-It-Yourself Application for upcoming Media Engineers & regular Users, addressing Common Risks and Solutions associated with Hacking\".",
+                "Programmed Java applications using the Stanford ACM library in Eclipse, and created console-based C/C++ programs and ASCII-art games.",
+                "Developed plain and interactive websites with JavaScript, HTML, CSS, external libraries, and SQL databases.",
+                "Modelled 3D assets and environments including lighting calculations in Blender and OpenGL.",
+                "Applied agile software and project management methods considering ergonomics and usability (including the VR project \"naturace\").",
+                "Mastered engineering mathematics for complex problem-solving, and calculated/conceived virtual and physical bus systems using cryptographic encryption for data transmission.",
+                "Practiced fundamentals of video/photography and multimedia recording and editing."
+            ]
+        },
+        {
+            id: "lead-tutor-physcomp",
+            category: "leadership",
+            categoryLabel: "Teaching & Tutoring",
+            icon: "ph-lightning",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "10/2022 – 01/2023",
+            location: "Nuremberg, Germany",
+            title: "Tutor for the Study Course \"Physical Computing\"",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "Lab Instructor",
+            overview: "Supervised first-semester students in electrical engineering labs, electronic measurements, and authored voluntary lab recaps.",
+            tags: ["Physical Computing", "Electrical Engineering", "Lab Instruction"],
+            details: [
+                "Supervised and introduced first-semester students to the fundamentals of electrical engineering during practical lab sessions.",
+                "Served as lab engineer, contact person, and instructor for electronic measurements of hardware assemblies.",
+                "Voluntarily created comprehensive recap guides covering essential lab concepts outside of regular practical hours."
+            ]
+        },
+        {
+            id: "proj-naturace",
+            category: "projects",
+            categoryLabel: "Flagship Project",
+            icon: "ph- goggles",
+            accent: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+            dotColor: "bg-cyan-400",
+            period: "10/2021 – 09/2022",
+            location: "Nuremberg, Germany",
+            title: "Project Manager & Main Developer — VR Project \"naturace\"",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "Pro-Noris Prize Nominee",
+            overview: "Led development of an Oculus Quest VR game in Unreal Engine 4.27.2 featuring custom C++ spherical coordinate plugins and animal AI heuristics.",
+            tags: ["Unreal Engine 4.27", "Oculus Quest VR", "C++ Plugins", "Blender", "Project Management"],
+            details: [
+                "Main developer of the VR project in Unreal Engine 4.27.2 using an Oculus Quest and the Oculus Client.",
+                "Developed custom C++ plugins converting Cartesian to polar coordinates as the mathematical foundation for the spherical Earth level.",
+                "Independently designed and implemented AI heuristics for animals, and created/revised 3D models and animations in Blender.",
+                "Designed and implemented interactive tasks and custom teleportation mechanics within the house level.",
+                "Managed Bitbucket version control and moderated weekly agile team meetings.",
+                "Produced and sound-designed the official project trailer using the Unreal Animation Sequencer, and led project documentation and marketing (nominated for the Pro-Noris Prize)."
+            ]
+        },
+        {
+            id: "lead-courage-studies",
+            category: "leadership",
+            categoryLabel: "Mentorship",
+            icon: "ph-users-three",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "10/2021 – 03/2022",
+            location: "Nuremberg, Germany",
+            title: "Volunteer Study Companion — \"Courage for Studies\"",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "Peer Mentor",
+            overview: "Mentored and onboarded 5 first-semester students through academic and personal university transitions.",
+            tags: ["Mentoring", "Student Onboarding", "Volunteering"],
+            details: [
+                "Introduced and supervised 5 students throughout their first semester via WhatsApp and e-mail.",
+                "Acted as a trusted point of contact for both academic questions and personal challenges during university onboarding."
+            ]
+        },
+        {
+            id: "lead-caritas-tutor",
+            category: "leadership",
+            categoryLabel: "Social Engagement",
+            icon: "ph-heart",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "04/2021 – 09/2023",
+            location: "Kunigundenschule Lauf / Middle School Feucht",
+            title: "Volunteer Tutor in the Caritas Program \"NachhilFEE\"",
+            organization: "Caritas / Regional Schools",
+            badge: "Grades 5–10 Tutor",
+            overview: "Provided free academic tutoring and personal mentorship for pupils in grades 5 to 10 across all school subjects.",
+            tags: ["Caritas", "Youth Tutoring", "Social Responsibility"],
+            details: [
+                "Dedicated contact person and volunteer tutor for students in grades 5–10 across any required school subject.",
+                "Supported pupils with learning strategies as well as broader school and personal challenges."
+            ]
+        },
+        {
+            id: "lead-ambassador-thn",
+            category: "leadership",
+            categoryLabel: "University Representation",
+            icon: "ph-megaphone",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "03/2021 – 09/2023",
+            location: "Nuremberg, Germany",
+            title: "Ambassador of the Media Engineering Degree Program",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "StudiTalks & Outreach",
+            overview: "Represented the Media Engineering program at schools, fairs, campus tours, and within the \"StudiTalks\" advisory initiative.",
+            tags: ["Public Speaking", "StudiTalks", "Campus Outreach"],
+            details: [
+                "Presented student experiences and curriculum insights both online and in person at schools, education fairs, and university information days.",
+                "Advised prospective students via e-mail within the \"StudiTalks\" peer-counseling project.",
+                "Guided visiting school classes around campus and supervised practical university visits."
+            ]
+        },
+        {
+            id: "work-spaceflower",
+            category: "work",
+            categoryLabel: "Work Experience",
+            icon: "ph-game-controller",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "02/2021 – 07/2021",
+            location: "Nuremberg, Germany",
+            title: "Game Developer (Practice Semester)",
+            organization: "Spaceflower UG",
+            badge: "Unity • C# • Twitch API",
+            overview: "Main developer & Community Manager for Unity Twitch games (Viewergames Arcade/Racing) and Intellivision's Amico Farkle.",
+            tags: ["Unity", "C#", "Twitch Extensions", "JavaScript & Java", "Blender", "Shaders"],
+            details: [
+                "Main developer and Community Manager responsible for advancing the Unity games Viewergames Arcade and Viewergames Racing for Twitch.",
+                "Restructured and improved existing C# codebases while architecting and implementing new gameplay features.",
+                "Redesigned UI elements using custom shader tools and created 3D models in Blender.",
+                "Expanded the real-time JavaScript-based Twitch extension by designing and programming a custom map-implementation tool in Java.",
+                "Fixed bugs and extended the multilingual Unity project Amico Farkle (Intellivision) using the Amico Application Program Interface (API).",
+                "Independently planned sprints via Git and Jira while supporting the Spaceflower community and influencer campaigns."
+            ]
+        },
+        {
+            id: "lead-spokesman-thn",
+            category: "leadership",
+            categoryLabel: "Academic Governance",
+            icon: "ph-chats-circle",
+            accent: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            dotColor: "bg-purple-400",
+            period: "10/2020 – 09/2023",
+            location: "Nuremberg, Germany",
+            title: "Vice Semester Spokesman (Media Engineering)",
+            organization: "TH Nürnberg Georg Simon Ohm",
+            badge: "Student Representative",
+            overview: "Elected mediator and liaison between students, professors, faculty board, and university management.",
+            tags: ["Academic Representation", "Mediation", "Leadership"],
+            details: [
+                "Served as primary mediator and contact person for professors and fellow students.",
+                "Represented the student cohort's interests towards university management and the faculty board."
+            ]
+        },
+        {
+            id: "work-siemens-systest",
+            category: "work",
+            categoryLabel: "Work Experience",
+            icon: "ph-wrench",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "10/2019 – 11/2020",
+            location: "Fürth / Erlangen, Germany",
+            title: "Work Student in System Test Development",
+            organization: "Siemens AG",
+            badge: "VDE 0701 & Test Racks",
+            overview: "Engineered virtual and physical test racks for automated prototype testing, including VDE-compliant wiring and commissioning.",
+            tags: ["Siemens AG", "System Test", "VDE 0701", "Hardware Prototyping"],
+            details: [
+                "Virtually and physically designed and built racks for automated prototype test environments.",
+                "Performed professional, individualized wiring and assembly of test setups in strict accordance with Association of Electronics Engineers (VDE) standards.",
+                "Executed independent acceptance testing under VDE 0701 regulations and commissioned completed test racks.",
+                "Coordinated and reorganized the department store room before and during facility relocation, establishing structured inventory systems."
+            ]
+        },
+        {
+            id: "edu-fachabitur",
+            category: "education",
+            categoryLabel: "Education",
+            icon: "ph-books",
+            accent: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+            dotColor: "bg-blue-400",
+            period: "09/2018 – 06/2019",
+            location: "Fürth, Germany",
+            title: "Advanced Technical College Entrance Qualification (Fachabitur)",
+            organization: "Max-Grundig-Schule",
+            badge: "Final Grade: 2.2",
+            overview: "Intensive qualification combining higher mathematics, physical experiment calculations, business English, chemistry, and leadership psychology.",
+            tags: ["Higher Mathematics", "Physics", "Business English", "Team Leadership"],
+            details: [
+                "Mastered the combination of higher mathematics and physical calculations for pre-calculating experiments and formal proofs.",
+                "Completed advanced coursework in business English, chemistry fundamentals, and psychological foundations for team leadership."
+            ]
+        },
+        {
+            id: "work-siemens-fitter",
+            category: "work",
+            categoryLabel: "Work Experience",
+            icon: "ph-circuitry",
+            accent: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+            dotColor: "bg-emerald-400",
+            period: "03/2018 – 10/2018",
+            location: "Fürth / Erlangen, Germany",
+            title: "Electrician for Devices & Systems (Assembling & Testing)",
+            organization: "Siemens AG",
+            badge: "SAP • Diagnostics • IG Metall",
+            overview: "Conducted VDE assembly testing, circuit-diagram logfile diagnostics, SAP error documentation, and youth works council representation.",
+            tags: ["Electronics Testing", "Circuit Diagnostics", "SAP", "VDE Regulations"],
+            details: [
+                "Tested and assembled delivered electronic assemblies according to Association of Electronics Engineers (VDE) testing regulations.",
+                "Performed logfile-based fault diagnostics by systematically comparing hardware assemblies against circuit diagrams.",
+                "Documented and reported technical defects via SAP and resolved hardware faults through precision soldering.",
+                "Served as contact and representative for IG Metall youth in the works council as scribe of the youth and apprentice representation (JAV)."
+            ]
+        },
+        {
+            id: "award-city-fuerth",
+            category: "projects",
+            categoryLabel: "Honour & Award",
+            icon: "ph-trophy",
+            accent: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+            dotColor: "bg-cyan-400",
+            period: "12.07.2018",
+            location: "Fürth, Germany",
+            title: "City Prize for Very Good Performance at the Vocational High School",
+            organization: "City of Fürth",
+            badge: "Municipal Honour",
+            overview: "Awarded by the City of Fürth in recognition of outstanding academic and technical achievement.",
+            tags: ["Award", "City of Fürth"],
+            details: [
+                "Honoured with the City Prize of Fürth (12.07.2018) for exceptional performance upon graduating from high school vocational training."
+            ]
+        },
+        {
+            id: "edu-apprenticeship-siemens",
+            category: "education",
+            categoryLabel: "Education & Apprenticeship",
+            icon: "ph-certificate",
+            accent: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+            dotColor: "bg-blue-400",
+            period: "09/2014 – 02/2018",
+            location: "Fürth, Germany",
+            title: "Apprenticeship: Electrician for Devices & Systems",
+            organization: "Siemens AG",
+            badge: "Final Grade: 1.3",
+            overview: "Completed industrial electronics apprenticeship with a 1.3 GPA, specializing in CT scanners, displays, circuit boards, and works council service.",
+            tags: ["Siemens AG", "Electrical Engineering", "CT & Medical Electronics", "Grade: 1.3"],
+            details: [
+                "Trained in advanced electrical engineering techniques for the design, construction, assembly, and production flow of complex electronic systems.",
+                "Performed assembly, repair, and quality control for computer tomographs (CT), industrial displays, and electronic circuit boards.",
+                "Elected contact and representative of the youth of the IG Metall in the works council (scribe of the youth and apprentice representation)."
+            ]
+        },
+        {
+            id: "award-middle-franconia",
+            category: "projects",
+            categoryLabel: "Honour & Award",
+            icon: "ph-medal",
+            accent: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+            dotColor: "bg-cyan-400",
+            period: "28.09.2017",
+            location: "Fürth, Germany",
+            title: "Special Recognition for Outstanding Completion of the Vocational School",
+            organization: "Government of Middle Franconia (Regierung von Mittelfranken)",
+            badge: "State Award (GPA 1.3)",
+            overview: "Prestigious regional state award recognizing top-tier graduates for achieving exceptional academic excellence and an outstanding GPA.",
+            tags: ["State Award", "Government of Middle Franconia"],
+            details: [
+                "Awarded by the Government of Middle Franconia to recognize top-tier graduates achieving an outstanding final grade point average (1.3)."
+            ]
+        }
+    ];
+
+    // State Management
+    let activeCategory = 'all';
+    let searchQuery = '';
+    let allExpanded = false;
+    const expandedIds = new Set(['work-phd-ludaviz']); // Expand current PhD role by default as a visual cue
+
+    const timelineFeed = document.getElementById('cv-timeline-feed');
+    const searchInput = document.getElementById('cv-search');
+    const filterBtns = document.querySelectorAll('.cv-filter-btn');
+    const kpiTriggers = document.querySelectorAll('[data-filter-trigger]');
+    const toggleAllBtn = document.getElementById('toggle-all-details');
+    const toggleAllText = document.getElementById('toggle-all-text');
+    const toggleAllIcon = document.getElementById('toggle-all-icon');
+
+    // Highlight matched search text
+    function highlightMatch(text, query) {
+        if (!query || !text) return text;
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp(`(${escaped})`, 'gi'), '<span class="px-1 rounded-sm text-white" style="background: rgb(217 128 38)">$1</span>');
+    }
+
+    function renderTimeline() {
+        const q = searchQuery.toLowerCase().trim();
+
+        const filtered = cvEntries.filter(item => {
+            const matchesCat = activeCategory === 'all' || item.category === activeCategory;
+            if (!matchesCat) return false;
+            if (!q) return true;
+
+            const haystack = [
+                item.title,
+                item.organization,
+                item.location,
+                item.period,
+                item.badge,
+                item.overview,
+                ...(item.tags || []),
+                ...(item.details || [])
+            ].join(' ').toLowerCase();
+
+            return haystack.includes(q);
+        });
+
+        if (filtered.length === 0) {
+            timelineFeed.innerHTML = `
+                <div class="bento-card p-10 text-center border-dashed">
+                    <i class="ph ph-magnifying-glass text-3xl text-textMuted mb-2"></i>
+                    <h3 class="font-bold text-white mb-1">No matching milestones found</h3>
+                    <p class="text-xs text-textMuted">Try clearing your search filter or selecting "All".</p>
+                </div>`;
+            return;
+        }
+
+        timelineFeed.innerHTML = filtered.map((item) => {
+            // Auto-expand cards if user is actively searching so they see where the match occurred inside details
+            const isExpanded = expandedIds.has(item.id) || (q.length > 0) || allExpanded;
+
+            return `
+            <article data-id="${item.id}" class="timeline-card bento-card p-5 md:p-6 cursor-pointer interactive relative group ${isExpanded ? 'expanded' : ''}">
+                <!-- Timeline Node Dot -->
+                <span class="w-3.5 h-3.5 rounded-full ${item.dotColor} border-[3px] border-base absolute -left-[28px] top-7 z-10 shadow-[0_0_10px_rgba(255,255,255,0.3)]"></span>
+
+                <!-- Top Meta Row: Category Pill, Date, Location & Badge -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${item.accent}">
+                            <i class="ph ${item.icon}"></i> ${item.categoryLabel}
+                        </span>
+                        <span class="text-xs font-bold text-white">${highlightMatch(item.period, searchQuery)}</span>
+                        <span class="text-xs text-textMuted">• ${highlightMatch(item.location, searchQuery)}</span>
+                    </div>
+
+                    ${item.badge ? `<span class="px-2.5 py-0.5 rounded-lg bg-white/10 border border-white/10 text-[11px] font-bold text-white">${highlightMatch(item.badge, searchQuery)}</span>` : ''}
+                </div>
+
+                <!-- Main Header: Title & Organization -->
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h2 class="md:text-lg font-bold text-white leading-snug group-hover:text-gray-200 transition-colors">
+                            ${highlightMatch(item.title, searchQuery)}
+                        </h2>
+                        <p class="text-xs md:text-sm text-gray-300 font-bold mt-0.5">
+                            ${highlightMatch(item.organization, searchQuery)}
+                        </p>
+                    </div>
+
+                    <!-- Expand/Collapse Trigger Indicator -->
+                    <div class="w-8 h-8 rounded-full border border-border bg-base flex items-center justify-center shrink-0 mt-0.5 group-hover:border-gray-400 transition-colors">
+                        <i class="ph ph-caret-down text-sm text-white chevron-icon transition-transform duration-300"></i>
+                    </div>
+                </div>
+
+                <!-- Overview First: Concise 1-Line Summary -->
+                <p class="text-xs md:text-sm text-textMuted leading-relaxed mt-3">
+                    ${highlightMatch(item.overview, searchQuery)}
+                </p>
+
+                <!-- Skill / Domain Tags -->
+                <div class="flex flex-wrap gap-1.5 mt-3.5">
+                    ${(item.tags || []).map(t => `<span class="px-2 py-0.5 rounded-md bg-base border border-border text-[10px] text-gray-300">${highlightMatch(t, searchQuery)}</span>`).join('')}
+                </div>
+
+                <!-- Details on Demand: Collapsible Drawer -->
+                <div class="details-grid">
+                    <div class="overflow-hidden">
+                        <div class="pt-4 mt-4 border-t border-border/80 flex flex-col gap-2.5">
+                            <p class="text-[10px] uppercase tracking-widest text-textMuted font-bold">Detailed Responsibilities & Achievements</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-xs md:text-sm text-gray-300 leading-relaxed">
+                                ${(item.details || []).map(d => `<li>${highlightMatch(d, searchQuery)}</li>`).join('')}
+                            </ul>
+                            ${item.link ? `
+                                <div class="mt-2">
+                                    <a href="${item.link}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-black text-xs font-bold hover:bg-gray-200 transition-colors interactive">
+                                        View Publication (DOI) <i class="ph ph-arrow-up-right"></i>
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            </article>`;
+        }).join('');
+
+        // Bind click events to toggle details on demand
+        document.querySelectorAll('.timeline-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.getAttribute('data-id');
+                if (card.classList.contains('expanded')) {
+                    card.classList.remove('expanded');
+                    expandedIds.delete(id);
+                } else {
+                    card.classList.add('expanded');
+                    expandedIds.add(id);
+                }
+            });
+        });
+
+        if (typeof bindCursorEvents === 'function') bindCursorEvents();
+    }
+
+    // Category Button Filtering
+    function setActiveCategory(cat) {
+        activeCategory = cat;
+        filterBtns.forEach(btn => {
+            if (btn.getAttribute('data-cat') === cat) {
+                btn.className = 'cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-white text-black transition-all interactive';
+            } else {
+                btn.className = 'cv-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold text-textMuted hover:text-white hover:bg-white/5 transition-all interactive';
+            }
+        });
+        renderTimeline();
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => setActiveCategory(btn.getAttribute('data-cat')));
+    });
+
+    kpiTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const targetCat = trigger.getAttribute('data-filter-trigger');
+            setActiveCategory(targetCat);
+        });
+    });
+
+    // Live Search
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderTimeline();
+    });
+
+    // Expand All / Collapse All Toggle
+    toggleAllBtn.addEventListener('click', () => {
+        allExpanded = !allExpanded;
+        if (allExpanded) {
+            cvEntries.forEach(e => expandedIds.add(e.id));
+            toggleAllText.textContent = 'Collapse All';
+            toggleAllIcon.className = 'ph ph-arrows-in-line-vertical';
+        } else {
+            expandedIds.clear();
+            toggleAllText.textContent = 'Expand All';
+            toggleAllIcon.className = 'ph ph-arrows-out-line-vertical';
+        }
+        renderTimeline();
+    });
+
+    // Initial Render
+    renderTimeline();
+</script>
+
+<!-- Shared Portfolio Logic -->
+<script src="../assets/js/app.js"></script>
+</body>
+</html>
