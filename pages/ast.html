@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Software Techniques | Luca G.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
+    <!-- Procedural Header -->
+    <header id="site-header"></header>
+
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+        <!-- Procedural Left Sidebar -->
+        <aside id="site-sidebar"></aside>
+
+        <!-- Right AST Content Area -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-6 lg:pb-0">
+            <!-- Page Header & Search -->
+            <div class="mb-6 md:mb-8 fade-in-up" style="animation-delay: 150ms;">
+                <h1 class="text-3xl md:text-[32px] lg:text-[40px] font-bold text-white tracking-wide mb-6">Applied Software Techniques</h1>
+                <div class="relative w-full max-w-lg">
+                    <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-textMuted text-lg"></i>
+                    <input id="lecture-search" type="text" placeholder="Search lectures..." class="w-full bg-[#121212] border border-[#2a2a2a] rounded-[1rem] py-3.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                </div>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pb-6 relative">
+                <!-- Left Column: Procedurally Filled Video Lecture Feed -->
+                <div id="lecture-feed" class="lg:col-span-8 flex flex-col gap-5"></div>
+
+                <!-- Right Column: Sidebar Widgets -->
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
+                    <!-- Featured Widget (Ludic Visualizations) -->
+                    <a href="#" class="bento-card p-6 flex flex-col items-center justify-center text-center group block interactive h-auto aspect-square lg:aspect-auto lg:h-[340px]">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-[#2a2a2a] mb-5 group-hover:scale-105 transition-transform duration-500 bg-[#3b5998]">
+                            <img src="../images/LudaViz.png" alt="Ludic Visualizations" class="w-full h-full object-cover opacity-90">
+                        </div>
+                        <h3 class="text-[18px] font-bold text-white tracking-wide">Ludic Visualizations</h3>
+                        <p class="text-[11px] text-textMuted italic mt-1">The future of immersive<br>game design</p>
+                        <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
+                            <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
+                        </div>
+                    </a>
+
+                    <!-- Stack Widget -->
+                    <a href="pages/stack.html" class="bento-card p-5 md:p-6 flex flex-col items-center justify-center interactive relative group h-[120px] lg:h-[160px] overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)]" style="background-size: 14px 14px;"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
+                        <h3 class="text-[15px] font-bold absolute top-5 left-5 tracking-wide text-gray-300 z-20">My Stack</h3>
+                        <div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Procedural Mobile Footer -->
+            <div id="site-mobile-footer"></div>
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

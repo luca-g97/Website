@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stack | Luca G.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
+    <!-- Procedural Header -->
+    <header id="site-header"></header>
+
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+        <!-- Procedural Left Sidebar -->
+        <aside id="site-sidebar"></aside>
+
+        <!-- Right Content Area -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
+            <!-- 1. EXECUTIVE HEADER & KPI STRIP -->
+            <div class="mb-6 fade-in-up" style="animation-delay: 150ms;">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">My Stack & Toolkit</h1>
+                    </div>
+                    <p class="text-xs text-textMuted max-w-md">
+                        <span class="text-white font-bold">Full-Spectrum Media Engineering:</span><br>From VDE-compliant hardware test racks and C++ game engines to PyTorch Explainable AI and HCI visualization.
+                    </p>
+                </div>
+
+                <!-- 4 Executive Summary Bento Cards (Clickable to filter) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <button data-stack-filter="engines" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Game Engines & 3D</span>
+                            <i class="ph ph-cube text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white group-hover:text-gray-200">UE5 & Unity</div>
+                            <div class="text-xs text-textMuted mt-0.5">C++ • Blueprints • Blender</div>
+                        </div>
+                    </button>
+
+                    <button data-stack-filter="ai" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">AI & Visualization</span>
+                            <i class="ph ph-brain text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">PyTorch & SciViz</div>
+                            <div class="text-xs text-textMuted mt-0.5">LLM XAI • Diegetic & Ludic Vis</div>
+                        </div>
+                    </button>
+
+                    <button data-stack-filter="code" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Core Languages</span>
+                            <i class="ph ph-code text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">C++ • C# • JS • Python</div>
+                            <div class="text-xs text-textMuted mt-0.5">Java • SQL • React • CMake</div>
+                        </div>
+                    </button>
+
+                    <button data-stack-filter="design" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Design & Workflow</span>
+                            <i class="ph ph-figma-logo text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">Figma & Framer</div>
+                            <div class="text-xs text-textMuted mt-0.5">Git • Jira • VDE Hardware</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 2. FILTER & SEARCH BAR -->
+                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-[#121212] border border-[#2a2a2a] rounded-2xl p-3">
+                    <div id="stack-filter-group" class="flex flex-wrap gap-1.5"></div>
+
+                    <div class="relative w-full lg:w-72">
+                        <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                        <input id="stack-search" type="text" placeholder="Filter tool, language, domain..." class="w-full bg-base border border-[#2a2a2a] rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MAIN BENTO GRID (8 Cols Tool Cards + 4 Cols Architecture Sidebar) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pb-6">
+                <!-- Left 8 Columns: Procedurally Injected Stack Cards -->
+                <div id="stack-bento-grid" class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 fade-in-up" style="animation-delay: 250ms;"></div>
+
+                <!-- Right 4 Columns: Sticky Engineering Philosophy & Workflow -->
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
+                    <div class="bento-card p-6 flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-[15px] font-bold text-white tracking-wide">Engineering Workflow</h3>
+                            <span class="text-[11px] text-textMuted uppercase tracking-wider">Pipeline</span>
+                        </div>
+                        <div class="flex flex-col gap-3 text-xs">
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>1. Research & Conception</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">HCI / Mixed-Methods</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Empirical user studies, Figma wireframing, and design pattern synthesis.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>2. Core Systems & AI</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">C++ / PyTorch</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">High-performance C++ backend logic, AI/LLM pipelines, and algorithmic data parsing.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-base/70 border border-border">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>3. Interactive 3D & Polish</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-gray-300">UE5 / Unity / Web</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Blueprints state machines, Niagara VFX, custom shaders, and procedural web deployment.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA to AST Courseware -->
+                    <a href="../ast.html" class="bento-card p-6 flex flex-col justify-between gap-4 group interactive">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Live In Action</span>
+                            <div class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="ph-bold ph-arrow-up-right text-sm"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-white">See This Stack in AST</h3>
+                            <p class="text-xs text-textMuted mt-1 leading-relaxed">Explore 11 hands-on lectures combining CMake, C++, Stockfish AI, and Unreal Engine 5.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Procedural Mobile Footer -->
+            <div id="site-mobile-footer"></div>
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

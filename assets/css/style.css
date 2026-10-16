@@ -1,7 +1,7 @@
 /* Hide Default Cursor on Desktop */
 @media (pointer: fine) {
     body { cursor: none; }
-    a, button, .interactive, canvas { cursor: none !important; }
+    a, button, .interactive, canvas, input, textarea { cursor: none !important; }
 }
 
 /* Premium dotted background pattern */
@@ -44,25 +44,84 @@ body.hovering-interactive #cursor-halo {
 
 /* --- Premium Bento Cards --- */
 .bento-card {
-    background-color: #121212; border: 1px solid #2a2a2a; border-radius: 1.5rem;
-    position: relative; overflow: hidden;
+    background-color: #121212;
+    border: 1px solid #2a2a2a;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
     transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 .bento-card:hover {
-    border-color: #4a4a4a; transform: translateY(-4px);
+    border-color: #4a4a4a;
+    transform: translateY(-4px);
     box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.03);
 }
-.card-link-btn { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; }
-.bento-card:hover .card-link-btn { transform: scale(1.1) rotate(5deg); border-color: #3a3a3a; }
+.card-link-btn {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+.bento-card:hover .card-link-btn {
+    transform: scale(1.1) rotate(5deg);
+    border-color: #3a3a3a;
+}
 
-/* Marquee Mask */
-.marquee-mask-y { mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%); }
+/* --- Marquee & Scrollbars --- */
+.marquee-mask-y {
+    mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%);
+}
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Dropdown & Entrances */
-#dropdown-menu { transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s; }
-#dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+/* --- Dropdown & Entrances --- */
+#dropdown-menu {
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+}
+#dropdown-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
 
-.fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+/* --- About Page: Accordion & Timeline Spine --- */
+.details-grid {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+}
+.timeline-card.expanded .details-grid {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+.timeline-card.expanded .chevron-icon {
+    transform: rotate(180deg);
+}
+.timeline-card.expanded {
+    border-color: #4a4a4a;
+    background-color: #161616;
+}
+.timeline-spine::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 0;
+    left: 15px;
+    width: 1px;
+    background: linear-gradient(to bottom, #4a4a4a 0%, #2a2a2a 85%, transparent 100%);
+}
+
+/* --- Contact Page: Active Topic Pill --- */
+.topic-pill.active {
+    background-color: #ffffff;
+    color: #0c0c0c;
+    border-color: #ffffff;
+}
