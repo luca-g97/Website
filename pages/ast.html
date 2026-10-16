@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
     <script src="../assets/js/tailwind-config.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -24,41 +24,107 @@
         <aside id="site-sidebar"></aside>
 
         <!-- Right AST Content Area -->
-        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-6 lg:pb-0">
-            <!-- Page Header & Search -->
-            <div class="mb-6 md:mb-8 fade-in-up" style="animation-delay: 150ms;">
-                <h1 class="text-3xl md:text-[32px] lg:text-[40px] font-bold text-white tracking-wide mb-6">Applied Software Techniques</h1>
-                <div class="relative w-full max-w-lg">
-                    <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-textMuted text-lg"></i>
-                    <input id="lecture-search" type="text" placeholder="Search lectures..." class="w-full bg-[#121212] border border-[#2a2a2a] rounded-[1rem] py-3.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
+            <!-- 1. EXECUTIVE HEADER & KPI BENTO STRIP -->
+            <div class="mb-6 fade-in-up" style="animation-delay: 150ms;">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">Applied Software Techniques</h1>
+                    </div>
+                    <p class="text-xs text-textMuted max-w-md">
+                        <span class="text-white font-bold">Overview first, details on demand:</span><br>Filter by course phase, search across lecture syllabi, click any card to inspect its 6-part outline, or launch the video player.
+                    </p>
+                </div>
+
+                <!-- 4 Executive Summary Bento Cards (Clickable to filter) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <button data-ast-filter="all" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Full Courseware</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        </div>
+                        <div>
+                            <div id="ast-kpi-total" class="font-bold text-white group-hover:text-gray-200">11 Videos (~11h 44m)</div>
+                            <div class="text-xs text-textMuted mt-0.5">12 Group Lessons • 72h WS</div>
+                        </div>
+                    </button>
+
+                    <button data-ast-filter="cpp" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Phase 1 • Plain C++</span>
+                            <i class="ph ph-terminal-window text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">Stockfish & FEN</div>
+                            <div class="text-xs text-textMuted mt-0.5">CMake • UCI Pipe • Console Chess</div>
+                        </div>
+                    </button>
+
+                    <button data-ast-filter="chess3d" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Phase 2 • UE5 Chess</span>
+                            <i class="ph ph-cube text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">3D Chess-Party</div>
+                            <div class="text-xs text-textMuted mt-0.5">C++ Bridge • Blueprints • Niagara</div>
+                        </div>
+                    </button>
+
+                    <button data-ast-filter="darts" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Phase 3 • UE5 Darts</span>
+                            <i class="ph ph-crosshair text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">Physics vs. Projectile</div>
+                            <div class="text-xs text-textMuted mt-0.5">Raycasting • CCD • Dummy Actors</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 2. PROFESSIONAL FILTER, SEARCH & EXPAND ALL BAR -->
+                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-card border border-border rounded-2xl p-3">
+                    <div id="ast-filter-group" class="flex flex-wrap gap-1.5"></div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="relative flex-1 lg:w-64">
+                            <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                            <input id="lecture-search" type="text" placeholder="Search syllabus, C++, Niagara..." class="w-full bg-base border border-border rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                        </div>
+                        <button id="toggle-all-lectures" class="px-3.5 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-white whitespace-nowrap transition-all interactive flex items-center gap-1.5">
+                            <i id="toggle-all-ast-icon" class="ph ph-arrows-out-line-vertical"></i>
+                            <span id="toggle-all-ast-text">Expand All</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Bento Grid Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pb-6 relative">
+            <!-- 3. BENTO GRID LAYOUT (8 Cols Video Feed + 4 Cols Sticky Widgets) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pb-6 relative items-start">
                 <!-- Left Column: Procedurally Filled Video Lecture Feed -->
-                <div id="lecture-feed" class="lg:col-span-8 flex flex-col gap-5"></div>
+                <div id="lecture-feed" class="lg:col-span-8 flex flex-col gap-5 fade-in-up" style="animation-delay: 250ms;"></div>
 
                 <!-- Right Column: Sidebar Widgets -->
                 <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
                     <!-- Featured Widget (Ludic Visualizations) -->
-                    <a href="#" class="bento-card p-6 flex flex-col items-center justify-center text-center group block interactive h-auto aspect-square lg:aspect-auto lg:h-[340px]">
-                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-[#2a2a2a] mb-5 group-hover:scale-105 transition-transform duration-500 bg-[#3b5998]">
+                    <a href="academic.html" class="bento-card p-6 flex flex-col items-center justify-center text-center group block interactive h-auto aspect-square lg:aspect-auto lg:h-[340px]">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-border mb-5 group-hover:scale-105 transition-transform duration-500 bg-[#3b5998]">
                             <img src="../images/LudaViz.png" alt="Ludic Visualizations" class="w-full h-full object-cover opacity-90">
                         </div>
                         <h3 class="text-[18px] font-bold text-white tracking-wide">Ludic Visualizations</h3>
                         <p class="text-[11px] text-textMuted italic mt-1">The future of immersive<br>game design</p>
                         <div class="card-link-btn absolute bottom-4 right-4 md:bottom-5 md:right-5 w-9 h-9 md:w-10 md:h-10 bg-white border-4 border-card rounded-full flex items-center justify-center z-20 shadow-lg group-hover:border-[#2a2a2a]">
-                            <i class="ph ph-arrow-up-right text-black font-bold text-base md:text-lg"></i>
+                            <i class="ph ph-arrow-up-right text-black font-bold md:text-lg"></i>
                         </div>
                     </a>
 
                     <!-- Stack Widget -->
-                    <a href="pages/stack.html" class="bento-card p-5 md:p-6 flex flex-col items-center justify-center interactive relative group h-[120px] lg:h-[160px] overflow-hidden">
-                        <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)]" style="background-size: 14px 14px;"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
+                    <a href="stack.html" class="bento-card p-5 md:p-6 flex flex-col items-center justify-center interactive relative group h-[120px] lg:h-[160px] overflow-hidden">
+                        <div class="absolute inset-0 stack-card-dots"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
                         <h3 class="text-[15px] font-bold absolute top-5 left-5 tracking-wide text-gray-300 z-20">My Stack</h3>
-                        <div id="stack-container" class="flex flex-wrap items-center justify-center relative z-10 mt-6 w-full"></div>
+                        <div id="stack-container" class="flex items-center justify-center relative z-10 mt-6 w-full"></div>
                     </a>
                 </div>
             </div>

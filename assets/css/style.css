@@ -1,3 +1,27 @@
+:root {
+    --soft-white: #cccccc;
+    --soft-white-hover: #cccccc;
+    --bg-base: #0c0c0c;
+    --bg-card: #121212;
+    --bg-card-expanded: #161616;
+    --border-color: #2a2a2a;
+    --border-hover: #4a4a4a;
+}
+
+/* Soften all bg-white elements & text selection globally */
+.bg-white {
+    background-color: var(--soft-white) !important;
+}
+.hover\:bg-white:hover,
+.group:hover .group-hover\:bg-white {
+    background-color: var(--soft-white) !important;
+}
+::selection,
+*::selection {
+    background-color: var(--soft-white) !important;
+    color: var(--bg-base) !important;
+}
+
 /* Hide Default Cursor on Desktop */
 @media (pointer: fine) {
     body { cursor: none; }
@@ -6,29 +30,41 @@
 
 /* Premium dotted background pattern */
 body {
-    background-color: #0c0c0c;
-    color: #ffffff;
+    background-color: var(--bg-base);
+    color: var(--soft-white);
     background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
     background-size: 24px 24px;
 }
 
 /* --- Perfectly Locked Cursor --- */
 #cursor-wrapper {
-    position: fixed; top: 0; left: 0;
-    width: 0; height: 0;
-    pointer-events: none; z-index: 99999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 99999;
 }
 #cursor-dot {
-    position: absolute; top: -4px; left: -4px;
-    width: 8px; height: 8px;
-    background-color: white; border-radius: 50%;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--soft-white);
+    border-radius: 50%;
 }
 #cursor-halo {
-    position: absolute; top: -24px; left: -24px;
-    width: 48px; height: 48px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50%; opacity: 0;
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(226, 226, 226, 0.05);
+    border: 1px solid rgba(226, 226, 226, 0.4);
+    border-radius: 50%;
+    opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.3s ease;
 }
@@ -44,15 +80,15 @@ body.hovering-interactive #cursor-halo {
 
 /* --- Premium Bento Cards --- */
 .bento-card {
-    background-color: #121212;
-    border: 1px solid #2a2a2a;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 1.5rem;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background-color 0.3s ease;
 }
 .bento-card:hover {
-    border-color: #4a4a4a;
+    border-color: var(--border-hover);
     transform: translateY(-4px);
     box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.03);
 }
@@ -64,11 +100,45 @@ body.hovering-interactive #cursor-halo {
     border-color: #3a3a3a;
 }
 
-/* --- Marquee & Scrollbars --- */
+/* Dotted Stack Card Overlay */
+.stack-card-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 14px 14px;
+}
+
+/* Search Match Highlight */
+.search-highlight {
+    background-color: rgb(217, 128, 38);
+    color: #ffffff;
+    padding: 0 0.25rem;
+    border-radius: 0.125rem;
+}
+
+/* --- Marquee Masks & Animations --- */
 .marquee-mask-y {
     mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 85%, transparent 98%);
 }
+.marquee-mask-x {
+    mask-image: linear-gradient(to right, transparent 1%, black 12%, black 88%, transparent 99%);
+    -webkit-mask-image: linear-gradient(to right, transparent 1%, black 12%, black 88%, transparent 99%);
+}
+
+@keyframes scrollX {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.stack-marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: max-content;
+    animation: scrollX 42s linear infinite;
+}
+.stack-marquee-track:hover {
+    animation-play-state: paused;
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -91,7 +161,20 @@ body.hovering-interactive #cursor-halo {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- About & Projects Pages: Accordion & Timeline Spine --- */
+/* Reusable Animation Delay Classes (Eliminates inline styles) */
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-350 { animation-delay: 350ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-450 { animation-delay: 450ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-550 { animation-delay: 550ms; }
+.delay-650 { animation-delay: 650ms; }
+
+/* --- Accordion ("Details on Demand") & Timeline Spine --- */
 .details-grid {
     display: grid;
     grid-template-rows: 0fr;
@@ -99,19 +182,23 @@ body.hovering-interactive #cursor-halo {
     opacity: 0;
 }
 .timeline-card.expanded .details-grid,
-.project-card.expanded .details-grid {
+.project-card.expanded .details-grid,
+.lecture-card.expanded .details-grid {
     grid-template-rows: 1fr;
     opacity: 1;
 }
 .timeline-card.expanded .chevron-icon,
-.project-card.expanded .chevron-icon {
+.project-card.expanded .chevron-icon,
+.lecture-card.expanded .chevron-icon {
     transform: rotate(180deg);
 }
 .timeline-card.expanded,
-.project-card.expanded {
-    border-color: #4a4a4a;
-    background-color: #161616;
+.project-card.expanded,
+.lecture-card.expanded {
+    border-color: var(--border-hover);
+    background-color: var(--bg-card-expanded);
 }
+
 .timeline-spine::before {
     content: '';
     position: absolute;
@@ -124,7 +211,7 @@ body.hovering-interactive #cursor-halo {
 
 /* --- Contact Page: Active Topic Pill --- */
 .topic-pill.active {
-    background-color: #ffffff;
-    color: #0c0c0c;
-    border-color: #ffffff;
+    background-color: var(--soft-white);
+    color: var(--bg-base);
+    border-color: var(--soft-white);
 }

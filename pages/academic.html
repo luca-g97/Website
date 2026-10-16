@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Teaching | Luca G.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
+    <!-- Procedural Header -->
+    <header id="site-header"></header>
+
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+        <!-- Procedural Left Sidebar -->
+        <aside id="site-sidebar"></aside>
+
+        <!-- Right Content Area -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
+            <!-- 1. EXECUTIVE HEADER & KPI STRIP -->
+            <div class="mb-6 fade-in-up delay-150">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">Research & Teaching</h1>
+                    </div>
+                    <p class="text-xs text-textMuted max-w-md">
+                        <span class="text-white font-bold">Overview first, details on demand:</span><br>Click any research or course card to open the overlaying view with full abstracts, syllabi, metrics, and links.
+                    </p>
+                </div>
+
+                <!-- 4 Executive Summary Bento Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <button data-proj-filter="publications" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">FWF Pioneer PhD</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-white group-hover:text-gray-200">LudaViz Project</div>
+                            <div class="text-xs text-textMuted mt-0.5">CHI '26 & FDG '26 Papers</div>
+                        </div>
+                    </button>
+
+                    <button data-proj-filter="xai" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">AI & Computer Vision</span>
+                            <i class="ph ph-brain text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div id="kpi-xai-count" class="font-bold text-white">2 AI Studies</div>
+                            <div class="text-xs text-textMuted mt-0.5">White-Box LLM XAI & BAMBI</div>
+                        </div>
+                    </button>
+
+                    <button data-proj-filter="hci-vis" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">HCI & InfoVis</span>
+                            <i class="ph ph-chart-polar text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div id="kpi-hcivis-count" class="font-bold text-white">2 Studies</div>
+                            <div class="text-xs text-textMuted mt-0.5">Foldable Pen HCI & D3 Climate</div>
+                        </div>
+                    </button>
+
+                    <button data-proj-filter="teaching" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">University Teaching</span>
+                            <i class="ph ph-chalkboard-teacher text-textMuted group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div>
+                            <div id="kpi-lecture-count" class="font-bold text-white">1 Showcase (11 Videos)</div>
+                            <div class="text-xs text-textMuted mt-0.5">AST (72h) & Game Prog. (21h)</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 2. FILTER, SEARCH & EXPAND ALL BAR -->
+                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-card border border-border rounded-2xl p-3">
+                    <div id="projects-filter-group" class="flex flex-wrap gap-1.5"></div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="relative flex-1 lg:w-60">
+                            <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                            <input id="projects-search" type="text" placeholder="Filter CHI, PyTorch, AST..." class="w-full bg-base border border-border rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                        </div>
+                        <button id="toggle-all-projects" class="px-3.5 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-white whitespace-nowrap transition-all interactive flex items-center gap-1.5">
+                            <i id="toggle-all-proj-icon" class="ph ph-arrows-out-line-vertical"></i>
+                            <span id="toggle-all-proj-text">Expand All</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MAIN BENTO GRID -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pb-6">
+                <div id="projects-bento-grid" data-showcase-scope="academic" class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 items-start fade-in-up delay-250"></div>
+
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1 delay-350">
+                    <!-- Peer-Reviewed Papers & Service -->
+                    <div class="bento-card p-6 flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-[15px] font-bold text-white tracking-wide">Publications & Teaching</h3>
+                            <span class="text-[11px] text-textMuted uppercase tracking-wider">Highlights</span>
+                        </div>
+                        <div class="flex flex-col gap-3 text-xs">
+                            <a href="https://doi.org/10.1145/3815598.3815601" target="_blank" rel="noopener" class="p-3.5 rounded-xl bg-base/70 border border-border hover:border-gray-500 transition-all interactive block">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>FDG '26 (Copenhagen)</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">08/2026</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Transient Gear, Persistent Impact: Mixed-methods study on Zelda: BotW weapon durability & 6 HCI design patterns.</p>
+                            </a>
+                            <a href="https://doi.org/10.1145/3772363.3799313" target="_blank" rel="noopener" class="p-3.5 rounded-xl bg-base/70 border border-border hover:border-gray-500 transition-all interactive block">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>ACM CHI EA '26 (Barcelona)</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">04/2026</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite's Swarm Visualization.</p>
+                            </a>
+                            <a href="ast.html" class="p-3.5 rounded-xl bg-base/70 border border-border hover:border-gray-500 transition-all interactive block">
+                                <div class="font-bold text-white mb-1 flex items-center justify-between">
+                                    <span>AST Video Portal<br>(11 Videos)</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">UE5 & C++</span>
+                                </div>
+                                <p class="text-textMuted leading-relaxed">Open the dedicated 11-lecture video series covering Plain C++, Stockfish AI, 3D Chess-Party, and Darts.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Procedural Mobile Footer -->
+            <div id="site-mobile-footer"></div>
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

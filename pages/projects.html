@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects & Research | Luca G.</title>
+    <title>All Projects & Works | Luca G.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,24 +23,24 @@
         <!-- Procedural Left Sidebar -->
         <aside id="site-sidebar"></aside>
 
-        <!-- Right Content Area: Overview First, Details on Demand -->
+        <!-- Right Content Area -->
         <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
             <!-- 1. EXECUTIVE HEADER & KPI STRIP -->
-            <div class="mb-6 fade-in-up" style="animation-delay: 150ms;">
+            <div class="mb-6 fade-in-up delay-150">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
                     <div>
                         <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">Projects & Works</h1>
                     </div>
                     <p class="text-xs text-textMuted max-w-md">
-                        <span class="text-white font-bold">Overview first, details on demand:</span><br>Filter by domain or click any project card to expand full technical breakdowns, key findings, trailers, and playable downloads.
+                        <span class="text-white font-bold">Overview first, details on demand:</span><br>Click any project card to open the overlaying view with full high-resolution visuals, technical breakdowns, and links.
                     </p>
                 </div>
 
-                <!-- 4 Executive Summary Bento Cards (Clickable to filter) -->
+                <!-- 4 Executive Summary Bento Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
                     <button data-proj-filter="all" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
                         <div class="flex items-center justify-between w-full mb-3">
-                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Portfolio Archive</span>
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Complete Archive</span>
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         </div>
                         <div>
@@ -51,7 +51,7 @@
 
                     <button data-proj-filter="interactive" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
                         <div class="flex items-center justify-between w-full mb-3">
-                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Interactive Media & Eng.</span>
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Interactive Media</span>
                             <i class="ph ph-game-controller text-textMuted group-hover:text-white transition-colors"></i>
                         </div>
                         <div>
@@ -62,7 +62,7 @@
 
                     <button data-proj-filter="academic" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
                         <div class="flex items-center justify-between w-full mb-3">
-                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Scientific Work</span>
+                            <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Academic Research</span>
                             <i class="ph ph-flask text-textMuted group-hover:text-white transition-colors"></i>
                         </div>
                         <div>
@@ -71,28 +71,28 @@
                         </div>
                     </button>
 
-                    <button data-proj-filter="lecture" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
+                    <button data-proj-filter="teaching" class="bento-card p-4 text-left group interactive flex flex-col justify-between">
                         <div class="flex items-center justify-between w-full mb-3">
                             <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">University Teaching</span>
                             <i class="ph ph-chalkboard-teacher text-textMuted group-hover:text-white transition-colors"></i>
                         </div>
                         <div>
-                            <div id="kpi-lecture-count" class="font-bold text-white">1 Course (11 Videos)</div>
+                            <div id="kpi-lecture-count" class="font-bold text-white">1 Showcase (11 Videos)</div>
                             <div class="text-xs text-textMuted mt-0.5">AST (72h) & Game Prog. (21h)</div>
                         </div>
                     </button>
                 </div>
 
                 <!-- 2. FILTER, SEARCH & EXPAND ALL BAR -->
-                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-[#121212] border border-[#2a2a2a] rounded-2xl p-3">
+                <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between bg-card border border-border rounded-2xl p-3">
                     <div id="projects-filter-group" class="flex flex-wrap gap-1.5"></div>
 
                     <div class="flex items-center gap-2">
                         <div class="relative flex-1 lg:w-60">
                             <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
-                            <input id="projects-search" type="text" placeholder="Filter project, tool, year..." class="w-full bg-base border border-[#2a2a2a] rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
+                            <input id="projects-search" type="text" placeholder="Filter project, tool, year..." class="w-full bg-base border border-border rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-gray-500 transition-colors interactive">
                         </div>
-                        <button id="toggle-all-projects" class="px-3.5 py-2 rounded-xl border border-[#2a2a2a] bg-base hover:bg-white/10 text-xs font-bold text-white whitespace-nowrap transition-all interactive flex items-center gap-1.5">
+                        <button id="toggle-all-projects" class="px-3.5 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-white whitespace-nowrap transition-all interactive flex items-center gap-1.5">
                             <i id="toggle-all-proj-icon" class="ph ph-arrows-out-line-vertical"></i>
                             <span id="toggle-all-proj-text">Expand All</span>
                         </button>
@@ -100,52 +100,34 @@
                 </div>
             </div>
 
-            <!-- 3. MAIN BENTO GRID (8 Cols Expandable Project Cards + 4 Cols Sticky Highlights) -->
+            <!-- 3. MAIN BENTO GRID -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pb-6">
-                <!-- Left 8 Columns: Procedurally Injected Project Cards -->
-                <div id="projects-bento-grid" class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 items-start fade-in-up" style="animation-delay: 250ms;"></div>
+                <div id="projects-bento-grid" data-showcase-scope="all" class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 items-start fade-in-up delay-250"></div>
 
-                <!-- Right 4 Columns: Sticky Flagship Highlights -->
-                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
-                    <!-- Flagship Research Spotlight -->
-                    <a href="about.html?cat=publications" class="bento-card p-6 flex flex-col items-center justify-center text-center group block interactive">
-                        <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-[#2a2a2a] mb-4 group-hover:scale-105 transition-transform duration-500 bg-[#3b5998]">
-                            <img src="../images/LudaViz.png" alt="LudaViz" class="w-full h-full object-cover opacity-90">
-                        </div>
-                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold uppercase tracking-wider mb-2">FWF Pioneer Project</span>
-                        <h3 class="text-lg font-bold text-white tracking-wide">LudaViz PhD Research</h3>
-                        <p class="text-xs text-textMuted mt-1 leading-relaxed">FH Hagenberg & University of Regensburg • Investigating Ludic and Diegetic Visualizations in video games.</p>
-                    </a>
-
-                    <!-- Flagship Engineering Milestones -->
-                    <div class="bento-card p-6 flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-[15px] font-bold text-white tracking-wide">Featured Deep Dives</h3>
-                            <span class="text-[11px] text-textMuted uppercase tracking-wider">Portfolio</span>
-                        </div>
-                        <div class="flex flex-col gap-3 text-xs">
-                            <div class="p-3 rounded-xl bg-base/70 border border-border">
-                                <div class="font-bold text-white mb-1 flex items-center justify-between">
-                                    <span>naturace VR Simulation</span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Pro-Noris Nominee</span>
-                                </div>
-                                <p class="text-textMuted leading-relaxed">7-pillar climate model, custom spherical C++ coordinates, and 9 animal AI heuristics on a NASA-textured Earth.</p>
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1 delay-350">
+                    <div class="bento-card p-6 flex flex-col gap-3">
+                        <h3 class="text-[15px] font-bold text-white tracking-wide mb-1">Dedicated Portals</h3>
+                        <a href="interactive.html" class="p-3.5 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div>
+                                <div class="text-xs font-bold text-white">Interactive Media & Eng.</div>
+                                <div class="text-[11px] text-textMuted mt-0.5">Games, VR, Simulators & Security</div>
                             </div>
-                            <div class="p-3 rounded-xl bg-base/70 border border-border">
-                                <div class="font-bold text-white mb-1 flex items-center justify-between">
-                                    <span>Explainable AI (LLMs & MNIST)</span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">~95% Accuracy</span>
-                                </div>
-                                <p class="text-textMuted leading-relaxed">Retracing AI outputs to the 42/10,000 most influential training sources solely via neural activations.</p>
+                            <i class="ph ph-arrow-right text-textMuted group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                        </a>
+                        <a href="academic.html" class="p-3.5 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div>
+                                <div class="text-xs font-bold text-white">Academic & Teaching</div>
+                                <div class="text-[11px] text-textMuted mt-0.5">LudaViz, CHI '26, XAI & AST</div>
                             </div>
-                            <div class="p-3 rounded-xl bg-base/70 border border-border">
-                                <div class="font-bold text-white mb-1 flex items-center justify-between">
-                                    <span>Cybersecurity Lab (Docker)</span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">~80 Fake Sites</span>
-                                </div>
-                                <p class="text-textMuted leading-relaxed">Try-it-yourself container covering the 80% most common web hacks with exact code-level fixes.</p>
+                            <i class="ph ph-arrow-right text-textMuted group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                        </a>
+                        <a href="ast.html" class="p-3.5 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div>
+                                <div class="text-xs font-bold text-white">AST Video Lectures</div>
+                                <div class="text-[11px] text-textMuted mt-0.5">11 Prerecorded C++ & UE5 Videos</div>
                             </div>
-                        </div>
+                            <i class="ph ph-arrow-right text-textMuted group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -8,38 +8,40 @@
     "socials": [
       {
         "name": "FH",
-        "url": "https://pure.fh-ooe.at/de/persons/luca-geiger/",
-        "image": "images/Icons/FHIcon.png",
+        "label": "FH OÖ Research Portal",
         "subtitle": "Pure Database",
-        "label": "FH OÖ Research Portal"
+        "url": "https://pure.fh-ooe.at/de/persons/luca-geiger/",
+        "image": "images/Icons/FHIcon.png"
       },
       {
         "name": "ORCID",
-        "url": "https://orcid.org/0009-0007-5752-2204",
-        "image": "images/Icons/OrcidIcon.png",
+        "label": "ORCID Registry",
         "subtitle": "0009-0007-5752-2204",
-        "label": "ORCID Registry"
+        "url": "https://orcid.org/0009-0007-5752-2204",
+        "image": "images/Icons/OrcidIcon.png"
       },
       {
         "name": "LinkedIn",
-        "url": "https://www.linkedin.com/in/luca-geiger/",
-        "icon": "ph-linkedin-logo",
+        "label": "LinkedIn",
         "subtitle": "in/luca-geiger",
-        "label": "LinkedIn"
+        "url": "https://www.linkedin.com/in/luca-geiger/",
+        "icon": "ph-linkedin-logo"
       },
       {
         "name": "GitHub",
-        "url": "https://github.com/luca-g97",
-        "icon": "ph-github-logo",
+        "label": "GitHub",
         "subtitle": "@luca-g97",
-        "label": "GitHub"
+        "url": "https://github.com/luca-g97",
+        "icon": "ph-github-logo"
       }
     ]
   },
   "featuredProject": {
-    "id": "proj_ludaviz",
+    "id": "proj_ludaviz_phd",
     "title": "LudaViz",
-    "imageUrl": "images/LudaViz.png"
+    "subtitle": "The future of immersive game design",
+    "imageUrl": "images/LudaViz.png",
+    "link": "pages/academic.html"
   },
   "stack": [
     {
@@ -48,10 +50,11 @@
       "icon": "ph-cube",
       "color": "text-black",
       "category": "engines",
+      "featured": true,
       "role": "3D Game Engine • C++ & Blueprints",
       "level": "Expert / Lecturer",
       "description": "Used for naturace VR, AST 3D Chess-Party & Darts, Fishing Simulator, Party Time, and The Untold Truth of the Grinch.",
-      "link": "ast.html"
+      "link": "pages/ast.html"
     },
     {
       "name": "Unity",
@@ -59,10 +62,11 @@
       "icon": "ph-game-controller",
       "color": "text-black",
       "category": "engines",
+      "featured": true,
       "role": "Multiplayer Games & RL Agents",
       "level": "Advanced",
       "description": "Used for Viewergames Racing/Arcade (Spaceflower UG), Amico Farkle, and Hill-Climb-Racing Reinforcement Learning.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "C++",
@@ -70,10 +74,11 @@
       "icon": "ph-code",
       "color": "text-blue-600",
       "category": "code",
+      "featured": true,
       "role": "Systems, Engine Plugins & Algorithms",
       "level": "Expert",
       "description": "Plain C++ Console-Chess, Stockfish UCI pipe integration, custom UE4/UE5 spherical coordinate plugins, and Android NDK.",
-      "link": "ast.html"
+      "link": "pages/ast.html"
     },
     {
       "name": "Python",
@@ -81,10 +86,11 @@
       "icon": "ph-terminal-window",
       "color": "text-amber-500",
       "category": "ai",
+      "featured": true,
       "role": "Explainable AI & Computer Vision",
       "level": "Expert",
       "description": "Primary language for M.Sc. Thesis on White-Box LLM Explainability (kNN activation analysis) and BAMBI thermal object detection.",
-      "link": "pages/projects.html?cat=academic"
+      "link": "pages/academic.html"
     },
     {
       "name": "PyTorch",
@@ -92,10 +98,11 @@
       "icon": "ph-fire",
       "color": "text-orange-600",
       "category": "ai",
+      "featured": true,
       "role": "Deep Learning & Activation Tracing",
       "level": "M.Sc. Specialization",
       "description": "Retracing AI-generated text and MNIST predictions (~95% accuracy with 42/10,000 sources) via compressed neural activations.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/academic.html"
     },
     {
       "name": "C#",
@@ -103,10 +110,11 @@
       "icon": "ph-brackets-curly",
       "color": "text-purple-600",
       "category": "code",
+      "featured": true,
       "role": "Unity Gameplay & ML-Agents Scripting",
       "level": "Advanced",
       "description": "Architected AI car waypoint systems, 12 real-time viewer items, ghost mode, and RL agent reward loops in Unity.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "Blender",
@@ -114,21 +122,11 @@
       "icon": "ph-polygon",
       "color": "text-orange-500",
       "category": "engines",
+      "featured": true,
       "role": "3D Modelling, Modifiers & Animation",
       "level": "Advanced",
       "description": "NASA-textured 3D Earth & 9 animated animal species (naturace), procedural city houses (Grinch), and Party Time assets.",
-      "link": "pages/projects.html?cat=interactive"
-    },
-    {
-      "name": "Java",
-      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
-      "icon": "ph-coffee",
-      "color": "text-red-600",
-      "category": "code",
-      "role": "Android/iOS Apps & Custom Tooling",
-      "level": "Advanced",
-      "description": "Cross-platform mobile app development, custom Twitch map-implementation tooling, and foldable device HCI evaluation.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "JavaScript",
@@ -136,10 +134,23 @@
       "icon": "ph-file-js",
       "color": "text-yellow-500",
       "category": "code",
+      "featured": true,
       "role": "Interactive Web, D3.js & Twitch Extensions",
       "level": "Advanced",
       "description": "Real-time Twitch viewer extensions, cybersecurity training web apps, D3.js climate visualizations, and this procedural portfolio.",
       "link": "index.html"
+    },
+    {
+      "name": "Java",
+      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+      "icon": "ph-coffee",
+      "color": "text-red-600",
+      "category": "code",
+      "featured": false,
+      "role": "Android/iOS Apps & Custom Tooling",
+      "level": "Advanced",
+      "description": "Cross-platform mobile app development, custom Twitch map-implementation tooling, and foldable device HCI evaluation.",
+      "link": "pages/interactive.html"
     },
     {
       "name": "HTML5 & CSS3",
@@ -147,6 +158,7 @@
       "icon": "ph-file-html",
       "color": "text-orange-600",
       "category": "code",
+      "featured": false,
       "role": "Frontend Architecture & UI Styling",
       "level": "Advanced",
       "description": "Responsive Bento interfaces, ~80 simulated web environments for cybersecurity training, and HCI experiment interfaces.",
@@ -158,10 +170,11 @@
       "icon": "ph-chart-line-up",
       "color": "text-amber-600",
       "category": "ai",
+      "featured": false,
       "role": "Information & Scientific Visualization",
       "level": "PhD / M.Sc. Focus",
       "description": "Interactive data visualizations for the Climate Change & Catastrophes report and LudaViz player behavior analytics.",
-      "link": "pages/projects.html?cat=academic"
+      "link": "pages/academic.html"
     },
     {
       "name": "Google Colab",
@@ -169,10 +182,11 @@
       "icon": "ph-cloud",
       "color": "text-amber-500",
       "category": "ai",
+      "featured": false,
       "role": "Cloud GPU Notebooks & AI Benchmarks",
       "level": "Daily Driver",
       "description": "Rapid experimentation for activation-based LLM explainability and benchmarking 13 object detection models (BAMBI).",
-      "link": "pages/projects.html?cat=academic"
+      "link": "pages/academic.html"
     },
     {
       "name": "TensorBoard & ML-Agents",
@@ -180,10 +194,11 @@
       "icon": "ph-chart-bar",
       "color": "text-orange-500",
       "category": "ai",
+      "featured": false,
       "role": "Reinforcement Learning Telemetry",
       "level": "Proficient",
       "description": "Training and evaluating autonomous driving agents in Hill-Climb-Racing across 8,750m procedural maps.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "Docker",
@@ -191,10 +206,11 @@
       "icon": "ph-shipping-container",
       "color": "text-sky-500",
       "category": "workflow",
+      "featured": false,
       "role": "Containerized Sandboxes & Deployment",
       "level": "Proficient",
       "description": "Containerized ~80 vulnerable web applications for safe hands-on hacking in the B.Eng. Cybersecurity Thesis.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "PHP & SQL",
@@ -202,10 +218,11 @@
       "icon": "ph-database",
       "color": "text-indigo-500",
       "category": "code",
+      "featured": false,
       "role": "Backend & Security Lab Scripting",
       "level": "Proficient",
       "description": "Server-side logic and vulnerability/patch demonstrations for the Try-It-Yourself Cybersecurity application.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "Go (Golang)",
@@ -213,10 +230,11 @@
       "icon": "ph-hard-drives",
       "color": "text-cyan-500",
       "category": "code",
+      "featured": false,
       "role": "Real-Time Multiplayer Backend",
       "level": "Working Knowledge",
       "description": "High-concurrency backend services connecting Twitch extension viewer actions with Unity in Viewergames Racing.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "Arduino IDE & Hardware",
@@ -224,10 +242,11 @@
       "icon": "ph-cpu",
       "color": "text-teal-500",
       "category": "workflow",
+      "featured": false,
       "role": "Physical Computing & Simulators",
       "level": "Expert / Lab Tutor",
       "description": "Microcontroller integration for the immersive Fishing Simulator, Physical Computing lab tutoring, and Siemens VDE test racks.",
-      "link": "pages/projects.html?cat=interactive"
+      "link": "pages/interactive.html"
     },
     {
       "name": "Git & GitHub",
@@ -235,6 +254,7 @@
       "icon": "ph-github-logo",
       "color": "text-black",
       "category": "workflow",
+      "featured": false,
       "role": "Version Control & Team Management",
       "level": "Daily Driver",
       "description": "Lead repository manager for naturace VR, Spaceflower sprints, XAI research codebases, and AST teaching repositories.",
@@ -246,37 +266,68 @@
       "icon": "ph-film-strip",
       "color": "text-rose-500",
       "category": "design",
+      "featured": false,
       "role": "Video Editing, Trailers & Courseware",
       "level": "Advanced",
       "description": "Post-production and sound design for the naturace VR trailer, project demo videos, and 11 prerecorded AST lectures.",
       "link": "pages/ast.html"
+    },
+    {
+      "name": "React",
+      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+      "icon": "ph-atom",
+      "color": "text-purple-600",
+      "category": "code",
+      "featured": false,
+      "role": "Component UI & Web Applications",
+      "level": "Proficient",
+      "description": "Modular front-end interfaces, interactive visualizations, and state-driven web applications.",
+      "link": "index.html"
+    },
+    {
+      "name": "Figma",
+      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+      "icon": "ph-figma-logo",
+      "color": "text-black",
+      "category": "design",
+      "featured": false,
+      "role": "UI/UX & Visualization Prototyping",
+      "level": "Advanced",
+      "description": "Wireframing interactive dashboards, diegetic UI concepts, and scientific figure layouts.",
+      "link": "pages/academic.html"
+    },
+    {
+      "name": "Framer",
+      "logoUrl": "https://cdn.simpleicons.org/framer/0055FF",
+      "icon": "ph-framer-logo",
+      "color": "text-black",
+      "category": "design",
+      "featured": false,
+      "role": "Interactive Web & Motion Systems",
+      "level": "Advanced",
+      "description": "Bento-grid layout architecture, rapid interactive prototyping, and micro-interactions.",
+      "link": "index.html"
+    },
+    {
+      "name": "Slack",
+      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/slack/slack-original.svg",
+      "icon": "ph-slack-logo",
+      "color": "text-black",
+      "category": "workflow",
+      "featured": false,
+      "role": "Team & Research Communication",
+      "level": "Daily Driver",
+      "description": "Real-time academic group coordination, LudaViz research channels, and student mentoring.",
+      "link": "pages/contact.html"
     }
   ],
   "cvCategories": [
-    {
-      "id": "all",
-      "label": "All"
-    },
-    {
-      "id": "work",
-      "label": "Work"
-    },
-    {
-      "id": "education",
-      "label": "Education"
-    },
-    {
-      "id": "publications",
-      "label": "Publications"
-    },
-    {
-      "id": "projects",
-      "label": "Projects & Awards"
-    },
-    {
-      "id": "leadership",
-      "label": "Service & Teaching"
-    }
+    { "id": "all", "label": "All" },
+    { "id": "work", "label": "Work" },
+    { "id": "education", "label": "Education" },
+    { "id": "publications", "label": "Publications" },
+    { "id": "projects", "label": "Projects & Awards" },
+    { "id": "leadership", "label": "Service & Teaching" }
   ],
   "cvEntries": [
     {
@@ -293,12 +344,7 @@
       "badge": "DOI: 10.1145/3815598.3815601",
       "link": "https://doi.org/10.1145/3815598.3815601",
       "overview": "Mixed-methods study examining weapon durability in The Legend of Zelda: Breath of the Wild and six design patterns for planned transience in HCI.",
-      "tags": [
-        "HCI",
-        "Game Design Patterns",
-        "Mixed-Methods",
-        "Zelda: BotW"
-      ],
+      "tags": ["HCI", "Game Design Patterns", "Mixed-Methods", "Zelda: BotW"],
       "details": [
         "Conducted a mixed-methods study exploring how weapon durability in The Legend of Zelda: Breath of the Wild affects player behavior and emotion.",
         "Culminated in six actionable design patterns for integrating planned transience into broader Human-Computer Interaction (HCI) contexts."
@@ -318,12 +364,7 @@
       "badge": "DOI: 10.1145/3772363.3799313",
       "link": "https://doi.org/10.1145/3772363.3799313",
       "overview": "Survey-based study analyzing how players recognize, interpret, and behaviorally adapt to diegetic hazard visualizations in Fortnite.",
-      "tags": [
-        "CHI '26",
-        "Diegetic Visualization",
-        "Player Behavior",
-        "Fortnite"
-      ],
+      "tags": ["CHI '26", "Diegetic Visualization", "Player Behavior", "Fortnite"],
       "details": [
         "Published in CHI EA '26: Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (Barcelona, Spain).",
         "Conducted a survey-based study analyzing how players recognize, interpret, and behaviorally adapt to diegetic data visualizations representing spreading map hazards in Fortnite."
@@ -342,12 +383,7 @@
       "organization": "ACM CHI Conference & VINCI Symposium",
       "badge": "Peer Review & Volunteering",
       "overview": "Active contributor to the international HCI and Visualization research communities as a CHI 2026 Poster Reviewer and VINCI 2025 Volunteer.",
-      "tags": [
-        "CHI 2026",
-        "VINCI 2025",
-        "Peer Review",
-        "Academic Community"
-      ],
+      "tags": ["CHI 2026", "VINCI 2025", "Peer Review", "Academic Community"],
       "details": [
         "02/2026 – REVIEWER | CHI 2026 (Posters): Peer reviewing extended abstracts and poster submissions for the premier international conference on Human-Computer Interaction.",
         "12/2025 – VOLUNTEER | VINCI 2025: Supporting session operations and attendees at the International Symposium on Visual Information Communication and Interaction."
@@ -363,15 +399,10 @@
       "period": "08/2025 – PRESENT",
       "location": "Hagenberg im Mühlkreis, Austria",
       "title": "PhD Student (LudaViz Project – FWF funded)",
-      "organization": "University of Applied Sciences Upper Austria (FH OÖ)",
+      "organization": "University of Applied Sciences Upper Austria (FH OÖ) & University of Regensburg",
       "badge": "Current Position",
       "overview": "Researcher in an FWF-funded pioneer project investigating Ludic Visualizations in video games and player behavior analytics.",
-      "tags": [
-        "Ludic Visualization",
-        "Player Behavior",
-        "FWF Research",
-        "Information Visualization"
-      ],
+      "tags": ["Ludic Visualization", "Player Behavior", "FWF Research", "Information Visualization"],
       "details": [
         "Researcher in the Pioneer Project Team studying Ludic Visualizations in Video Games (FWF-funded LudaViz project).",
         "Specifically researching novel visualization paradigms and options for representing complex player behaviour."
@@ -390,19 +421,13 @@
       "organization": "University of Applied Sciences Upper Austria (FH OÖ)",
       "badge": "University Lecturer",
       "overview": "Taught Interaction & Game Programming (SS) and Applied Software Techniques (WS) using custom C++, Stockfish AI, and Unreal Engine 5 projects.",
-      "tags": [
-        "Unreal Engine 5",
-        "C++",
-        "Blueprints",
-        "Stockfish API",
-        "Game Design"
-      ],
+      "tags": ["Unreal Engine 5", "C++", "Blueprints", "Stockfish API", "Game Design"],
       "details": [
-        "Interaction & Game Programming (Summer Semester): Explained methods of Advanced Game Design covering state-of-the-art engines and guided students through the complete Game Design & Development lifecycle.",
-        "Applied Software Techniques (Winter Semester): Introduced Game and Level Design through three custom-engineered teaching projects:",
+        "Interaction & Game Programming (Summer Semester): 7 lessons (21 hours) explaining methods of Advanced Game Design and guiding students through the complete Game Creation lifecycle.",
+        "Applied Software Techniques (Winter Semester): 12 lessons per group (72 hours) introducing Game and Level Design through three custom-engineered teaching projects:",
         "• Console-Chess (Plain C++): A fully functional chess program operating with keyboard inputs.",
         "• Chess-Party (Unreal Engine C++ & Blueprints): 3D upgrade in Unreal Engine 5 supporting Player vs. Player, Player vs. AI, and AI vs. AI using the Stockfish engine connected via local pipe.",
-        "• Darts (Blueprints): Designed and analyzed multiple architectural variants of a physics-based dart game."
+        "• Darts (Blueprints): Designed and analyzed multiple architectural variants of a physics-based and projectile-based dart game."
       ]
     },
     {
@@ -418,13 +443,7 @@
       "organization": "University of Applied Sciences Upper Austria (FH OÖ)",
       "badge": "Final Grade: 1.49",
       "overview": "Graduated with distinction (1.49). Specialized in Explainable AI (Compressed LLM Activations), PyTorch, Unreal Engine 5 multiplayer, and Unity RL.",
-      "tags": [
-        "Explainable AI",
-        "PyTorch",
-        "LLMs",
-        "Unreal Engine 5",
-        "Unity RL"
-      ],
+      "tags": ["Explainable AI", "PyTorch", "LLMs", "Unreal Engine 5", "Unity RL"],
       "details": [
         "Master's Thesis: \"A White-Box Approach to Scalable AI-Explainability: High-Fidelity kNN-Analysis via Compressed LLM-Activations\".",
         "Developed real-time local multiplayer games in Unreal Engine 5 and Reinforcement Learning-based games in Unity.",
@@ -444,12 +463,7 @@
       "organization": "Oberösterreichische Gesundheitsholding (OÖG)",
       "badge": "AI & Data Security",
       "overview": "Primary contact and domain expert evaluating secure AI workflow integration within healthcare administration.",
-      "tags": [
-        "AI Workflows",
-        "Data Security",
-        "Healthcare IT",
-        "Pilot Study"
-      ],
+      "tags": ["AI Workflows", "Data Security", "Healthcare IT", "Pilot Study"],
       "details": [
         "Served as Contact Person and Technical Expert for the enterprise AI pilot project.",
         "Researched and evaluated methods to introduce AI into organizational workflows while strictly guaranteeing data security and compliance."
@@ -468,13 +482,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "Final Grade: 1.4",
       "overview": "Graduated with 1.4. Broad engineering foundation spanning C/C++, Java, Web/SQL, 3D Graphics (Blender/OpenGL), Cryptography, and VR.",
-      "tags": [
-        "C/C++",
-        "Java",
-        "OpenGL & Blender",
-        "Cybersecurity",
-        "SQL & Web"
-      ],
+      "tags": ["C/C++", "Java", "OpenGL & Blender", "Cybersecurity", "SQL & Web"],
       "details": [
         "Bachelor's Thesis: \"Bridging Cybersecurity Awareness: A Try-It-Yourself Application for upcoming Media Engineers & regular Users, addressing Common Risks and Solutions associated with Hacking\".",
         "Programmed Java applications using the Stanford ACM library in Eclipse, and created console-based C/C++ programs and ASCII-art games.",
@@ -498,11 +506,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "Lab Instructor",
       "overview": "Supervised first-semester students in electrical engineering labs, electronic measurements, and authored voluntary lab recaps.",
-      "tags": [
-        "Physical Computing",
-        "Electrical Engineering",
-        "Lab Instruction"
-      ],
+      "tags": ["Physical Computing", "Electrical Engineering", "Lab Instruction"],
       "details": [
         "Supervised and introduced first-semester students to the fundamentals of electrical engineering during practical lab sessions.",
         "Served as lab engineer, contact person, and instructor for electronic measurements of hardware assemblies.",
@@ -522,13 +526,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "Pro-Noris Prize Nominee",
       "overview": "Led development of an Oculus Quest VR game in Unreal Engine 4.27.2 featuring custom C++ spherical coordinate plugins and animal AI heuristics.",
-      "tags": [
-        "Unreal Engine 4.27",
-        "Oculus Quest VR",
-        "C++ Plugins",
-        "Blender",
-        "Project Management"
-      ],
+      "tags": ["Unreal Engine 4.27", "Oculus Quest VR", "C++ Plugins", "Blender", "Project Management"],
       "details": [
         "Main developer of the VR project in Unreal Engine 4.27.2 using an Oculus Quest and the Oculus Client.",
         "Developed custom C++ plugins converting Cartesian to polar coordinates as the mathematical foundation for the spherical Earth level.",
@@ -551,11 +549,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "Peer Mentor",
       "overview": "Mentored and onboarded 5 first-semester students through academic and personal university transitions.",
-      "tags": [
-        "Mentoring",
-        "Student Onboarding",
-        "Volunteering"
-      ],
+      "tags": ["Mentoring", "Student Onboarding", "Volunteering"],
       "details": [
         "Introduced and supervised 5 students throughout their first semester via WhatsApp and e-mail.",
         "Acted as a trusted point of contact for both academic questions and personal challenges during university onboarding."
@@ -574,11 +568,7 @@
       "organization": "Caritas / Regional Schools",
       "badge": "Grades 5–10 Tutor",
       "overview": "Provided free academic tutoring and personal mentorship for pupils in grades 5 to 10 across all school subjects.",
-      "tags": [
-        "Caritas",
-        "Youth Tutoring",
-        "Social Responsibility"
-      ],
+      "tags": ["Caritas", "Youth Tutoring", "Social Responsibility"],
       "details": [
         "Dedicated contact person and volunteer tutor for students in grades 5–10 across any required school subject.",
         "Supported pupils with learning strategies as well as broader school and personal challenges."
@@ -597,11 +587,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "StudiTalks & Outreach",
       "overview": "Represented the Media Engineering program at schools, fairs, campus tours, and within the \"StudiTalks\" advisory initiative.",
-      "tags": [
-        "Public Speaking",
-        "StudiTalks",
-        "Campus Outreach"
-      ],
+      "tags": ["Public Speaking", "StudiTalks", "Campus Outreach"],
       "details": [
         "Presented student experiences and curriculum insights both online and in person at schools, education fairs, and university information days.",
         "Advised prospective students via e-mail within the \"StudiTalks\" peer-counseling project.",
@@ -621,14 +607,7 @@
       "organization": "Spaceflower UG",
       "badge": "Unity • C# • Twitch API",
       "overview": "Main developer & Community Manager for Unity Twitch games (Viewergames Arcade/Racing) and Intellivision's Amico Farkle.",
-      "tags": [
-        "Unity",
-        "C#",
-        "Twitch Extensions",
-        "JavaScript & Java",
-        "Blender",
-        "Shaders"
-      ],
+      "tags": ["Unity", "C#", "Twitch Extensions", "JavaScript & Java", "Blender", "Shaders"],
       "details": [
         "Main developer and Community Manager responsible for advancing the Unity games Viewergames Arcade and Viewergames Racing for Twitch.",
         "Restructured and improved existing C# codebases while architecting and implementing new gameplay features.",
@@ -651,11 +630,7 @@
       "organization": "TH Nürnberg Georg Simon Ohm",
       "badge": "Student Representative",
       "overview": "Elected mediator and liaison between students, professors, faculty board, and university management.",
-      "tags": [
-        "Academic Representation",
-        "Mediation",
-        "Leadership"
-      ],
+      "tags": ["Academic Representation", "Mediation", "Leadership"],
       "details": [
         "Served as primary mediator and contact person for professors and fellow students.",
         "Represented the student cohort's interests towards university management and the faculty board."
@@ -674,12 +649,7 @@
       "organization": "Siemens AG",
       "badge": "VDE 0701 & Test Racks",
       "overview": "Engineered virtual and physical test racks for automated prototype testing, including VDE-compliant wiring and commissioning.",
-      "tags": [
-        "Siemens AG",
-        "System Test",
-        "VDE 0701",
-        "Hardware Prototyping"
-      ],
+      "tags": ["Siemens AG", "System Test", "VDE 0701", "Hardware Prototyping"],
       "details": [
         "Virtually and physically designed and built racks for automated prototype test environments.",
         "Performed professional, individualized wiring and assembly of test setups in strict accordance with Association of Electronics Engineers (VDE) standards.",
@@ -700,12 +670,7 @@
       "organization": "Max-Grundig-Schule",
       "badge": "Final Grade: 2.2",
       "overview": "Intensive qualification combining higher mathematics, physical experiment calculations, business English, chemistry, and leadership psychology.",
-      "tags": [
-        "Higher Mathematics",
-        "Physics",
-        "Business English",
-        "Team Leadership"
-      ],
+      "tags": ["Higher Mathematics", "Physics", "Business English", "Team Leadership"],
       "details": [
         "Mastered the combination of higher mathematics and physical calculations for pre-calculating experiments and formal proofs.",
         "Completed advanced coursework in business English, chemistry fundamentals, and psychological foundations for team leadership."
@@ -724,12 +689,7 @@
       "organization": "Siemens AG",
       "badge": "SAP • Diagnostics • IG Metall",
       "overview": "Conducted VDE assembly testing, circuit-diagram logfile diagnostics, SAP error documentation, and youth works council representation.",
-      "tags": [
-        "Electronics Testing",
-        "Circuit Diagnostics",
-        "SAP",
-        "VDE Regulations"
-      ],
+      "tags": ["Electronics Testing", "Circuit Diagnostics", "SAP", "VDE Regulations"],
       "details": [
         "Tested and assembled delivered electronic assemblies according to Association of Electronics Engineers (VDE) testing regulations.",
         "Performed logfile-based fault diagnostics by systematically comparing hardware assemblies against circuit diagrams.",
@@ -750,10 +710,7 @@
       "organization": "City of Fürth",
       "badge": "Municipal Honour",
       "overview": "Awarded by the City of Fürth in recognition of outstanding academic and technical achievement.",
-      "tags": [
-        "Award",
-        "City of Fürth"
-      ],
+      "tags": ["Award", "City of Fürth"],
       "details": [
         "Honoured with the City Prize of Fürth (12.07.2018) for exceptional performance upon graduating from high school vocational training."
       ]
@@ -771,12 +728,7 @@
       "organization": "Siemens AG",
       "badge": "Final Grade: 1.3",
       "overview": "Completed industrial electronics apprenticeship with a 1.3 GPA, specializing in CT scanners, displays, circuit boards, and works council service.",
-      "tags": [
-        "Siemens AG",
-        "Electrical Engineering",
-        "CT & Medical Electronics",
-        "Grade: 1.3"
-      ],
+      "tags": ["Siemens AG", "Electrical Engineering", "CT & Medical Electronics", "Grade: 1.3"],
       "details": [
         "Trained in advanced electrical engineering techniques for the design, construction, assembly, and production flow of complex electronic systems.",
         "Performed assembly, repair, and quality control for computer tomographs (CT), industrial displays, and electronic circuit boards.",
@@ -796,10 +748,7 @@
       "organization": "Government of Middle Franconia (Regierung von Mittelfranken)",
       "badge": "State Award (GPA 1.3)",
       "overview": "Prestigious regional state award recognizing top-tier graduates for achieving exceptional academic excellence and an outstanding GPA.",
-      "tags": [
-        "State Award",
-        "Government of Middle Franconia"
-      ],
+      "tags": ["State Award", "Government of Middle Franconia"],
       "details": [
         "Awarded by the Government of Middle Franconia to recognize top-tier graduates achieving an outstanding final grade point average (1.3)."
       ]
@@ -807,10 +756,343 @@
   ],
   "projects": [
     {
+      "id": "proj_ludaviz_phd",
+      "title": "LudaViz – Ludic & Diegetic Visualizations",
+      "subtitle": "FWF Pioneer PhD Project • FH Hagenberg & University of Regensburg",
+      "domain": "PhD Research (LudaViz)",
+      "category": "academic",
+      "subCategory": "publications",
+      "year": "2025 – Present",
+      "imageUrl": "images/LudaViz.png",
+      "badge": "CHI '26 & FDG '26",
+      "overview": "FWF-funded pioneer PhD research investigating Ludic and Diegetic Visualizations in video games and player behavior analytics at FH Hagenberg and the University of Regensburg.",
+      "tags": ["Ludic Visualization", "Diegetic UI", "CHI '26", "FDG '26", "Player Analytics"],
+      "ultimateGoal": "Bridging Information Visualization and Game Design to make complex behavioral and systemic data intuitively tangible inside interactive worlds.",
+      "details": [
+        "PhD Student & Researcher in the FWF-funded LudaViz pioneer project at FH Hagenberg and the University of Regensburg.",
+        "CHI '26 Publication (Barcelona, Spain): \"How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite's Swarm Visualization\" (DOI: 10.1145/3772363.3799313).",
+        "FDG '26 Publication (Copenhagen, Denmark): \"Transient Gear, Persistent Impact: A Mixed-Methods Study with Design Implications for Transient Game Systems\" examining weapon durability in Zelda: Breath of the Wild and deriving six HCI design patterns (DOI: 10.1145/3815598.3815601)."
+      ],
+      "links": [
+        { "label": "CHI '26 Paper (DOI)", "url": "https://doi.org/10.1145/3772363.3799313", "icon": "ph-article" },
+        { "label": "FDG '26 Paper (DOI)", "url": "https://doi.org/10.1145/3815598.3815601", "icon": "ph-article" }
+      ]
+    },
+    {
+      "id": "proj_teaching_ast",
+      "title": "University Teaching: Applied Software Techniques & Game Programming",
+      "subtitle": "Prerecorded Video Courseware • AST (WS • 72h) & Interaction & Game Programming (SS • 21h)",
+      "domain": "University Teaching (FH OÖ)",
+      "category": "academic",
+      "subCategory": "teaching",
+      "year": "2024 – 2025",
+      "imageUrl": "images/Lectures/ASTLecture.png",
+      "secondaryImageUrl": "images/Lectures/ASTLogo.png",
+      "badge": "11 Videos Included",
+      "overview": "I prerecord every lesson to ensure the highest quality. Covers Applied Software Techniques (WS: 12 lessons/group, 72h total) and Interaction & Game Programming (SS: 7 lessons, 21h total) at FH Hagenberg.",
+      "tags": ["11 Video Lectures", "Plain C++", "Unreal Engine 5", "Blueprints", "Stockfish AI", "Game Creation"],
+      "ultimateGoal": "Empowering students to master both low-level C++ systems architecture and visual node-based Unreal Engine 5 Blueprints through prerecorded, high-density video courseware.",
+      "details": [
+        "Applied Software Techniques (WS): 12 lessons for each group (72 hours in total) covering Plain C++, Unreal Engine C++, and Blueprints.",
+        "AST Projects: Using Stockfish AI as Chess Engine for Console-Chess and 3D Chess-Party, plus Physics-based and Projectile-based Darts (11 prerecorded HD video lectures)."
+      ],
+      "links": [
+        { "label": "Open All 11 AST Video Lectures", "url": "pages/ast.html", "icon": "ph-play-circle", "internal": true },
+        { "label": "View Teaching CV Dossier", "url": "pages/about.html?cat=work", "icon": "ph-user-focus", "internal": true }
+      ]
+    },
+    {
+      "id": "proj_igp_course",
+      "title": "Interaction & Game Programming (Summer Semester)",
+      "subtitle": "7 Lessons (21 Hours Total) • Game Engines & Full Creation Lifecycle",
+      "domain": "University Teaching (FH OÖ)",
+      "category": "teaching",
+      "subCategory": "courses",
+      "year": "2025",
+      "imageUrl": "images/Lectures/ASTLogo.png",
+      "duration": "7 Lessons • 21 Hours",
+      "badge": "Summer Semester Course",
+      "overview": "University course in Media Technology and Design at FH Hagenberg guiding students through state-of-the-art game engines and the complete game creation process.",
+      "tags": ["Game Engines", "Game Creation Lifecycle", "Unreal & Unity", "FH Hagenberg"],
+      "details": [
+        "Taught 7 comprehensive lessons (21 hours in total) in the Summer Semester at the University of Applied Sciences Upper Austria (FH OÖ).",
+        "Covered advanced game design methodologies, engine architecture comparisons, rapid prototyping, and iterative playtesting.",
+        "Mentored student teams through the complete Game Creation Process from initial pitch to playable vertical slice."
+      ],
+      "links": [
+        { "label": "View Academic CV Dossier", "url": "pages/about.html?cat=work", "icon": "ph-user-focus", "internal": true }
+      ]
+    },
+    {
+      "id": "proj_msc_thesis_xai",
+      "title": "Explainable AI: Retracing AI-Generated Text to Influential Training Data",
+      "subtitle": "M.Sc. Master Thesis • Universal Activation-Based LLM Explainability",
+      "domain": "Explainable AI (M.Sc.)",
+      "category": "academic",
+      "subCategory": "xai",
+      "year": "2024 – 2025",
+      "imageUrl": "images/InteractiveMedia/MasterThesis.png",
+      "badge": "~95% Accuracy (42/10k Sources)",
+      "overview": "White-box activation-based approach to scalable AI explainability, retracing predictions and LLM text to the most influential training data via high-fidelity kNN analysis.",
+      "tags": ["Google Colab", "Python", "PyTorch", "GitHub", "LLMs & MNIST"],
+      "ultimateGoal": "Exploring new methods to explain AI behaviour solely focused on the model's internal activations.",
+      "details": [
+        "Built an interactive Google Colab & PyTorch application to rapidly evaluate a self-created white-box explainability method across different datasets and models on consumer hardware.",
+        "Demonstrated ~95% similarity/accuracy on the MNIST dataset (50,000 training images; Cosine Similarity: 0.9599, Pearson Correlation: 0.9581, Kendall's Tau: 0.88) using only the 42 / 10,000 most influential training sources.",
+        "Culminated in the M.Sc. Master's Thesis: \"A White-Box Approach to Scalable AI-Explainability: High-Fidelity kNN-Analysis via Compressed LLM-Activations\" (Final Grade: 1.49)."
+      ]
+    },
+    {
+      "id": "proj_fishing_sim",
+      "title": "Real-Time Simulation: Fishing Simulator",
+      "subtitle": "Immersive Hardware-in-the-Loop & 3D Water Simulation",
+      "domain": "Interactive Media (M.Sc.)",
+      "category": "interactive",
+      "subCategory": "msc",
+      "year": "2025",
+      "imageUrl": "images/InteractiveMedia/FishingSimulator.jpg",
+      "badge": "UE5 + Arduino Hardware",
+      "overview": "Full-scale physical boat seat, tactile fishing rig, and multi-screen/projection setup synchronized in real time with Unreal Engine and Arduino microcontrollers.",
+      "tags": ["Unreal Engine", "Arduino IDE", "C++", "Physical Computing"],
+      "details": [
+        "Designed and engineered an immersive real-time fishing simulator combining a physical boat cockpit and custom sensor-equipped fishing rod with a 3D water environment.",
+        "Programmed the real-time hardware-software telemetry bridge between Arduino microcontrollers and Unreal Engine gameplay physics."
+      ]
+    },
+    {
+      "id": "proj_hill_climb_rl",
+      "title": "Reinforcement Learning: Hill-Climb-Racing",
+      "subtitle": "Autonomous Agent Development Across 8,750m Ground Maps",
+      "domain": "Interactive Media (M.Sc.)",
+      "category": "interactive",
+      "subCategory": "msc",
+      "year": "2024",
+      "imageUrl": "images/InteractiveMedia/HillClimbRacing.png",
+      "badge": "Unity ML-Agents",
+      "overview": "Autonomous Reinforcement Learning agent trained in Unity using ML-Agents and TensorBoard to master 2D vehicle physics, fuel limits, and steep hills.",
+      "tags": ["Unity", "ML-Agents", "TensorBoard", "C#", "Reinforcement Learning"],
+      "details": [
+        "Developed and trained Reinforcement Learning agents in Unity to autonomously balance gas, brake, angular momentum, and fuel collection across an ~8,750m ground map.",
+        "Configured custom reward shaping and parallel training environments (22x AI-Gas speedups) while tracking policy convergence in TensorBoard."
+      ]
+    },
+    {
+      "id": "proj_infovis_climate",
+      "title": "Information Visualization: Climate Change Report",
+      "subtitle": "Interactive Data Storytelling on Global Climate Change & Catastrophes",
+      "domain": "Scientific Work (M.Sc.)",
+      "category": "academic",
+      "subCategory": "hci-vis",
+      "year": "2024",
+      "imageUrl": "images/ScientificContributions/InformationVisualization.png",
+      "secondaryImageUrl": "images/ScientificContributions/ClimateChange.png",
+      "badge": "D3.js & Observable",
+      "overview": "Interactive scientific visualization report analyzing global climate change indicators and natural catastrophes using D3.js and Markdown in Observable.",
+      "tags": ["D3.js (Observable)", "Markdown", "JavaScript", "Information Visualization"],
+      "details": [
+        "Co-authored \"Climate Report (Final Submission)\" with Hanna Rodler and Lukas Schmalzer for FH OÖ Information Visualization (Edited May 20, 2024).",
+        "Designed and programmed interactive D3.js charts and scrollytelling visualizations to communicate complex climate and catastrophe datasets clearly."
+      ]
+    },
+    {
+      "id": "proj_black_tide",
+      "title": "Black Tide Protocol",
+      "subtitle": "Interactive Media Game & Environment Prototype",
+      "domain": "Interactive Media (M.Sc.)",
+      "category": "interactive",
+      "subCategory": "msc",
+      "year": "2024",
+      "imageUrl": "images/InteractiveMedia/BlackTideProtocol.png",
+      "badge": "Interactive Media",
+      "overview": "Atmospheric interactive media and game engineering project developed during the Master of Science program at FH Hagenberg.",
+      "tags": ["Unreal Engine", "3D Environment", "Game Engineering"],
+      "details": [
+        "Designed atmospheric lighting, shaders, and interactive gameplay systems as part of the M.Sc. Interactive Media curriculum at FH OÖ."
+      ]
+    },
+    {
+      "id": "proj_mocap",
+      "title": "Full-Body Motion Capturing & Character Pipeline",
+      "subtitle": "Optical MoCap Recording, Retargeting & Real-Time 3D Animation",
+      "domain": "Interactive Media (M.Sc.)",
+      "category": "interactive",
+      "subCategory": "msc",
+      "year": "2024",
+      "imageUrl": "images/InteractiveMedia/MotionCapturing.png",
+      "badge": "MoCap Studio",
+      "overview": "End-to-end motion capture production pipeline translating live actor performances onto rigged 3D characters inside real-time game engines.",
+      "tags": ["Motion Capturing", "Unreal Engine", "Blender", "Skeletal Rigging"],
+      "details": [
+        "Recorded, cleaned, and retargeted full-body optical motion capture data onto custom 3D skeletal meshes for real-time interactive scenes."
+      ]
+    },
+    {
+      "id": "proj_party_time",
+      "title": "Multiplayer-Game: Party Time",
+      "subtitle": "4-Player Local Multiplayer Arena Party Game",
+      "domain": "Interactive Media (M.Sc.)",
+      "category": "interactive",
+      "subCategory": "msc",
+      "year": "2023",
+      "imageUrl": "images/InteractiveMedia/PartyTime.png",
+      "badge": "4-Player Multiplayer",
+      "overview": "Fast-paced 4-player local multiplayer party game built in Unreal Engine featuring dynamic tilting arena platforms and custom Blender 3D assets.",
+      "tags": ["Unreal Engine", "Blender", "Local Multiplayer", "Game Design"],
+      "details": [
+        "Engineered local 4-player split/shared-camera multiplayer gameplay on a dynamic tilting arena platform surrounded by a stylized medieval village.",
+        "Modelled, textured, and animated custom 3D character and environment assets in Blender and integrated them into Unreal Engine."
+      ]
+    },
+    {
+      "id": "proj_bambi_cv",
+      "title": "Research: Object Detection (BAMBI)",
+      "subtitle": "Benchmarking 13 AI Models for Aerial & Thermal Wildlife Detection",
+      "domain": "Scientific Work (M.Sc.)",
+      "category": "academic",
+      "subCategory": "xai",
+      "year": "2023",
+      "imageUrl": "images/ScientificContributions/AnimalDetection.png",
+      "badge": "13 Test-AIs Benchmarked",
+      "overview": "Empirical computer vision study evaluating 13 AI detection architectures in Python and Google Colab to spot deer and fawns in thermal aerial imagery.",
+      "tags": ["Python", "Google Colab", "13 Test-AIs", "Computer Vision"],
+      "details": [
+        "Investigated and benchmarked 13 different state-of-the-art AI object detection models (including zero-shot text queries such as \"deer shape\") on thermal imagery.",
+        "Built the automated evaluation pipeline in Python and Google Colab to compare precision, recall, and inference speed for wildlife rescue applications."
+      ]
+    },
+    {
+      "id": "proj_foldable_hci",
+      "title": "Pictorial: Line Accuracy on Foldable Devices",
+      "subtitle": "Evaluating Across-Hinge Dragging with Pen on Analog Curved & Foldable Devices",
+      "domain": "Scientific Work (M.Sc.)",
+      "category": "academic",
+      "subCategory": "hci-vis",
+      "year": "2023",
+      "imageUrl": "images/ScientificContributions/HumanComputerInteraction.png",
+      "badge": "HCI Pictorial Study",
+      "overview": "HCI replication and extension study analyzing how hinge radii (2mm, 6mm, 12mm, 24mm) and dragging angles impact pen accuracy and movement variability on foldable displays.",
+      "tags": ["Java", "HTML/CSS", "Jamovi", "NASA-TLX", "HCI Research"],
+      "details": [
+        "Co-authored with Larissa Schäfer, Philipp Thayer, and Tobias Kothbauer at FH Hagenberg.",
+        "Constructed an analog \"booklet\" prototype with paper drawing surfaces across 4 hinge radii (2mm, 6mm, 12mm, 24mm) to programmatically measure Drag Time and Movement Variability (MV).",
+        "Evaluated quantitative pen trajectories and NASA-TLX workload scores using Java, HTML/CSS, and Jamovi, proving that hinge radius significantly impacts movement variability."
+      ]
+    },
+    {
+      "id": "proj_bsc_cybersecurity",
+      "title": "Bachelor-Thesis: Bridging Cybersecurity Awareness",
+      "subtitle": "Try-It-Yourself Docker Hacking Lab for Media Engineers & Regular Users",
+      "domain": "Media Engineering (B.Eng.)",
+      "category": "interactive",
+      "subCategory": "beng",
+      "year": "2023",
+      "imageUrl": "images/MediaEngineering/BachelorThesis.png",
+      "badge": "~80 Faked Websites • Grade 1.4",
+      "overview": "Dockerized hands-on cybersecurity application covering the 80% most common web hacks across ~80 simulated websites, showing the exact lines of code that cause and fix each vulnerability.",
+      "tags": ["Docker", "JavaScript", "HTML/CSS", "PHP", "Cybersecurity"],
+      "ultimateGoal": "Sharing knowledge to make the internet a safer place by raising consciousness between developers and users.",
+      "details": [
+        "Covers the 80% most common web hacks step-by-step for every knowledge level hands-on, complete with progressive hints (\"Tipp 1–3\") and guided solutions.",
+        "Contains ~80 faked websites (such as streaming and login portals) inside a safe, self-contained Docker container environment to practice exploiting vulnerabilities.",
+        "Displays the exact line of source code that causes or prevents each security gap to bridge understanding between software developers and everyday users."
+      ]
+    },
+    {
+      "id": "proj_grinch",
+      "title": "Game: The Untold Truth of the Grinch",
+      "subtitle": "Round-Based Active Tower-Defense Game with Procedural Labyrinth (7th Semester)",
+      "domain": "Media Engineering (B.Eng.)",
+      "category": "interactive",
+      "subCategory": "beng",
+      "year": "2023",
+      "imageUrl": "images/MediaEngineering/Grinch.png",
+      "badge": "Procedural Labyrinth • 10-Day Solo Build",
+      "overview": "Solo-developed active tower-defense game in Unreal Engine featuring a recursive-backtracking procedural city labyrinth that players can regenerate on the fly to outsmart the Grinch.",
+      "tags": ["Unreal Engine", "Blender", "Procedural Generation", "AI Pathfinding"],
+      "details": [
+        "Built solo within 10 days in Unreal Engine for the \"Game Design\" course; each won round unlocks a new chapter of a self-written story revealing the untold truth of the Grinch.",
+        "Constructed the city from 5 Blender-modified house models arranged via a recursive backtracking algorithm that generates a procedural labyrinth with one entrance and exit on opposite sides.",
+        "Players can regenerate the entire city labyrinth at the press of a button during gameplay to gain or lose tactical advantage, backed by custom AI pathfinding error-correction and player unstuck mechanics.",
+        "Features a randomly generated snow-covered forest, custom-linked locomotion animations, sound design, and configurable game menu settings."
+      ],
+      "links": [
+        { "label": "Demo Video (Timestamps)", "url": "https://youtu.be/AffxLK9GBuw", "icon": "ph-video" },
+        { "label": "Download Game (Drive)", "url": "https://drive.google.com/drive/folders/1pkKpWEqrqR5ncUmX9B_ZtU-WBpZLA500", "icon": "ph-download-simple" }
+      ]
+    },
+    {
+      "id": "proj_naturace_vr",
+      "title": "naturace – Scientific VR Climate Change Simulation",
+      "subtitle": "Real-Time VR Simulation of Everyday Lifestyle Consequences (6th Semester)",
+      "domain": "Media Engineering (B.Eng.)",
+      "category": "interactive",
+      "subCategory": "beng",
+      "year": "2022",
+      "imageUrl": "images/MediaEngineering/Naturace.png",
+      "badge": "Pro-Noris Prize Nominee",
+      "overview": "World's first scientific VR future simulator in Unreal Engine where player household actions are remapped to 8 billion people in real time across a NASA-textured spherical Earth.",
+      "tags": ["Unreal Engine", "C++", "Blender", "GitHub", "DaVinci Resolve", "Oculus VR"],
+      "ultimateGoal": "Raising consciousness for our everyday behaviour and showing possible adjustments towards a more sustainable lifestyle without sacrificing comfort.",
+      "details": [
+        "Scientific 7-Pillar Model: Remaps player actions onto all 8 billion humans across 7 interconnected pillars (energy, CO₂, plastic, water, global warming, pollution, living beings) with an 8-minute tipping-point timer.",
+        "House Level (Everyday Life): Features 13 interactive sustainability tasks, live TV pillar monitors, contextual player hints, a custom wall-safe VR teleportation system, and a live presentation debug tool.",
+        "Earth Level & Custom C++ Plugins: Created a NASA-textured 3D Earth in Blender with atmospheric fog, clouds, and day-night cycle; engineered custom C++ polar-coordinate placement plugins and a custom spherical animal AI heuristic for 9 animated species, plus continental disasters.",
+        "Served as Chief Developer, Project Manager, and Git lead for a 4-person team; produced the Sequencer trailer in DaVinci Resolve and earned a Pro-Noris Prize nomination."
+      ],
+      "links": [
+        { "label": "Watch Trailer", "url": "https://youtu.be/qLzKraWttAE", "icon": "ph-play-circle" },
+        { "label": "Demo Video (Timestamps)", "url": "https://youtu.be/rZ67wXNqQ80", "icon": "ph-video" }
+      ]
+    },
+    {
+      "id": "proj_mobile_app",
+      "title": "App-Development for Android and iOS",
+      "subtitle": "Cross-Platform Mobile Simulation & Telemetry App",
+      "domain": "Media Engineering (B.Eng.)",
+      "category": "interactive",
+      "subCategory": "beng",
+      "year": "2022",
+      "imageUrl": "images/MediaEngineering/Java.png",
+      "badge": "Android & iOS • 60 FPS",
+      "overview": "Mobile application engineered for Android and iOS featuring real-time interactive 2D flocking entities and live telemetry (FPS, Speed, Direction, Crab counter).",
+      "tags": ["Java", "Android Debug Bridge", "C++", "Mobile Development"],
+      "details": [
+        "Programmed cross-platform mobile application logic and rendering using Java, native C++, and the Android Debug Bridge (ADB).",
+        "Implemented real-time entity movement, collision detection, and live diagnostic HUD metrics running smoothly at ~60 FPS on mobile devices."
+      ]
+    },
+    {
+      "id": "proj_viewergames_racing",
+      "title": "Game: Viewergames Racing (Practice Semester)",
+      "subtitle": "Real-Time Multiplayer Twitch Streamer-Viewer Racing Game (4th Semester)",
+      "domain": "Media Engineering (B.Eng.)",
+      "category": "interactive",
+      "subCategory": "beng",
+      "year": "2021",
+      "imageUrl": "images/MediaEngineering/Viewergames.png",
+      "badge": "Released on Steam • Twitch API",
+      "overview": "Real-time Unity racing game where Twitch viewers join live races via a JavaScript extension, trigger 12 interactive items, activate channel-point obstacles, and deploy bit-powered airplane bombers.",
+      "tags": ["Unity", "C#", "Twitch-API", "Go-Backend", "JavaScript", "Java"],
+      "details": [
+        "Became main responsible developer for Viewergames Racing within one month during the practice semester at Spaceflower UG (and fixed bugs on Intellivision's \"Amico Farkle\").",
+        "Improved the AI car waypoint system, expanded usable real-time viewer items from 3 to 12, and added custom item cooldowns plus a collision-free \"Ghost Mode\".",
+        "Completely overhauled the race HUD, leaderboard, killfeed, and tip ticker, and programmed a custom Java map-implementation tool for the JavaScript Twitch extension and Go backend.",
+        "Tracked down and solved a critical game-breaking bug that occurred roughly once every 1,000th round; continued volunteering as Community Manager for Spaceflower."
+      ],
+      "links": [
+        { "label": "Steam Store Page", "url": "https://store.steampowered.com/app/1440090/Viewergames_Racing", "icon": "ph-steam-logo" },
+        { "label": "Debug Demo Video", "url": "https://youtu.be/eVwQtH2dIXo", "icon": "ph-video" },
+        { "label": "1-in-1000 Bug Debug View", "url": "https://youtu.be/JhzRDU6Xyf8", "icon": "ph-bug" }
+      ]
+    }
+  ],
+  "lectures": [
+    {
       "id": "proj_cms_1",
       "title": "01 - Full Overview over Unreal Engine 5",
       "slug": "introduction-into-unreal-engine-5",
       "category": "lecture",
+      "phase": "intro",
       "summary": "Begin your game development journey. Master the Unreal Engine 5 interface, configure projects, and learn the essential tools needed for the 3D transition ahead.",
       "imageUrl": "images/Lectures/AST/AST01.png",
       "videoUrl": "https://www.youtube.com/watch?v=0pVHsnrbiZM",
@@ -823,6 +1105,7 @@
       "title": "02 - Stockfish Integration",
       "slug": "stockfish-integration",
       "category": "lecture",
+      "phase": "cpp",
       "summary": "Build the brain of your chess game. Integrate the Stockfish AI using pure C++ to calculate optimal moves and handle complex rules without writing them from scratch.",
       "imageUrl": "images/Lectures/AST/AST02.png",
       "videoUrl": "https://www.youtube.com/watch?v=7t8m3NrQwa4",
@@ -835,6 +1118,7 @@
       "title": "03 - FEN-Extraction",
       "slug": "fen-extraction",
       "category": "lecture",
+      "phase": "cpp",
       "summary": "Translate AI logic into readable data. Write a custom C++ parser to decode FEN strings, extracting piece positions and special rules for the game board.",
       "imageUrl": "images/Lectures/AST/AST03.png",
       "videoUrl": "https://www.youtube.com/watch?v=gz4qKo7gEOw",
@@ -847,6 +1131,7 @@
       "title": "04 - Console-Chess",
       "slug": "console-chess",
       "category": "lecture",
+      "phase": "cpp",
       "summary": "Complete the foundational C++ phase. Build the core game loop and manage player turns in a text-based console, finalizing the logic before jumping into 3D.",
       "imageUrl": "images/Lectures/AST/AST04.png",
       "videoUrl": "https://www.youtube.com/watch?v=NJSM5iA8Gc0",
@@ -859,6 +1144,7 @@
       "title": "05 - Chess-Pattern",
       "slug": "chess-pattern",
       "category": "lecture",
+      "phase": "chess3d",
       "summary": "Step into the 3D world of Unreal Engine 5. Connect your C++ code with visual Blueprints to procedurally generate and optimize the physical chessboard grid.",
       "imageUrl": "images/Lectures/AST/AST05.png",
       "videoUrl": "https://www.youtube.com/watch?v=O5iQdkbUQ_Y",
@@ -871,6 +1157,7 @@
       "title": "06 - ChessPiece-Spawning",
       "slug": "chesspiece-spawning",
       "category": "lecture",
+      "phase": "chess3d",
       "summary": "Populate your newly built 3D board. Use custom Blueprint macros and C++ to read the FEN string data and dynamically spawn the correct chess pieces in real-time.",
       "imageUrl": "images/Lectures/AST/AST06.png",
       "videoUrl": "https://www.youtube.com/watch?v=H0_Fwu9QyxU",
@@ -883,6 +1170,7 @@
       "title": "06.5 - Special: Full Chess-Party Explanation",
       "slug": "full-chess-party-explanation",
       "category": "lecture",
+      "phase": "chess3d",
       "summary": "Pause to review the game architecture. Deepen your understanding of how C++ bridges with Blueprints and master memory optimization before coding player inputs.",
       "imageUrl": "images/Lectures/ASTLogo.png",
       "videoUrl": "https://www.youtube.com/watch?v=BQVph4DK5C4",
@@ -895,6 +1183,7 @@
       "title": "07 - Move-Selection",
       "slug": "move-selection",
       "category": "lecture",
+      "phase": "chess3d",
       "summary": "Make your 3D game interactive using pure Blueprints. Build a visual state machine to handle mouse clicks, highlight valid tiles, and select legal moves.",
       "imageUrl": "images/Lectures/AST/AST07.png",
       "videoUrl": "https://www.youtube.com/watch?v=n7G1GXFizoA",
@@ -907,6 +1196,7 @@
       "title": "08 - AI-Movement",
       "slug": "ai-movement",
       "category": "lecture",
+      "phase": "chess3d",
       "summary": "Polish the final chess experience. Replace instant teleports with smooth AI pathfinding, custom jump animations, and stunning Niagara particle effects for captures.",
       "imageUrl": "images/Lectures/AST/AST08.png",
       "videoUrl": "https://www.youtube.com/watch?v=7TF5eIwelzs",
@@ -919,10 +1209,11 @@
       "title": "09 - Darts-Physics",
       "slug": "darts-physics",
       "category": "lecture",
+      "phase": "darts",
       "summary": "Apply your UE5 skills to a brand-new challenge. Explore physics-based throwing mechanics using raycasting and physics handles to pick up and launch darts.",
       "imageUrl": "images/Lectures/AST/AST09.png",
       "videoUrl": "https://www.youtube.com/watch?v=xmU3EdxEe3E",
-      "content": "### Introduction\nWelcome to the ninth lecture! Now that we have fully completed the 3D chess project, we are transitioning to a brand-new interactive system: darts. This lesson focuses exclusively on physics-based throwing mechanics. You will learn how to enable continuous collision detection, program a raycast system to pick up objects, and utilize physics handles to accurately throw and stick a dart into a cabinet.\n\n### 1. Scene Overview and Object Collisions\nPreparing the Dart and Dartboard\nWe start by reviewing the interactive dart meshes inside the viewport. To achieve highly precise hits—crucial for calculating dart scores later—we configure the dart's collision settings. You will learn how to enable Continuous Collision Detection (CCD) alongside physics simulation, ensuring the dart registers precise impact points without phasing through the dartboard mesh at high speeds.\n\n### 2. Setting Up Enhanced Inputs\nMapping Keyboard and Mouse Actions\nBefore we can interact with the darts, we need to map player inputs. We dive into Unreal Engine's Enhanced Input System, configuring \"Grab\" and \"Throw\" input actions. You will see how to link the Left and Right Mouse buttons to these actions using an Input Mapping Context and how to assign this context directly to the player controller.\n\n### 3. Programming the Grab Logic\nUsing Raytracing to Pick Up Objects\nWith inputs mapped, we script the grab functionality. We write a custom Raycast (Line Trace) function originating from the First Person Camera's Forward Vector. You will learn how to mathematically multiply this forward vector by a float value to define a specific \"Grab Range\" (e.g., 200 units), allowing the player to detect and target dart actors dynamically in the 3D world.\n\n### 4. Mastering the Physics Handle\nMoving Objects in 3D Space\nOnce the raycast successfully detects a dart, we need to pick it up. We utilize Unreal Engine's Physics Handle component to grab the dart at its exact transform location. To keep the dart attached to the player's screen, we hook the Physics Handle into the Event Tick, continuously updating the dart's target location and rotation to perfectly match the player's camera Billboard.\n\n### 5. Throwing the Dart\nAdding Physics Impulses\nNext, we build the \"Throw\" logic. Upon clicking the throw input, the script releases the dart from the Physics Handle, re-enables its physics collision and gravity, and applies a massive linear impulse relative to the camera's forward vector. You will learn how to configure linear damping so the dart travels swiftly and realistically toward the target rather than floating aimlessly.\n\n### 6. Sticking the Dart to the Board\nFreezing Physics on Impact\nThe final step is ensuring the dart behaves like a real dart and sticks to the board upon impact. We script an \"On Component Hit\" event specifically checking for collisions with the Dart Cabinet class. If a valid hit occurs, we freeze the dart by setting its linear and angular damping to absurdly high values, stopping its movement instantly while retaining its exact impact coordinates.",
+      "content": "### Introduction\nWelcome to the ninth lecture! Now that we have fully completed the 3D chess project, we are transitioning to a brand-new interactive system: darts. This lesson focuses exclusively on physics-based throwing mechanics. You will learn how to enable continuous collision detection, program a raycast system to pick up objects, and utilize physics handles to accurately throw and stick a dart into a cabinet.\n\n### 1. Scene Overview and Object Collisions\nPreparing the Dart and Dartboard\nWe start by reviewing the interactive dart meshes inside the viewport. To achieve highly precise hits crucial for calculating dart scores later we configure the dart's collision settings. You will learn how to enable Continuous Collision Detection (CCD) alongside physics simulation, ensuring the dart registers precise impact points without phasing through the dartboard mesh at high speeds.\n\n### 2. Setting Up Enhanced Inputs\nMapping Keyboard and Mouse Actions\nBefore we can interact with the darts, we need to map player inputs. We dive into Unreal Engine's Enhanced Input System, configuring \"Grab\" and \"Throw\" input actions. You will see how to link the Left and Right Mouse buttons to these actions using an Input Mapping Context and how to assign this context directly to the player controller.\n\n### 3. Programming the Grab Logic\nUsing Raytracing to Pick Up Objects\nWith inputs mapped, we script the grab functionality. We write a custom Raycast (Line Trace) function originating from the First Person Camera's Forward Vector. You will learn how to mathematically multiply this forward vector by a float value to define a specific \"Grab Range\" (e.g., 200 units), allowing the player to detect and target dart actors dynamically in the 3D world.\n\n### 4. Mastering the Physics Handle\nMoving Objects in 3D Space\nOnce the raycast successfully detects a dart, we need to pick it up. We utilize Unreal Engine's Physics Handle component to grab the dart at its exact transform location. To keep the dart attached to the player's screen, we hook the Physics Handle into the Event Tick, continuously updating the dart's target location and rotation to perfectly match the player's camera Billboard.\n\n### 5. Throwing the Dart\nAdding Physics Impulses\nNext, we build the \"Throw\" logic. Upon clicking the throw input, the script releases the dart from the Physics Handle, re-enables its physics collision and gravity, and applies a massive linear impulse relative to the camera's forward vector. You will learn how to configure linear damping so the dart travels swiftly and realistically toward the target rather than floating aimlessly.\n\n### 6. Sticking the Dart to the Board\nFreezing Physics on Impact\nThe final step is ensuring the dart behaves like a real dart and sticks to the board upon impact. We script an \"On Component Hit\" event specifically checking for collisions with the Dart Cabinet class. If a valid hit occurs, we freeze the dart by setting its linear and angular damping to absurdly high values, stopping its movement instantly while retaining its exact impact coordinates.",
       "date": "Dec 20, 2024",
       "duration": "1:01:41"
     },
@@ -931,97 +1222,13 @@
       "title": "10 - Darts-Projectile",
       "slug": "darts-projectile",
       "category": "lecture",
+      "phase": "darts",
       "summary": "Master the art of game dev illusions. Replace unpredictable physics with controlled projectiles and dummy meshes to guarantee perfect dart hits every time.",
       "imageUrl": "images/Lectures/AST/AST10.png",
       "videoUrl": "https://www.youtube.com/watch?v=PaDvSZ55mwo",
       "content": "### Introduction\nWelcome to the tenth and final lecture of the Applied Software Techniques course! Building on the previous lesson's physics-based darts, today we explore an alternative, highly reliable approach: Projectile-based movement. You will learn the crucial game development concept of \"Fake it 'till you make it,\" swapping out unpredictable physics for controlled projectiles and dummy actors to guarantee perfect dartboard collisions every time.\n\n### 1. The Flaws of Physics-Based Systems\nUnderstanding the Need to \"Fake It\"\nWe begin by reviewing the physics dart system from the last lecture. While realistic, relying purely on the physics engine often causes unpredictable behaviors, such as darts hitting the board at awkward angles or bouncing off incorrectly. We discuss why game developers frequently \"fake\" complex interactions to maintain absolute control over the game's mechanics and the player's experience.\n\n### 2. Designing the \"Fake\" Grab Logic\nSwapping Real Darts for Dummies\nInstead of picking up a physical dart with a Physics Handle, we script a new grab sequence. You will learn how to make the targeted dart instantly invisible upon selection, and simultaneously activate a \"Dart Dummy\" static mesh permanently attached to the player's First Person Camera. This creates the perfect optical illusion that the player is holding the dart, without any physics jitter.\n\n### 3. Programming the Projectile Throw\nSpawning Actors with Velocity\nWhen the player clicks to throw, we do not add a physics impulse. Instead, we hide the camera dummy and dynamically spawn a new \"Dart Projectile\" Blueprint exactly where the camera is facing. We explore the Projectile Movement Component, setting initial speeds, max speeds, and disabling gravity so the dart flies in a perfectly straight, predictable line toward the target.\n\n### 4. Managing Projectile Collisions\nSwitching States on Impact\nA projectile does not use physics to fly, but it still needs to collide. We configure the projectile's collider to trigger an \"On Component Begin Overlap\" event when it hits the Dart Cabinet. Once triggered, the script instantly stops the projectile's movement component, switches its collision profile to \"Physics Actor,\" and locks its linear and angular damping so it sticks perfectly into the board.\n\n### 5. Creating the Dart Dummy Replacements\nReplacing Actors in the Viewport\nBecause our new logic requires specific projectile actors rather than physics actors, we must update our 3D environment. You will learn a valuable Unreal Engine editor trick: using the \"Replace Selected Actors With\" function. This allows you to quickly swap out all the old physics darts scattered around the room with our new Projectile Dummy Blueprints in just a few clicks.\n\n### 6. Adding Polish with Throw Animations\nTriggering Skeletal Mesh Montages\nTo complete the illusion, we add a throwing animation. We dive briefly into the Animation Blueprint and Skeletal Mesh sockets, attaching the dart to the character's hand bone. We then script the throw event to play a custom animation montage, adding a calculated delay before the projectile spawns, ensuring the dart physically leaves the hand at the exact apex of the throwing animation.",
       "date": "Dec 17, 2024",
       "duration": "1:28:54"
-    },
-    {
-      "id": "proj_img_1",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/BlackTideProtocol.png"
-    },
-    {
-      "id": "proj_img_2",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/FishingSimulator.jpg"
-    },
-    {
-      "id": "proj_img_3",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/HillClimbRacing.png"
-    },
-    {
-      "id": "proj_img_4",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/MasterThesis.png"
-    },
-    {
-      "id": "proj_img_5",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/MotionCapturing.png"
-    },
-    {
-      "id": "proj_img_6",
-      "category": "interactive",
-      "imageUrl": "images/InteractiveMedia/PartyTime.png"
-    },
-    {
-      "id": "proj_img_7",
-      "category": "interactive",
-      "imageUrl": "images/MediaEngineering/BachelorThesis.png"
-    },
-    {
-      "id": "proj_img_8",
-      "category": "interactive",
-      "imageUrl": "images/MediaEngineering/Grinch.png"
-    },
-    {
-      "id": "proj_img_9",
-      "category": "interactive",
-      "imageUrl": "images/MediaEngineering/Java.png"
-    },
-    {
-      "id": "proj_img_10",
-      "category": "interactive",
-      "imageUrl": "images/MediaEngineering/Naturace.png"
-    },
-    {
-      "id": "proj_img_11",
-      "category": "interactive",
-      "imageUrl": "images/MediaEngineering/Viewergames.png"
-    },
-    {
-      "id": "proj_img_12",
-      "category": "academic",
-      "imageUrl": "images/ScientificContributions/AnimalDetection.png"
-    },
-    {
-      "id": "proj_img_13",
-      "category": "academic",
-      "imageUrl": "images/ScientificContributions/ClimateChange.png"
-    },
-    {
-      "id": "proj_img_14",
-      "category": "academic",
-      "imageUrl": "images/ScientificContributions/HumanComputerInteraction.png"
-    },
-    {
-      "id": "proj_img_15",
-      "category": "academic",
-      "imageUrl": "images/ScientificContributions/InformationVisualization.png"
-    },
-    {
-      "id": "proj_img_16",
-      "category": "academic",
-      "imageUrl": "images/Lectures/ASTLecture.png"
-    },
-    {
-      "id": "proj_img_17",
-      "category": "academic",
-      "imageUrl": "images/Lectures/ASTLogo.png"
     }
   ]
 }
