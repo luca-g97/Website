@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-base">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Luca G.</title>
+
+    <!-- Tailwind CSS & Phosphor Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- External Config & Styles -->
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        .topic-pill.active {
+            background-color: #ffffff;
+            color: #0c0c0c;
+            border-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="font-mono bg-base text-white antialiased selection:bg-white selection:text-black lg:h-screen lg:overflow-hidden flex flex-col">
+
+<!-- Fallback Initial Data -->
+<script type="application/json" id="initial-data">
+    {
+        "profile": {
+            "name": "Luca Geiger",
+            "title": "M.Sc. B.Eng.",
+            "image": "../images/Portrait.jpg"
+        },
+        "stack": [
+            { "name": "Slack", "icon": "ph-slack-logo", "color": "text-black", "link": "#" },
+            { "name": "Figma", "icon": "ph-figma-logo", "color": "text-black", "link": "#" },
+            { "name": "Framer", "icon": "ph-framer-logo", "color": "text-black", "link": "#" },
+            { "name": "React", "icon": "ph-atom", "color": "text-purple-600", "link": "#" },
+            { "name": "Google", "icon": "ph-google-logo", "color": "text-blue-500", "link": "#" }
+        ]
+    }
+</script>
+
+<!-- Custom Cursor -->
+<div class="hidden lg:block" id="cursor-wrapper">
+    <div id="cursor-halo"></div>
+    <div id="cursor-dot"></div>
+</div>
+
+<div class="max-w-[1800px] mx-auto w-full flex flex-col p-4 md:p-6 lg:p-10 relative lg:h-full min-h-screen lg:min-h-0">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center shrink-0 mb-6 md:mb-8 z-50 fade-in-up">
+        <a href="../index.html" class="flex items-center gap-4 interactive group">
+            <img id="profile-img" src="../images/Portrait.jpg" alt="Profile" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <div class="leading-tight">
+                <h2 id="profile-name" class="font-bold text-lg md:text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500">Luca Geiger</h2>
+                <p id="profile-title" class="text-[10px] md:text-[12px] text-textMuted uppercase tracking-widest mt-1">M.Sc. B.Eng.</p>
+            </div>
+        </a>
+
+        <!-- Clock -->
+        <div class="hidden lg:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
+
+        <div class="relative">
+            <button id="menu-toggle" class="w-10 h-10 md:w-[50px] md:h-[50px] rounded-full border border-border flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive z-50 relative bg-card focus:outline-none">
+                <div class="relative w-[16px] h-[10px] md:w-[18px] md:h-[12px]">
+                    <span id="menu-line-1" class="absolute left-0 top-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                    <span id="menu-line-2" class="absolute left-0 bottom-0 w-full h-[2px] bg-white rounded-full transition-transform duration-300 ease-in-out origin-center"></span>
+                </div>
+            </button>
+
+            <div id="dropdown-menu" class="absolute top-14 md:top-16 right-0 w-52 bg-card border border-border rounded-2xl p-2 opacity-0 invisible -translate-y-4 z-40 shadow-2xl">
+                <nav class="flex flex-col text-sm font-medium">
+                    <a href="../index.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Home</a>
+                    <a href="about.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">About Me</a>
+                    <a href="stack.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Stack</a>
+                    <a href="projects.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">Projects</a>
+                    <a href="contact.html" class="px-4 py-3 text-white bg-white/5 rounded-xl transition-all interactive flex items-center justify-between">Contact <i class="ph ph-arrow-right"></i></a>
+                    <a href="../ast.html" class="px-4 py-3 text-textMuted hover:text-white hover:bg-white/5 rounded-xl transition-all hover:translate-x-1 interactive">AST</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="flex flex-col lg:flex-row gap-6 lg:gap-10 flex-1 lg:overflow-hidden relative z-10 h-full">
+
+        <!-- Left Sidebar -->
+        <aside class="w-full lg:w-[280px] xl:w-[280px] flex flex-col shrink-0 lg:h-full lg:overflow-y-auto no-scrollbar lg:pb-0">
+            <h1 class="text-2xl md:text-[24px] xl:text-[28px] font-bold mb-4 md:mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
+                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="../images/RockOnAndNamaste.png" height="32" width="32" alt="🤟"/>
+            </h1>
+
+            <p class="text-sm md:text-[16px] text-textMuted leading-[1.8] mb-6 md:mb-8 fade-in-up" style="animation-delay: 200ms;">
+                And as you will find out, <br class="hidden lg:block"> I am quite an <span class="hidden lg:inline">experienced</span><br>
+                <span class="text-white font-bold">Interactive Media Allrounder</span><br>
+                who's fascinated by gaining and sharing <br class="block md:hidden lg:hidden"> knowledge about <br class="hidden md:block"> complex topics,
+                especially <br class="block md:hidden lg:block"> if they are related to the <br>
+                <span class="text-white font-bold">Combination of Sustainability <br class="block md:hidden lg:hidden"> and New Technologies</span>
+            </p>
+
+            <div class="flex flex-row flex-wrap lg:flex-col justify-between items-center lg:items-start gap-4 lg:gap-8 mb-8 lg:mb-16 w-full">
+
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 300ms;">
+                    <a href="about.html" class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive flex items-center gap-2">
+                        About Me <i class="ph ph-arrow-right"></i>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1DycAck25TK2zfhSOt1q6Ir1gv6Po1ChS/view?usp=drive_link" target="_blank" class="w-max px-4 py-2.5 rounded-xl border border-border bg-card text-white text-sm font-bold hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        Download CV
+                    </a>
+                </div>
+
+                <div class="flex gap-2 md:gap-4 fade-in-up" style="animation-delay: 400ms;">
+                    <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="../images/Icons/FHIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="FH">
+                    </a>
+                    <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 transition-all duration-500 interactive">
+                        <img src="../images/Icons/OrcidIcon.png" class="w-4 h-4 md:w-5 md:h-5 object-contain" alt="ORCID">
+                    </a>
+                    <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    <a href="https://github.com/luca-g97" target="_blank" class="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:bg-white/10 hover:border-gray-500 hover:text-white text-textMuted transition-all duration-500 interactive"><i class="ph ph-github-logo text-xl"></i></a>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex mt-auto flex-col gap-3 text-[11px] text-textMuted font-bold tracking-widest uppercase fade-in-up" style="animation-delay: 500ms;">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Licensing</a>
+                <a href="#" class="hover:text-white transition-colors duration-300 interactive w-max">Privacy Policy</a>
+            </div>
+        </aside>
+
+        <!-- Right Contact Content Area -->
+        <div class="flex-1 w-full lg:h-full lg:overflow-y-auto no-scrollbar pb-10">
+
+            <!-- Page Header & Availability Pill -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8 fade-in-up" style="animation-delay: 150ms;">
+                <div>
+                    <!-- <p class="text-xs uppercase tracking-widest text-textMuted mb-1">Collaboration & Inquiries</p> -->
+                    <h1 class="text-3xl md:text-[34px] lg:text-[40px] font-bold text-white tracking-wide leading-tight">Get in Touch</h1>
+                </div>
+
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-card border border-border text-xs text-gray-300 w-max">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Open for Research, Lectures & Projects</span>
+                </div>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pb-6">
+
+                <!-- Left 8 Columns: Quick Actions & Interactive Contact Form -->
+                <div class="lg:col-span-8 flex flex-col gap-5 fade-in-up" style="animation-delay: 250ms;">
+
+                    <!-- Top Quick-Contact Bento Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <!-- Direct Email Card with Copy Button -->
+                        <div class="bento-card p-5 md:p-6 flex flex-col justify-between gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs uppercase tracking-wider text-textMuted font-bold">Direct Email</span>
+                                <div class="w-9 h-9 rounded-full bg-white/5 border border-border flex items-center justify-center text-white">
+                                    <i class="ph ph-envelope-simple text-lg"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p id="email-address" class="text-sm font-bold text-white break-all">luca.geiger@fh-hagenberg.at</p>
+                                <p class="text-xs text-textMuted mt-1">Typical response time: within 24–48 hours</p>
+                            </div>
+
+                            <div class="flex items-center gap-2.5 pt-1">
+                                <button id="copy-email-btn" type="button" class="px-4 py-2 rounded-xl bg-white text-black text-xs font-bold hover:bg-gray-200 transition-all interactive flex items-center gap-1.5">
+                                    <i id="copy-email-icon" class="ph ph-copy text-sm"></i>
+                                    <span id="copy-email-text">Copy Email</span>
+                                </button>
+                                <a href="mailto:luca.geiger@fh-hagenberg.at" class="px-4 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-white transition-all interactive flex items-center gap-1.5">
+                                    <span>Mail App</span>
+                                    <i class="ph ph-arrow-up-right text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Academic & University Office Card -->
+                        <div class="bento-card p-5 md:p-6 flex flex-col justify-between gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs uppercase tracking-wider text-textMuted font-bold">Academic Affiliation</span>
+                                <div class="w-9 h-9 rounded-full bg-white/5 border border-border flex items-center justify-center text-white">
+                                    <i class="ph ph-buildings text-lg"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="text-sm font-bold text-white">FH Oberösterreich</p>
+                                <p class="text-xs text-textMuted mt-1">Campus Hagenberg • LudaViz Research Group</p>
+                            </div>
+
+                            <div class="flex items-center gap-2.5 pt-1">
+                                <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="px-4 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-white transition-all interactive flex items-center gap-1.5">
+                                    <span>Pure Profile</span>
+                                    <i class="ph ph-arrow-up-right text-sm"></i>
+                                </a>
+                                <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="px-3.5 py-2 rounded-xl border border-border bg-base hover:bg-white/10 text-xs font-bold text-textMuted hover:text-white transition-all interactive">
+                                    ORCID
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Main Inquiry Form Card -->
+                    <div class="bento-card p-6 md:p-8">
+                        <div class="mb-6">
+                            <h2 class="text-lg md:text-xl font-bold text-white">Send a Message</h2>
+                            <p class="text-xs text-textMuted mt-1">Select a topic below and compose your message.</p>
+                        </div>
+
+                        <form id="contact-form" class="flex flex-col gap-5">
+                            <!-- Topic Selector Pills -->
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-textMuted font-bold mb-2.5">Topic</label>
+                                <div class="flex flex-wrap gap-2" id="topic-pills">
+                                    <button type="button" data-topic="Research Collaboration" class="topic-pill active px-3.5 py-2 rounded-xl border border-border bg-base text-xs font-bold text-textMuted hover:text-white transition-all interactive">
+                                        Research Collaboration
+                                    </button>
+                                    <button type="button" data-topic="Lecture & Teaching" class="topic-pill px-3.5 py-2 rounded-xl border border-border bg-base text-xs font-bold text-textMuted hover:text-white transition-all interactive">
+                                        Lecture & Teaching
+                                    </button>
+                                    <button type="button" data-topic="Interactive Media Project" class="topic-pill px-3.5 py-2 rounded-xl border border-border bg-base text-xs font-bold text-textMuted hover:text-white transition-all interactive">
+                                        Interactive Media Project
+                                    </button>
+                                    <button type="button" data-topic="General Inquiry" class="topic-pill px-3.5 py-2 rounded-xl border border-border bg-base text-xs font-bold text-textMuted hover:text-white transition-all interactive">
+                                        General Inquiry
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Name & Email Row -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="sender-name" class="block text-xs uppercase tracking-wider text-textMuted font-bold mb-2">Your Name *</label>
+                                    <input id="sender-name" name="name" type="text" required placeholder="Jane Doe" class="w-full bg-base border border-border rounded-xl py-3 px-4 text-sm text-white placeholder:text-textMuted/50 focus:outline-none focus:border-gray-400 transition-colors interactive">
+                                </div>
+                                <div>
+                                    <label for="sender-email" class="block text-xs uppercase tracking-wider text-textMuted font-bold mb-2">Your Email *</label>
+                                    <input id="sender-email" name="email" type="email" required placeholder="jane@university.edu" class="w-full bg-base border border-border rounded-xl py-3 px-4 text-sm text-white placeholder:text-textMuted/50 focus:outline-none focus:border-gray-400 transition-colors interactive">
+                                </div>
+                            </div>
+
+                            <!-- Organization / Subject (Optional) -->
+                            <div>
+                                <label for="sender-org" class="block text-xs uppercase tracking-wider text-textMuted font-bold mb-2">Organization / Institution <span class="text-textMuted/60 lowercase font-normal">(optional)</span></label>
+                                <input id="sender-org" name="organization" type="text" placeholder="University / Studio / Company" class="w-full bg-base border border-border rounded-xl py-3 px-4 text-sm text-white placeholder:text-textMuted/50 focus:outline-none focus:border-gray-400 transition-colors interactive">
+                            </div>
+
+                            <!-- Message Textarea -->
+                            <div>
+                                <label for="sender-message" class="block text-xs uppercase tracking-wider text-textMuted font-bold mb-2">Message *</label>
+                                <textarea id="sender-message" name="message" rows="5" required placeholder="Tell me about your research idea, project, or question..." class="w-full bg-base border border-border rounded-xl py-3 px-4 text-sm text-white placeholder:text-textMuted/50 focus:outline-none focus:border-gray-400 transition-colors interactive resize-y"></textarea>
+                            </div>
+
+                            <!-- Submit Row -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                                <p id="form-status" class="text-xs text-textMuted">
+                                    Opens your default mail client pre-filled, or copy email above.
+                                </p>
+                                <button type="submit" class="w-max px-6 py-3 rounded-xl bg-white text-black text-sm font-bold hover:bg-gray-200 transition-all duration-300 interactive flex items-center gap-2 shadow-lg">
+                                    <span>Prepare Message</span>
+                                    <i class="ph-bold ph-paper-plane-tilt"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Right 4 Columns: Sticky Location Globe & Social Channels -->
+                <div class="lg:col-span-4 flex flex-col gap-5 fade-in-up self-start sticky top-1" style="animation-delay: 350ms;">
+
+                    <!-- Interactive WebGL Globe Location Card -->
+                    <div class="bento-card p-6 h-[280px] flex flex-col justify-between relative overflow-hidden group">
+                        <div class="relative z-20">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] uppercase tracking-wider text-textMuted font-bold">Base of Operations</span>
+                                <span class="px-2 py-0.5 rounded bg-red-500/20 border border-red-500/30 text-[10px] font-bold text-red-300">48.37° N<br>14.51° E</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mt-1">Hagenberg, Austria</h3>
+                            <p class="text-xs text-textMuted mt-0.5">Softwarepark • CET (UTC+2)</p>
+                        </div>
+
+                        <!-- Cobe WebGL Canvas (Powered by ../assets/js/globe.js) -->
+                        <div class="absolute -bottom-[45%] -right-[15%] w-[125%] h-[145%] group-hover:scale-105 transition-transform duration-[1000ms] pointer-events-none">
+                            <canvas id="cobe-globe" class="w-full h-full opacity-95"></canvas>
+                        </div>
+
+                        <div class="relative z-20 mt-auto pt-4">
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-gray-300 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                                <i class="ph-fill ph-map-pin text-red-400"></i> Upper Austria
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Social & Academic Directory Card -->
+                    <div class="bento-card p-6 flex flex-col gap-3">
+                        <h3 class="text-[15px] font-bold text-white tracking-wide mb-1">Networks & Profiles</h3>
+
+                        <a href="https://www.linkedin.com/in/luca-geiger/" target="_blank" class="p-3 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-white">
+                                    <i class="ph ph-linkedin-logo text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">LinkedIn</div>
+                                    <div class="text-[11px] text-textMuted">in/luca-geiger</div>
+                                </div>
+                            </div>
+                            <i class="ph ph-arrow-up-right text-textMuted group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                        </a>
+
+                        <a href="https://github.com/luca-g97" target="_blank" class="p-3 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-white">
+                                    <i class="ph ph-github-logo text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">GitHub</div>
+                                    <div class="text-[11px] text-textMuted">@luca-g97</div>
+                                </div>
+                            </div>
+                            <i class="ph ph-arrow-up-right text-textMuted group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                        </a>
+
+                        <a href="https://orcid.org/0009-0007-5752-2204" target="_blank" class="p-3 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center">
+                                    <img src="../images/Icons/OrcidIcon.png" class="w-4 h-4 object-contain" alt="ORCID">
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">ORCID Registry</div>
+                                    <div class="text-[11px] text-textMuted">0009-0007-5752-2204</div>
+                                </div>
+                            </div>
+                            <i class="ph ph-arrow-up-right text-textMuted group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                        </a>
+
+                        <a href="https://pure.fh-ooe.at/de/persons/luca-geiger/" target="_blank" class="p-3 rounded-xl bg-base/80 border border-border hover:border-gray-500 flex items-center justify-between group transition-all interactive">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center">
+                                    <img src="../images/Icons/FHIcon.png" class="w-4 h-4 object-contain" alt="FH">
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">FH OÖ Research Portal</div>
+                                    <div class="text-[11px] text-textMuted">Pure Database</div>
+                                </div>
+                            </div>
+                            <i class="ph ph-arrow-up-right text-textMuted group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer: Mobile & Tablet -->
+            <div class="flex lg:hidden flex-col gap-2 md:gap-3 text-[10px] md:text-[11px] text-textMuted font-bold tracking-widest uppercase mt-8 md:mt-10 pb-6 items-center text-center fade-in-up">
+                <p class="text-white mb-1 tracking-normal capitalize">Inspired by <a href="https://www.framer.com/marketplace/templates/bentovibe/" target="_blank" class="underline interactive hover:text-gray-300">BentoVibe-Template on Framer</a></p>
+                <div class="flex gap-4 md:gap-6">
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Licensing</a>
+                    <a href="#" class="hover:text-white transition-colors duration-300 interactive">Privacy Policy</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- Contact Page Interactive Logic -->
+<script>
+    // 1. Copy Email to Clipboard
+    const copyBtn = document.getElementById('copy-email-btn');
+    const copyText = document.getElementById('copy-email-text');
+    const copyIcon = document.getElementById('copy-email-icon');
+    const emailAddress = document.getElementById('email-address').textContent.trim();
+
+    copyBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(emailAddress);
+            copyText.textContent = 'Copied!';
+            copyIcon.className = 'ph-bold ph-check text-sm text-emerald-600';
+            setTimeout(() => {
+                copyText.textContent = 'Copy Email';
+                copyIcon.className = 'ph ph-copy text-sm';
+            }, 2200);
+        } catch (err) {
+            window.location.href = `mailto:${emailAddress}`;
+        }
+    });
+
+    // 2. Topic Pill Selection
+    let selectedTopic = 'Research Collaboration';
+    const topicPills = document.querySelectorAll('.topic-pill');
+
+    topicPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            topicPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            selectedTopic = pill.getAttribute('data-topic');
+        });
+    });
+
+    // 3. Smart Form Handler (Constructs formatted mailto draft)
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('sender-name').value.trim();
+        const email = document.getElementById('sender-email').value.trim();
+        const org = document.getElementById('sender-org').value.trim();
+        const message = document.getElementById('sender-message').value.trim();
+
+        const subject = encodeURIComponent(`[${selectedTopic}] Inquiry from ${name}${org ? ` (${org})` : ''}`);
+        const body = encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}${org ? `\nOrganization: ${org}` : ''}\nTopic: ${selectedTopic}\n\nMessage:\n${message}`
+        );
+
+        window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+        formStatus.innerHTML = '<span class="text-emerald-400 font-bold">✓ Opening your mail client with your formatted message...</span>';
+    });
+</script>
+
+<!-- Shared Globe & Portfolio Scripts -->
+<script type="module" src="../assets/js/globe.js"></script>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

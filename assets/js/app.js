@@ -95,9 +95,12 @@ function formatLectureContent(rawContent) {
 // 1. Procedural CMS Injection
 async function loadAndRenderPortfolio() {
     try {
+        // Automatically detect if current page is inside /pages/ subfolder
+        const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+
         let allData;
         try {
-            const response = await fetch(`assets/json/data.json?t=${Date.now()}`);
+            const response = await fetch(`${basePath}assets/json/data.json?t=${Date.now()}`);
             allData = await response.json();
         } catch (e) {
             const initialDataEl = document.getElementById('initial-data');
@@ -106,11 +109,14 @@ async function loadAndRenderPortfolio() {
 
         if (!allData) return;
 
-        // Profile (Safe updates)
+        // Profile (Safe updates with basePath prefix for relative images)
         const updateEl = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
         updateEl('profile-name', 'textContent', allData.profile.name);
         updateEl('profile-title', 'textContent', allData.profile.title);
-        updateEl('profile-img', 'src', allData.profile.image);
+        if (allData.profile.image) {
+            const imgPath = allData.profile.image.startsWith('../') ? allData.profile.image : `${basePath}${allData.profile.image}`;
+            updateEl('profile-img', 'src', imgPath);
+        }
 
         // Render AST Lecture Cards
         const lectures = allData.projects.filter(p => p.category && p.category.toLowerCase() === 'lecture');
