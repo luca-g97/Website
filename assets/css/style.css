@@ -91,21 +91,24 @@ body.hovering-interactive #cursor-halo {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- About Page: Accordion & Timeline Spine --- */
+/* --- About & Projects Pages: Accordion & Timeline Spine --- */
 .details-grid {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
     opacity: 0;
 }
-.timeline-card.expanded .details-grid {
+.timeline-card.expanded .details-grid,
+.project-card.expanded .details-grid {
     grid-template-rows: 1fr;
     opacity: 1;
 }
-.timeline-card.expanded .chevron-icon {
+.timeline-card.expanded .chevron-icon,
+.project-card.expanded .chevron-icon {
     transform: rotate(180deg);
 }
-.timeline-card.expanded {
+.timeline-card.expanded,
+.project-card.expanded {
     border-color: #4a4a4a;
     background-color: #161616;
 }

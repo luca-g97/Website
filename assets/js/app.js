@@ -21,7 +21,6 @@ function getActiveRoute() {
     return 'home';
 }
 
-// Fetch data.json first; fall back to cms.json if data.json hasn't been built yet
 async function fetchSiteData() {
     const cacheBuster = `?t=${Date.now()}`;
     for (const file of ['assets/json/data.json', 'assets/json/cms.json']) {
@@ -34,52 +33,509 @@ async function fetchSiteData() {
 }
 
 // ============================================================================
-// 2. UNIFIED STACK BUILDER (Used across index.html, ast.html, and stack.html)
+// 2. OFFICIAL BRAND LOGOS & STACK CATALOG (From Portfolio PDFs)
 // ============================================================================
+const PDF_STACK_CATALOG = [
+    {
+        name: "Unreal Engine 5",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg",
+        icon: "ph-cube",
+        color: "text-black",
+        category: "engines",
+        role: "3D Game Engine • C++ & Blueprints",
+        level: "Expert / Lecturer",
+        description: "Used for naturace VR, AST 3D Chess-Party & Darts, Fishing Simulator, Party Time, and The Untold Truth of the Grinch.",
+        link: "pages/ast.html"
+    },
+    {
+        name: "Unity",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg",
+        icon: "ph-game-controller",
+        color: "text-black",
+        category: "engines",
+        role: "Multiplayer Games & RL Agents",
+        level: "Advanced",
+        description: "Used for Viewergames Racing/Arcade (Spaceflower UG), Amico Farkle, and Hill-Climb-Racing Reinforcement Learning.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "C++",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+        icon: "ph-code",
+        color: "text-blue-600",
+        category: "code",
+        role: "Systems, Engine Plugins & Algorithms",
+        level: "Expert",
+        description: "Plain C++ Console-Chess, Stockfish UCI pipe integration, custom UE4/UE5 spherical coordinate plugins, and Android NDK.",
+        link: "pages/ast.html"
+    },
+    {
+        name: "Python",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+        icon: "ph-terminal-window",
+        color: "text-amber-500",
+        category: "ai",
+        role: "Explainable AI & Computer Vision",
+        level: "Expert",
+        description: "Primary language for M.Sc. Thesis on White-Box LLM Explainability (kNN activation analysis) and BAMBI thermal object detection.",
+        link: "pages/projects.html?cat=academic"
+    },
+    {
+        name: "PyTorch",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg",
+        icon: "ph-fire",
+        color: "text-orange-600",
+        category: "ai",
+        role: "Deep Learning & Activation Tracing",
+        level: "M.Sc. Specialization",
+        description: "Retracing AI-generated text and MNIST predictions (~95% accuracy with 42/10,000 sources) via compressed neural activations.",
+        link: "pages/projects.html?cat=academic"
+    },
+    {
+        name: "C#",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
+        icon: "ph-brackets-curly",
+        color: "text-purple-600",
+        category: "code",
+        role: "Unity Gameplay & ML-Agents Scripting",
+        level: "Advanced",
+        description: "Architected AI car waypoint systems, 12 real-time viewer items, ghost mode, and RL agent reward loops in Unity.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Blender",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg",
+        icon: "ph-polygon",
+        color: "text-orange-500",
+        category: "engines",
+        role: "3D Modelling, Modifiers & Animation",
+        level: "Advanced",
+        description: "NASA-textured 3D Earth & 9 animated animal species (naturace), procedural city houses (Grinch), and Party Time assets.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Java",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+        icon: "ph-coffee",
+        color: "text-red-600",
+        category: "code",
+        role: "Android/iOS Apps & Custom Tooling",
+        level: "Advanced",
+        description: "Cross-platform mobile app development, custom Twitch map-implementation tooling, and foldable device HCI evaluation.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "JavaScript",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+        icon: "ph-file-js",
+        color: "text-yellow-500",
+        category: "code",
+        role: "Interactive Web, D3.js & Twitch Extensions",
+        level: "Advanced",
+        description: "Real-time Twitch viewer extensions, cybersecurity training web apps, D3.js climate visualizations, and this procedural portfolio.",
+        link: "index.html"
+    },
+    {
+        name: "HTML5 & CSS3",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+        icon: "ph-file-html",
+        color: "text-orange-600",
+        category: "code",
+        role: "Frontend Architecture & UI Styling",
+        level: "Advanced",
+        description: "Responsive Bento interfaces, ~80 simulated web environments for cybersecurity training, and HCI experiment interfaces.",
+        link: "index.html"
+    },
+    {
+        name: "D3.js & Observable",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/d3js/d3js-original.svg",
+        icon: "ph-chart-line-up",
+        color: "text-amber-600",
+        category: "ai",
+        role: "Information & Scientific Visualization",
+        level: "PhD / M.Sc. Focus",
+        description: "Interactive data visualizations for the Climate Change & Catastrophes report and LudaViz player behavior analytics.",
+        link: "pages/projects.html?cat=academic"
+    },
+    {
+        name: "Google Colab",
+        logoUrl: "https://cdn.simpleicons.org/googlecolab/F9AB00",
+        icon: "ph-cloud",
+        color: "text-amber-500",
+        category: "ai",
+        role: "Cloud GPU Notebooks & AI Benchmarks",
+        level: "Daily Driver",
+        description: "Rapid experimentation for activation-based LLM explainability and benchmarking 13 object detection models (BAMBI).",
+        link: "pages/projects.html?cat=academic"
+    },
+    {
+        name: "TensorBoard & ML-Agents",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg",
+        icon: "ph-chart-bar",
+        color: "text-orange-500",
+        category: "ai",
+        role: "Reinforcement Learning Telemetry",
+        level: "Proficient",
+        description: "Training and evaluating autonomous driving agents in Hill-Climb-Racing across 8,750m procedural maps.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Docker",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+        icon: "ph-shipping-container",
+        color: "text-sky-500",
+        category: "workflow",
+        role: "Containerized Sandboxes & Deployment",
+        level: "Proficient",
+        description: "Containerized ~80 vulnerable web applications for safe hands-on hacking in the B.Eng. Cybersecurity Thesis.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "PHP & SQL",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+        icon: "ph-database",
+        color: "text-indigo-500",
+        category: "code",
+        role: "Backend & Security Lab Scripting",
+        level: "Proficient",
+        description: "Server-side logic and vulnerability/patch demonstrations for the Try-It-Yourself Cybersecurity application.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Go (Golang)",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
+        icon: "ph-hard-drives",
+        color: "text-cyan-500",
+        category: "code",
+        role: "Real-Time Multiplayer Backend",
+        level: "Working Knowledge",
+        description: "High-concurrency backend services connecting Twitch extension viewer actions with Unity in Viewergames Racing.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Arduino IDE & Hardware",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg",
+        icon: "ph-cpu",
+        color: "text-teal-500",
+        category: "workflow",
+        role: "Physical Computing & Simulators",
+        level: "Expert / Lab Tutor",
+        description: "Microcontroller integration for the immersive Fishing Simulator, Physical Computing lab tutoring, and Siemens VDE test racks.",
+        link: "pages/projects.html?cat=interactive"
+    },
+    {
+        name: "Git & GitHub",
+        logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+        icon: "ph-github-logo",
+        color: "text-black",
+        category: "workflow",
+        role: "Version Control & Team Management",
+        level: "Daily Driver",
+        description: "Lead repository manager for naturace VR, Spaceflower sprints, XAI research codebases, and AST teaching repositories.",
+        link: "https://github.com/luca-g97"
+    },
+    {
+        name: "DaVinci Resolve",
+        logoUrl: "https://cdn.simpleicons.org/davinciresolve/E0244E",
+        icon: "ph-film-strip",
+        color: "text-rose-500",
+        category: "design",
+        role: "Video Editing, Trailers & Courseware",
+        level: "Advanced",
+        description: "Post-production and sound design for the naturace VR trailer, project demo videos, and 11 prerecorded AST lectures.",
+        link: "pages/ast.html"
+    }
+];
+
+const EXTRA_LOGO_MAP = {
+    'slack': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/slack/slack-original.svg',
+    'figma': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
+    'framer': 'https://cdn.simpleicons.org/framer/0055FF',
+    'react': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg',
+    'google': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg'
+};
+
 function getUnifiedStack(allData) {
     const rawStack = allData.stack || [];
+    const catalogByName = new Map(PDF_STACK_CATALOG.map(item => [item.name.toLowerCase(), item]));
 
-    const defaultEnrichment = {
-        'Slack': { category: 'workflow', role: 'Team & Research Communication', level: 'Daily Driver', description: 'Real-time academic group coordination, LudaViz research channels, and student mentoring.' },
-        'Figma': { category: 'design', role: 'UI/UX & Visualization Prototyping', level: 'Advanced', description: 'Wireframing interactive dashboards, diegetic UI concepts, and scientific figure layouts.' },
-        'Framer': { category: 'design', role: 'Interactive Web & Motion Systems', level: 'Advanced', description: 'Bento-grid layout architecture, rapid interactive prototyping, and micro-interactions.' },
-        'React': { category: 'code', role: 'Component UI & Web Applications', level: 'Proficient', description: 'Modular front-end interfaces, interactive visualizations, and state-driven web apps.' },
-        'Google': { category: 'workflow', role: 'Scholar, Cloud & Workspace Suite', level: 'Daily Driver', description: 'Literature indexing, collaborative research documentation, and academic asset hosting.' }
-    };
+    // If cms.json has already been updated with the full stack, enrich any missing logoUrls
+    const merged = [];
+    const seen = new Set();
 
-    const coreEngineeringStack = [
-        { name: 'Unreal Engine 5', icon: 'ph-cube', color: 'text-emerald-600', category: 'engines', role: '3D Game Engine & C++ / Blueprints', level: 'Expert / Lecturer', description: 'Procedural generation, Niagara particles, AI MoveTo navigation, Stockfish pipe integration, and VR.', link: 'ast.html' },
-        { name: 'C / C++', icon: 'ph-code', color: 'text-blue-600', category: 'code', role: 'Systems & Engine Programming', level: 'Expert', description: 'Custom UE4/UE5 plugins, spherical coordinate math, Stockfish UCI pipelines, and console engines.', link: 'ast.html' },
-        { name: 'Unity & C#', icon: 'ph-game-controller', color: 'text-purple-600', category: 'engines', role: 'Game Development & Reinforcement Learning', level: 'Advanced', description: 'Multiplayer Twitch extensions (Viewergames), ML-Agents Reinforcement Learning, and custom shaders.', link: 'pages/about.html?cat=work' },
-        { name: 'PyTorch & XAI', icon: 'ph-brain', color: 'text-amber-600', category: 'ai', role: 'Explainable AI & Deep Learning', level: 'M.Sc. Specialization', description: 'White-box LLM activation compression, high-fidelity kNN analysis, and neural network diagnostics.', link: 'pages/about.html?cat=education' },
-        { name: 'Blender & OpenGL', icon: 'ph-polygon', color: 'text-orange-600', category: 'engines', role: '3D Modelling, Rigging & Shaders', level: 'Advanced', description: 'Low-poly and high-poly 3D asset pipelines, skeletal animations, and real-time lighting calculations.', link: 'pages/projects.html?cat=interactive' },
-        { name: 'Diegetic & Ludic Vis', icon: 'ph-chart-polar', color: 'text-cyan-600', category: 'ai', role: 'HCI & Information Visualization', level: 'PhD Research', description: 'Player behavior analytics, in-game hazard visualization (CHI \'26), and transient game systems (FDG \'26).', link: 'pages/about.html?cat=publications' },
-        { name: 'JavaScript & Tailwind', icon: 'ph-browsers', color: 'text-sky-600', category: 'code', role: 'Procedural Web & Full-Stack Tools', level: 'Advanced', description: 'Zero-dependency procedural CMS pipelines, Node.js build automation, and WebGL integrations.', link: 'index.html' },
-        { name: 'Hardware & VDE', icon: 'ph-circuitry', color: 'text-emerald-700', category: 'workflow', role: 'Electrical Engineering & Test Racks', level: 'Siemens Certified', description: 'Automated prototype test racks, VDE 0701 compliance, circuit diagnostics, and Physical Computing.', link: 'pages/about.html?cat=work' }
-    ];
+    // First include all PDF_STACK_CATALOG items (the authoritative stack from the Portfolio PDF)
+    for (const item of PDF_STACK_CATALOG) {
+        merged.push(item);
+        seen.add(item.name.toLowerCase());
+    }
 
-    const enrichedFromCms = rawStack.map(s => ({
-        ...(defaultEnrichment[s.name] || { category: 'workflow', role: 'Core Tool', level: 'Active', description: 'Integrated into daily research and development workflows.' }),
-        ...s
-    }));
+    // Also preserve any additional custom items in cms.json (e.g., Figma, Framer, React, Slack)
+    for (const s of rawStack) {
+        const key = (s.name || '').toLowerCase();
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        merged.push({
+            category: s.category || 'design',
+            role: s.role || 'Design & Workflow Tool',
+            level: s.level || 'Proficient',
+            description: s.description || 'Integrated into design, prototyping, and research workflows.',
+            logoUrl: s.logoUrl || EXTRA_LOGO_MAP[key] || null,
+            ...s
+        });
+    }
 
-    const existingNames = new Set(enrichedFromCms.map(s => (s.name || '').toLowerCase()));
-    return [
-        ...enrichedFromCms,
-        ...coreEngineeringStack.filter(d => !existingNames.has(d.name.toLowerCase()))
-    ];
+    return merged;
+}
+
+function renderStackIconGraphic(item, sizeClass = 'w-5 h-5 md:w-6 md:h-6', textClass = 'text-lg md:text-xl') {
+    if (item.logoUrl) {
+        return `
+            <img src="${item.logoUrl}" alt="${item.name}" class="${sizeClass} object-contain group-hover/icon:rotate-12 transition-transform duration-300" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
+            <i class="ph-fill ${item.icon || 'ph-cube'} ${item.color || 'text-black'} ${textClass} hidden"></i>
+        `;
+    }
+    return `<i class="ph-fill ${item.icon || 'ph-cube'} ${item.color || 'text-black'} ${textClass} group-hover/icon:rotate-12 transition-transform duration-300"></i>`;
 }
 
 // ============================================================================
-// 3. PROCEDURAL SHELL INJECTION (Cursor, Header, Sidebar, Mobile Footer)
+// 3. RICH PROJECT DETAILS ON DEMAND (Extracted from Portfolio PDFs)
+// ============================================================================
+const PDF_PROJECT_DETAILS = {
+    'MasterThesis.png': {
+        title: 'Explainable AI: Retracing AI-Generated Text to Influential Training Data',
+        subtitle: 'M.Sc. Master Thesis • Universal Activation-Based LLM Explainability',
+        domain: 'Explainable AI (M.Sc.)',
+        category: 'academic',
+        year: '2024 – 2025',
+        badge: '~95% Accuracy (42/10k Sources)',
+        overview: 'White-box activation-based approach to scalable AI explainability, retracing predictions and LLM text to the most influential training data via high-fidelity kNN analysis.',
+        tags: ['Google Colab', 'Python', 'PyTorch', 'GitHub', 'LLMs & MNIST'],
+        ultimateGoal: 'Exploring new methods to explain AI behaviour solely focused on the model\'s internal activations.',
+        details: [
+            'Built an interactive Google Colab & PyTorch application to rapidly evaluate a self-created white-box explainability method across different datasets and models on consumer hardware.',
+            'Demonstrated ~95% similarity/accuracy on the MNIST dataset (50,000 training images; Cosine Similarity: 0.9599, Pearson Correlation: 0.9581, Kendall\'s Tau: 0.88) using only the 42 / 10,000 most influential training sources.',
+            'Culminated in the M.Sc. Master\'s Thesis: "A White-Box Approach to Scalable AI-Explainability: High-Fidelity kNN-Analysis via Compressed LLM-Activations" (Final Grade: 1.49).'
+        ]
+    },
+    'FishingSimulator.jpg': {
+        title: 'Real-Time Simulation: Fishing Simulator',
+        subtitle: 'Immersive Hardware-in-the-Loop & 3D Water Simulation',
+        domain: 'Interactive Media (M.Sc.)',
+        category: 'interactive',
+        year: '2025',
+        badge: 'UE5 + Arduino Hardware',
+        overview: 'Full-scale physical boat seat, tactile fishing rig, and multi-screen/projection setup synchronized in real time with Unreal Engine and Arduino microcontrollers.',
+        tags: ['Unreal Engine', 'Arduino IDE', 'C++', 'Physical Computing'],
+        details: [
+            'Designed and engineered an immersive real-time fishing simulator combining a physical boat cockpit and custom sensor-equipped fishing rod with a 3D water environment.',
+            'Programmed the real-time hardware-software telemetry bridge between Arduino microcontrollers and Unreal Engine gameplay physics.'
+        ]
+    },
+    'HillClimbRacing.png': {
+        title: 'Reinforcement Learning: Hill-Climb-Racing',
+        subtitle: 'Autonomous Agent Development Across 8,750m Ground Maps',
+        domain: 'Interactive Media (M.Sc.)',
+        category: 'interactive',
+        year: '2024',
+        badge: 'Unity ML-Agents',
+        overview: 'Autonomous Reinforcement Learning agent trained in Unity using ML-Agents and TensorBoard to master 2D vehicle physics, fuel limits, and steep hills.',
+        tags: ['Unity', 'ML-Agents', 'TensorBoard', 'C#', 'Reinforcement Learning'],
+        details: [
+            'Developed and trained Reinforcement Learning agents in Unity to autonomously balance gas, brake, angular momentum, and fuel collection across an ~8,750m ground map.',
+            'Configured custom reward shaping and parallel training environments (22x AI-Gas speedups) while tracking policy convergence in TensorBoard.'
+        ]
+    },
+    'PartyTime.png': {
+        title: 'Multiplayer-Game: Party Time',
+        subtitle: '4-Player Local Multiplayer Arena Party Game',
+        domain: 'Interactive Media (M.Sc.)',
+        category: 'interactive',
+        year: '2023',
+        badge: '4-Player Multiplayer',
+        overview: 'Fast-paced 4-player local multiplayer party game built in Unreal Engine featuring dynamic tilting arena platforms and custom Blender 3D assets.',
+        tags: ['Unreal Engine', 'Blender', 'Local Multiplayer', 'Game Design'],
+        details: [
+            'Engineered local 4-player split/shared-camera multiplayer gameplay on a dynamic tilting arena platform surrounded by a stylized medieval village.',
+            'Modelled, textured, and animated custom 3D character and environment assets in Blender and integrated them into Unreal Engine.'
+        ]
+    },
+    'BlackTideProtocol.png': {
+        title: 'Black Tide Protocol',
+        subtitle: 'Interactive Media Game & Environment Prototype',
+        domain: 'Interactive Media (M.Sc.)',
+        category: 'interactive',
+        year: '2024',
+        badge: 'Interactive Media',
+        overview: 'Atmospheric interactive media and game engineering project developed during the Master of Science program at FH Hagenberg.',
+        tags: ['Unreal Engine', '3D Environment', 'Game Engineering'],
+        details: [
+            'Designed atmospheric lighting, shaders, and interactive gameplay systems as part of the M.Sc. Interactive Media curriculum at FH OÖ.'
+        ]
+    },
+    'MotionCapturing.png': {
+        title: 'Full-Body Motion Capturing & Character Pipeline',
+        subtitle: 'Optical MoCap Recording, Retargeting & Real-Time 3D Animation',
+        domain: 'Interactive Media (M.Sc.)',
+        category: 'interactive',
+        year: '2024',
+        badge: 'MoCap Studio',
+        overview: 'End-to-end motion capture production pipeline translating live actor performances onto rigged 3D characters inside real-time game engines.',
+        tags: ['Motion Capturing', 'Unreal Engine', 'Blender', 'Skeletal Rigging'],
+        details: [
+            'Recorded, cleaned, and retargeted full-body optical motion capture data onto custom 3D skeletal meshes for real-time interactive scenes.'
+        ]
+    },
+    'InformationVisualization.png': {
+        title: 'Information Visualization: Climate Change Report',
+        subtitle: 'Interactive Data Storytelling on Global Climate Change & Catastrophes',
+        domain: 'Scientific Work (M.Sc.)',
+        category: 'academic',
+        year: '2024',
+        badge: 'D3.js & Observable',
+        overview: 'Interactive scientific visualization report analyzing global climate change indicators and natural catastrophes using D3.js and Markdown in Observable.',
+        tags: ['D3.js (Observable)', 'Markdown', 'JavaScript', 'Information Visualization'],
+        details: [
+            'Co-authored "Climate Report (Final Submission)" with Hanna Rodler and Lukas Schmalzer for FH OÖ Information Visualization (May 2024).',
+            'Designed and programmed interactive D3.js charts and scrollytelling visualizations to communicate complex climate and catastrophe datasets clearly.'
+        ]
+    },
+    'AnimalDetection.png': {
+        title: 'Research: Object Detection (BAMBI)',
+        subtitle: 'Benchmarking 13 AI Models for Aerial & Thermal Wildlife Detection',
+        domain: 'Scientific Work (M.Sc.)',
+        category: 'academic',
+        year: '2023',
+        badge: '13 Test-AIs Benchmarked',
+        overview: 'Empirical computer vision study evaluating 13 AI detection architectures in Python and Google Colab to spot deer and fawns in thermal aerial imagery.',
+        tags: ['Python', 'Google Colab', '13 Test-AIs', 'Computer Vision'],
+        details: [
+            'Investigated and benchmarked 13 different state-of-the-art AI object detection models (including zero-shot text queries such as "deer shape") on thermal imagery.',
+            'Built the automated evaluation pipeline in Python and Google Colab to compare precision, recall, and inference speed for wildlife rescue applications.'
+        ]
+    },
+    'HumanComputerInteraction.png': {
+        title: 'Pictorial: Line Accuracy on Foldable Devices',
+        subtitle: 'Evaluating Across-Hinge Dragging with Pen on Analog Curved & Foldable Devices',
+        domain: 'Scientific Work (M.Sc.)',
+        category: 'academic',
+        year: '2023',
+        badge: 'HCI Pictorial Study',
+        overview: 'HCI replication and extension study analyzing how hinge radii (2mm, 6mm, 12mm, 24mm) and dragging angles impact pen accuracy and movement variability on foldable displays.',
+        tags: ['Java', 'HTML/CSS', 'Jamovi', 'NASA-TLX', 'HCI Research'],
+        details: [
+            'Co-authored with Larissa Schäfer, Philipp Thayer, and Tobias Kothbauer at FH Hagenberg.',
+            'Constructed an analog "booklet" prototype with paper drawing surfaces across 4 hinge radii (2mm, 6mm, 12mm, 24mm) to programmatically measure Drag Time and Movement Variability (MV).',
+            'Evaluated quantitative pen trajectories and NASA-TLX workload scores using Java, HTML/CSS, and Jamovi, proving that hinge radius significantly impacts movement variability.'
+        ]
+    },
+    'BachelorThesis.png': {
+        title: 'Bachelor-Thesis: Bridging Cybersecurity Awareness',
+        subtitle: 'Try-It-Yourself Docker Hacking Lab for Media Engineers & Regular Users',
+        domain: 'Media Engineering (B.Eng.)',
+        category: 'interactive',
+        year: '2023',
+        badge: '~80 Faked Websites • Grade 1.4',
+        overview: 'Dockerized hands-on cybersecurity application covering the 80% most common web hacks across ~80 simulated websites, showing the exact lines of code that cause and fix each vulnerability.',
+        tags: ['Docker', 'JavaScript', 'HTML/CSS', 'PHP', 'Cybersecurity'],
+        ultimateGoal: 'Sharing knowledge to make the internet a safer place by raising consciousness between developers and users.',
+        details: [
+            'Covers the 80% most common web hacks step-by-step for every knowledge level hands-on, complete with progressive hints ("Tipp 1–3") and guided solutions.',
+            'Contains ~80 faked websites (such as streaming and login portals) inside a safe, self-contained Docker container environment to practice exploiting vulnerabilities.',
+            'Displays the exact line of source code that causes or prevents each security gap to bridge understanding between software developers and everyday users.'
+        ]
+    },
+    'Naturace.png': {
+        title: 'naturace – Scientific VR Climate Change Simulation',
+        subtitle: 'Real-Time VR Simulation of Everyday Lifestyle Consequences (6th Semester)',
+        domain: 'Media Engineering (B.Eng.)',
+        category: 'interactive',
+        year: '2022',
+        badge: 'Pro-Noris Prize Nominee',
+        overview: 'World\'s first scientific VR future simulator in Unreal Engine where player household actions are remapped to 8 billion people in real time across a NASA-textured spherical Earth.',
+        tags: ['Unreal Engine', 'C++', 'Blender', 'GitHub', 'DaVinci Resolve', 'Oculus VR'],
+        ultimateGoal: 'Raising consciousness for our everyday behaviour and showing possible adjustments towards a more sustainable lifestyle without sacrificing comfort.',
+        details: [
+            'Scientific 7-Pillar Model: Remaps player actions onto all 8 billion humans across 7 interconnected pillars (energy, CO₂, plastic, water, global warming, pollution, living beings) with an 8-minute tipping-point timer.',
+            'House Level (Everyday Life): Features 13 interactive sustainability tasks, live TV pillar monitors, contextual player hints, a custom wall-safe VR teleportation system, and a live presentation debug tool.',
+            'Earth Level & Custom C++ Plugins: Created a NASA-textured 3D Earth in Blender with atmospheric fog, clouds, and day-night cycle; engineered custom C++ polar-coordinate placement plugins and a custom spherical animal AI heuristic for 9 animated species, plus continental disasters.',
+            'Served as Chief Developer, Project Manager, and Git lead for a 4-person team; produced the Sequencer trailer in DaVinci Resolve and earned a Pro-Noris Prize nomination.'
+        ],
+        links: [
+            { label: 'Watch Trailer', url: 'https://youtu.be/qLzKraWttAE', icon: 'ph-play-circle' },
+            { label: 'Demo Video (Timestamps)', url: 'https://youtu.be/rZ67wXNqQ80', icon: 'ph-video' }
+        ]
+    },
+    'Grinch.png': {
+        title: 'Game: The Untold Truth of the Grinch',
+        subtitle: 'Round-Based Active Tower-Defense Game with Procedural Labyrinth (7th Semester)',
+        domain: 'Media Engineering (B.Eng.)',
+        category: 'interactive',
+        year: '2023',
+        badge: 'Procedural Labyrinth • 10-Day Solo Build',
+        overview: 'Solo-developed active tower-defense game in Unreal Engine featuring a recursive-backtracking procedural city labyrinth that players can regenerate on the fly to outsmart the Grinch.',
+        tags: ['Unreal Engine', 'Blender', 'Procedural Generation', 'AI Pathfinding'],
+        details: [
+            'Built solo within 10 days in Unreal Engine for the "Game Design" course; each won round unlocks a new chapter of a self-written story revealing the untold truth of the Grinch.',
+            'Constructed the city from 5 Blender-modified house models arranged via a recursive backtracking algorithm that generates a procedural labyrinth with one entrance and exit on opposite sides.',
+            'Players can regenerate the entire city labyrinth at the press of a button during gameplay to gain or lose tactical advantage, backed by custom AI pathfinding error-correction and player unstuck mechanics.',
+            'Features a randomly generated snow-covered forest, custom-linked locomotion animations, sound design, and configurable game menu settings.'
+        ],
+        links: [
+            { label: 'Demo Video (Timestamps)', url: 'https://youtu.be/AffxLK9GBuw', icon: 'ph-video' },
+            { label: 'Download Game (Drive)', url: 'https://drive.google.com/drive/folders/1pkKpWEqrqR5ncUmX9B_ZtU-WBpZLA500', icon: 'ph-download-simple' }
+        ]
+    },
+    'Java.png': {
+        title: 'App-Development for Android and iOS',
+        subtitle: 'Cross-Platform Mobile Simulation & Telemetry App',
+        domain: 'Media Engineering (B.Eng.)',
+        category: 'interactive',
+        year: '2022',
+        badge: 'Android & iOS • 60 FPS',
+        overview: 'Mobile application engineered for Android and iOS featuring real-time interactive 2D flocking entities and live telemetry (FPS, Speed, Direction, Crab counter).',
+        tags: ['Java', 'Android Debug Bridge', 'C++', 'Mobile Development'],
+        details: [
+            'Programmed cross-platform mobile application logic and rendering using Java, native C++, and the Android Debug Bridge (ADB).',
+            'Implemented real-time entity movement, collision detection, and live diagnostic HUD metrics running smoothly at ~60 FPS on mobile devices.'
+        ]
+    },
+    'Viewergames.png': {
+        title: 'Game: Viewergames Racing (Practice Semester)',
+        subtitle: 'Real-Time Multiplayer Twitch Streamer-Viewer Racing Game (4th Semester)',
+        domain: 'Media Engineering (B.Eng.)',
+        category: 'interactive',
+        year: '2021',
+        badge: 'Released on Steam • Twitch API',
+        overview: 'Real-time Unity racing game where Twitch viewers join live races via a JavaScript extension, trigger 12 interactive items, activate channel-point obstacles, and deploy bit-powered airplane bombers.',
+        tags: ['Unity', 'C#', 'Twitch-API', 'Go-Backend', 'JavaScript', 'Java'],
+        details: [
+            'Became main responsible developer for Viewergames Racing within one month during the practice semester at Spaceflower UG (and fixed bugs on Intellivision\'s "Amico Farkle").',
+            'Improved the AI car waypoint system, expanded usable real-time viewer items from 3 to 12, and added custom item cooldowns plus a collision-free "Ghost Mode".',
+            'Completely overhauled the race HUD, leaderboard, killfeed, and tip ticker, and programmed a custom Java map-implementation tool for the JavaScript Twitch extension and Go backend.',
+            'Tracked down and solved a critical game-breaking bug that occurred roughly once every 1,000th round; continued volunteering as Community Manager for Spaceflower.'
+        ],
+        links: [
+            { label: 'Steam Store Page', url: 'https://store.steampowered.com/app/1440090/Viewergames_Racing', icon: 'ph-steam-logo' },
+            { label: 'Debug Demo Video', url: 'https://youtu.be/eVwQtH2dIXo', icon: 'ph-video' },
+            { label: '1-in-1000 Bug Debug View', url: 'https://youtu.be/JhzRDU6Xyf8', icon: 'ph-bug' }
+        ]
+    }
+};
+
+// ============================================================================
+// 4. PROCEDURAL SHELL INJECTION (Cursor, Header, Sidebar, Mobile Footer)
 // ============================================================================
 function renderSiteShell(siteData) {
     const activeRoute = getActiveRoute();
     const profile = siteData.profile || {};
-    const socials = profile.socials || [];
-    const cvUrl = profile.cvUrl || '#';
+    const socials = profile.socials || [
+        { name: "FH", url: "https://pure.fh-ooe.at/de/persons/luca-geiger/", image: "images/Icons/FHIcon.png" },
+        { name: "ORCID", url: "https://orcid.org/0009-0007-5752-2204", image: "images/Icons/OrcidIcon.png" },
+        { name: "LinkedIn", url: "https://www.linkedin.com/in/luca-geiger/", icon: "ph-linkedin-logo" },
+        { name: "GitHub", url: "https://github.com/luca-g97", icon: "ph-github-logo" }
+    ];
+    const cvUrl = profile.cvUrl || "https://drive.google.com/file/d/1DycAck25TK2zfhSOt1q6Ir1gv6Po1ChS/view?usp=drive_link";
 
-    // 1. Custom Cursor
     if (!document.getElementById('cursor-wrapper')) {
         document.body.insertAdjacentHTML('afterbegin', `
             <div class="hidden lg:block" id="cursor-wrapper">
@@ -89,14 +545,13 @@ function renderSiteShell(siteData) {
         `);
     }
 
-    // 2. Header & Navigation
     const navItems = [
         { id: 'home', label: 'Home', href: `${BASE_PATH}index.html` },
         { id: 'about', label: 'About Me', href: `${BASE_PATH}pages/about.html` },
         { id: 'stack', label: 'Stack', href: `${BASE_PATH}pages/stack.html` },
         { id: 'projects', label: 'Projects', href: `${BASE_PATH}pages/projects.html` },
         { id: 'contact', label: 'Contact', href: `${BASE_PATH}pages/contact.html`, routeAttr: 'contact' },
-        { id: 'ast', label: 'AST', href: `${BASE_PATH}ast.html`, routeAttr: 'ast' }
+        { id: 'ast', label: 'AST', href: `${BASE_PATH}pages/ast.html`, routeAttr: 'ast' }
     ];
 
     const navHtml = navItems.map(item => {
@@ -113,10 +568,10 @@ function renderSiteShell(siteData) {
         headerEl.className = "flex justify-between items-center shrink-0 mb-6 md:mb-8 z-50 fade-in-up";
         headerEl.innerHTML = `
             <a href="${BASE_PATH}index.html" class="flex items-center gap-4 interactive group">
-                <img id="profile-img" src="${resolveAsset(profile.image)}" alt="Profile" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                <img id="profile-img" src="${resolveAsset(profile.image || 'images/Portrait.jpg')}" alt="Profile" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-border group-hover:border-gray-400 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
                 <div class="leading-tight">
-                    <h2 id="profile-name" class="font-bold text-lg md:text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500">${profile.name || ''}</h2>
-                    <p id="profile-title" class="text-[10px] md:text-[12px] text-textMuted uppercase tracking-widest mt-1">${profile.title || ''}</p>
+                    <h2 id="profile-name" class="font-bold text-lg md:text-xl tracking-tight group-hover:text-gray-300 transition-colors duration-500">${profile.name || 'Luca Geiger'}</h2>
+                    <p id="profile-title" class="text-[10px] md:text-[12px] text-textMuted uppercase tracking-widest mt-1">${profile.title || 'M.Sc. B.Eng.'}</p>
                 </div>
             </a>
             <div class="hidden lg:block text-sm text-textMuted font-bold tracking-widest" id="clock">--:-- --- --, ----</div>
@@ -134,7 +589,6 @@ function renderSiteShell(siteData) {
         `;
     }
 
-    // 3. Left Sidebar
     const sidebarEl = document.getElementById('site-sidebar');
     if (sidebarEl) {
         const primaryBtn = activeRoute === 'about'
@@ -152,7 +606,7 @@ function renderSiteShell(siteData) {
         sidebarEl.className = "w-full lg:w-[280px] xl:w-[280px] flex flex-col shrink-0 lg:h-full lg:overflow-y-auto no-scrollbar lg:pb-0";
         sidebarEl.innerHTML = `
             <h1 class="text-2xl md:text-[24px] xl:text-[28px] font-bold mb-4 md:mb-6 tracking-tight fade-in-up" style="animation-delay: 100ms;">
-                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="${resolveAsset('images/RockOnAndNamaste.png')}" height="32" width="32" alt="👋">
+                Hey, I'm Luca <img class="inline-block origin-bottom-right ml-1" src="${resolveAsset('images/RockOnAndNamaste.png')}" height="32" width="32" alt="Rock On & Namaste">
             </h1>
             <p class="text-sm md:text-[16px] text-textMuted leading-[1.8] mb-6 md:mb-8 fade-in-up" style="animation-delay: 200ms;">
                 And as you will find out, <br class="hidden lg:block"> I am quite an <span class="hidden lg:inline">experienced</span><br>
@@ -180,7 +634,6 @@ function renderSiteShell(siteData) {
         `;
     }
 
-    // 4. Mobile & Tablet Footer
     const mobileFooterEl = document.getElementById('site-mobile-footer');
     if (mobileFooterEl) {
         mobileFooterEl.className = "flex lg:hidden flex-col gap-2 md:gap-3 text-[10px] md:text-[11px] text-textMuted font-bold tracking-widest uppercase mt-8 md:mt-10 pb-6 items-center text-center fade-in-up";
@@ -196,7 +649,7 @@ function renderSiteShell(siteData) {
 }
 
 // ============================================================================
-// 4. SHARED UTILITIES
+// 5. SHARED UTILITIES
 // ============================================================================
 function highlightMatch(text, query) {
     if (!query || !text) return text || '';
@@ -223,27 +676,6 @@ function getProjectSlug(p) {
     return p.id || '';
 }
 
-function deriveTitleFromPath(imageUrl) {
-    if (!imageUrl) return 'Untitled Project';
-    const base = imageUrl.split('/').pop().replace(/\.[^.]+$/, '');
-    return base.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]+/g, ' ').trim();
-}
-
-function deriveDomainFromPath(imageUrl, category) {
-    if (imageUrl && imageUrl.includes('/')) {
-        const parts = imageUrl.split('/');
-        const folder = parts[parts.length - 2];
-        if (folder && folder.toLowerCase() !== 'images') {
-            return folder.replace(/([a-z])([A-Z])/g, '$1 $2');
-        }
-    }
-    if (category === 'interactive') return 'Interactive Media';
-    if (category === 'academic') return 'Scientific Contribution';
-    if (category === 'lecture') return 'AST Lecture Series';
-    return 'Portfolio Project';
-}
-
-// Compute total duration across all AST lectures (e.g., "11h 44m")
 function sumLectureDurations(lectures) {
     let totalSeconds = 0;
     for (const l of lectures) {
@@ -315,7 +747,7 @@ function formatLectureContent(rawContent) {
 }
 
 // ============================================================================
-// 5. PAGE CONTROLLER: ABOUT ME (pages/about.html)
+// 6. PAGE CONTROLLER: ABOUT ME (pages/about.html)
 // ============================================================================
 function initAboutPage(allData) {
     const timelineFeed = document.getElementById('cv-timeline-feed');
@@ -502,106 +934,125 @@ function initAboutPage(allData) {
 }
 
 // ============================================================================
-// 6. PAGE CONTROLLER: PROJECTS SHOWCASE (pages/projects.html)
+// 7. PAGE CONTROLLER: PROJECTS SHOWCASE (pages/projects.html - Details on Demand)
 // ============================================================================
 function initProjectsPage(allData) {
     const projectsGrid = document.getElementById('projects-bento-grid');
     if (!projectsGrid) return;
 
     const rawProjects = allData.projects || [];
+    const customDetailsMap = { ...PDF_PROJECT_DETAILS, ...(allData.projectDetails || {}) };
     const lectureItems = rawProjects.filter(p => (p.category || '').toLowerCase() === 'lecture');
 
-    // Exclude individual lectures AND loose ASTLecture/ASTLogo images from non-lecture list
-    // so AST is represented by a single unified course card
+    // 1. Build the SINGLE aggregated AST Lecture card with video count & course details from PDF
+    const videoCount = lectureItems.length || 11;
+    const totalDuration = sumLectureDurations(lectureItems);
+    const singleAstCard = {
+        id: 'proj_ast_course_bundle',
+        title: 'Teaching: Applied Software Techniques & Game Programming',
+        subtitle: `${videoCount} Prerecorded Video Lectures • WS (72h) & SS (21h)`,
+        domain: 'University Teaching (FH OÖ)',
+        category: 'lecture',
+        year: '2024 – 2025',
+        imageUrl: 'images/Lectures/ASTLecture.png',
+        duration: `${videoCount} Videos${totalDuration ? ` • ${totalDuration}` : ''}`,
+        badge: `${videoCount} Videos Included`,
+        overview: `Prerecorded every lesson to ensure the highest quality. Covers Plain C++, Stockfish AI, Unreal Engine 5 C++, and Blueprints across Console-Chess, 3D Chess-Party, and Physics/Projectile Darts.`,
+        tags: [`${videoCount} Video Lectures`, 'Plain C++', 'Unreal Engine 5', 'Blueprints', 'Stockfish AI'],
+        details: [
+            'Applied Software Techniques (WS): 12 lessons for each group (72 hours in total) covering Plain C++, Unreal Engine C++, and Blueprints.',
+            'Engineered 3 teaching projects: Console-Chess & 3D Chess-Party powered by the Stockfish AI engine via local pipe, plus Physics-based and Projectile-based Darts.',
+            'Interaction & Game Programming (SS): 7 lessons (21 hours in total) guiding students through state-of-the-art Game Engines and the entire Game Creation lifecycle together.'
+        ],
+        links: [
+            { label: `Explore All ${videoCount} AST Lectures`, url: `${BASE_PATH}pages/ast.html`, icon: 'ph-play-circle', internal: true }
+        ]
+    };
+
+    // 2. Build Flagship LudaViz PhD Research Card
+    const ludavizCard = {
+        id: 'proj_ludaviz_phd',
+        title: 'LudaViz – Ludic & Diegetic Visualizations',
+        subtitle: 'FWF Pioneer PhD Research • FH Hagenberg & University of Regensburg',
+        domain: 'PhD Research (LudaViz)',
+        category: 'academic',
+        year: '2025 – Present',
+        imageUrl: (allData.featuredProject && allData.featuredProject.imageUrl) || 'images/LudaViz.png',
+        badge: 'CHI \'26 & FDG \'26',
+        overview: 'FWF-funded pioneer PhD project investigating Ludic and Diegetic Visualizations in video games and player behavior analytics at FH Hagenberg and the University of Regensburg.',
+        tags: ['Ludic Visualization', 'Diegetic UI', 'CHI \'26', 'FDG \'26', 'Player Behavior'],
+        details: [
+            'PhD researcher in the FWF-funded LudaViz pioneer project at FH Hagenberg and the University of Regensburg.',
+            'Published "How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite\'s Swarm Visualization" at ACM CHI \'26 (Barcelona, Spain).',
+            'Published "Transient Gear, Persistent Impact: A Mixed-Methods Study with Design Implications for Transient Game Systems" at FDG \'26 (Copenhagen, Denmark).'
+        ],
+        links: [
+            { label: 'CHI \'26 Publication (DOI)', url: 'https://doi.org/10.1145/3772363.3799313', icon: 'ph-article' },
+            { label: 'FDG \'26 Publication (DOI)', url: 'https://doi.org/10.1145/3815598.3815601', icon: 'ph-article' }
+        ]
+    };
+
+    // 3. Map Non-Lecture Projects with PDF Details on Demand
     const nonLectureProjects = rawProjects
         .filter(p => {
             const cat = (p.category || '').toLowerCase();
             if (cat === 'lecture') return false;
-            const img = (p.imageUrl || '').toLowerCase();
-            if (img.endsWith('astlecture.png') || img.endsWith('astlogo.png')) return false;
+            const filename = (p.imageUrl || '').split('/').pop();
+            // Exclude loose AST thumbnails and duplicate ClimateChange banner (consolidated into InformationVisualization.png)
+            if (['ASTLecture.png', 'ASTLogo.png', 'ClimateChange.png'].includes(filename)) return false;
             return true;
         })
         .map((p, idx) => {
-            const title = p.title || deriveTitleFromPath(p.imageUrl);
-            const domain = p.domain || deriveDomainFromPath(p.imageUrl, p.category);
-            const category = (p.category || 'interactive').toLowerCase();
-            const badge = p.badge || domain;
-            const summary = p.summary || (
-                category === 'interactive'
-                    ? `Interactive Media & Engineering showcase (${domain}). Click to inspect full visual preview and details.`
-                    : `Academic Research & Scientific Visualization contribution (${domain}).`
-            );
-            const tags = p.tags || [
-                domain,
-                category === 'academic' ? 'Research & HCI' : 'Interactive Media'
-            ];
-
+            const filename = (p.imageUrl || '').split('/').pop();
+            const pdfMeta = customDetailsMap[filename] || {};
             return {
                 ...p,
+                ...pdfMeta,
                 id: p.id || `proj_${idx}`,
-                title,
-                domain,
-                //category,
-                badge,
-                summary,
-                tags
+                imageUrl: p.imageUrl,
+                title: pdfMeta.title || p.title || filename.replace(/\.[^.]+$/, ''),
+                subtitle: pdfMeta.subtitle || p.domain || 'Portfolio Project',
+                domain: pdfMeta.domain || p.domain || 'Interactive Media',
+                category: (pdfMeta.category || p.category || 'interactive').toLowerCase(),
+                year: pdfMeta.year || p.date || '2024',
+                badge: pdfMeta.badge || 'Showcase',
+                overview: pdfMeta.overview || p.summary || '',
+                tags: pdfMeta.tags || p.tags || [],
+                ultimateGoal: pdfMeta.ultimateGoal || null,
+                details: pdfMeta.details || [],
+                links: pdfMeta.links || []
             };
         });
 
-    // Build the SINGLE aggregated AST Lecture card showing the number of included videos
-    const videoCount = lectureItems.length || 10;
-    const totalDuration = sumLectureDurations(lectureItems);
-    const singleAstCard = {
-        id: 'proj_ast_course_bundle',
-        title: 'Applied Software Techniques (AST)',
-        domain: 'University Lecture Series',
-        category: 'lecture',
-        imageUrl: 'images/Lectures/ASTLecture.png',
-        videoCount,
-        duration: `${videoCount} Videos${totalDuration ? ` • ${totalDuration}` : ''}`,
-        badge: `${videoCount} Videos Included`,
-        summary: `Comprehensive ${videoCount}-video university course guiding students from plain C++ and Stockfish AI integration to a full 3D Unreal Engine 5 Chess-Party and Darts game.`,
-        tags: [`${videoCount} Video Lectures`, 'Unreal Engine 5', 'C++ & Blueprints', 'Stockfish AI'],
-        targetUrl: `${BASE_PATH}ast.html`
-    };
-
-    const normalizedProjects = [singleAstCard, ...nonLectureProjects];
-
-    // Also include Featured Project (LudaViz) if not already in normalizedProjects
-    if (allData.featuredProject && !normalizedProjects.some(p => p.imageUrl === allData.featuredProject.imageUrl)) {
-        normalizedProjects.unshift({
-            id: allData.featuredProject.id || 'proj_ludaviz',
-            title: allData.featuredProject.title || 'LudaViz – Ludic Visualizations',
-            domain: 'FWF Pioneer Research Project',
-            category: 'academic',
-            badge: 'Flagship Research',
-            imageUrl: allData.featuredProject.imageUrl,
-            summary: 'FWF-funded pioneer research project investigating Ludic and Diegetic Visualizations in video games and player behavior analytics at FH OÖ.',
-            tags: ['PhD Research', 'Ludic Visualization', 'Player Analytics', 'FWF']
-        });
-    }
+    // Sort chronologically (newest year first)
+    const normalizedProjects = [ludavizCard, singleAstCard, ...nonLectureProjects];
 
     const categories = [
         { id: 'all', label: 'All Works' },
-        { id: 'interactive', label: 'Interactive Media' },
-        { id: 'academic', label: 'Research & SciViz' },
-        { id: 'lecture', label: 'AST Lecture' }
+        { id: 'interactive', label: 'Interactive Media & Eng.' },
+        { id: 'academic', label: 'Scientific Work' },
+        { id: 'lecture', label: 'Teaching' }
     ];
 
     const urlParams = new URLSearchParams(window.location.search);
     const initialCat = urlParams.get('cat');
     let activeCategory = initialCat && categories.some(c => c.id === initialCat) ? initialCat : 'all';
     let searchQuery = '';
+    let allExpanded = false;
+    const expandedIds = new Set(['proj_ast_course_bundle', 'proj_ludaviz_phd']);
 
     const filterGroup = document.getElementById('projects-filter-group');
     const searchInput = document.getElementById('projects-search');
     const kpiTriggers = document.querySelectorAll('[data-proj-filter]');
+    const toggleAllBtn = document.getElementById('toggle-all-projects');
+    const toggleAllText = document.getElementById('toggle-all-proj-text');
+    const toggleAllIcon = document.getElementById('toggle-all-proj-icon');
 
     const countByCat = (cat) => cat === 'all' ? normalizedProjects.length : normalizedProjects.filter(p => p.category === cat).length;
     const setElText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
     setElText('kpi-total-count', `${countByCat('all')} Showcases`);
     setElText('kpi-interactive-count', `${countByCat('interactive')} Projects`);
-    setElText('kpi-academic-count', `${countByCat('academic')} Visuals`);
+    setElText('kpi-academic-count', `${countByCat('academic')} Research Works`);
     setElText('kpi-lecture-count', `1 Course (${videoCount} Videos)`);
 
     function renderFilterButtons() {
@@ -626,67 +1077,15 @@ function initProjectsPage(allData) {
         });
     }
 
-    // Modal Controller
-    const modal = document.getElementById('project-detail-modal');
-    const modalClose = document.getElementById('project-modal-close');
-    const modalBody = document.getElementById('project-modal-body');
-
-    function openProjectModal(proj) {
-        if (!modal || !modalBody) return;
-        const actionUrl = proj.targetUrl || proj.link || proj.videoUrl || null;
-
-        modalBody.innerHTML = `
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-base border border-border mb-5">
-                <img src="${resolveAsset(proj.imageUrl)}" alt="${proj.title}" class="w-full h-full object-cover">
-                <div class="absolute top-3 left-3 flex gap-2">
-                    <span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-[11px] font-bold uppercase tracking-wider text-white">
-                        ${proj.domain}
-                    </span>
-                </div>
-            </div>
-            <div class="flex flex-wrap items-start justify-between gap-4 mb-3">
-                <div>
-                    <h2 class="text-xl md:text-2xl font-bold text-white">${proj.title}</h2>
-                    <p class="text-xs text-textMuted mt-1">${proj.domain} • ${proj.badge}</p>
-                </div>
-                ${actionUrl ? `
-                    <a href="${actionUrl}" class="px-4 py-2.5 rounded-xl bg-white text-black text-xs font-bold hover:bg-gray-200 transition-all interactive flex items-center gap-2">
-                        <span>Open Showcase</span>
-                        <i class="ph-bold ph-arrow-up-right"></i>
-                    </a>
-                ` : ''}
-            </div>
-            <p class="text-xs md:text-sm text-gray-300 leading-relaxed mb-4">${proj.summary}</p>
-            <div class="flex flex-wrap gap-1.5">
-                ${(proj.tags || []).map(t => `<span class="px-2.5 py-1 rounded-lg bg-base border border-border text-[11px] text-gray-300">${t}</span>`).join('')}
-            </div>
-        `;
-        modal.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
-        modal.classList.add('opacity-100', 'visible');
-    }
-
-    function closeProjectModal() {
-        if (!modal) return;
-        modal.classList.add('opacity-0', 'invisible', 'pointer-events-none');
-        modal.classList.remove('opacity-100', 'visible');
-    }
-
-    if (modalClose) modalClose.addEventListener('click', closeProjectModal);
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeProjectModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeProjectModal();
-        });
-    }
-
     function renderProjects() {
         const q = searchQuery.toLowerCase().trim();
         const filtered = normalizedProjects.filter(p => {
             if (activeCategory !== 'all' && p.category !== activeCategory) return false;
             if (!q) return true;
-            const hay = [p.title, p.domain, p.summary, p.badge, ...(p.tags || [])].join(' ').toLowerCase();
+            const hay = [
+                p.title, p.subtitle, p.domain, p.year, p.overview, p.badge, p.ultimateGoal,
+                ...(p.tags || []), ...(p.details || [])
+            ].join(' ').toLowerCase();
             return hay.includes(q);
         });
 
@@ -707,36 +1106,94 @@ function initProjectsPage(allData) {
         };
 
         projectsGrid.innerHTML = filtered.map((p) => {
+            const isExpanded = expandedIds.has(p.id) || q.length > 0 || allExpanded;
             const badgeStyle = catBadgeStyle[p.category] || 'bg-white/10 text-gray-300 border-white/20';
+
             return `
-            <article data-proj-id="${p.id}" class="project-card bento-card p-4 flex flex-col justify-between group cursor-pointer interactive">
+            <article data-proj-id="${p.id}" class="project-card bento-card p-5 flex flex-col justify-between group cursor-pointer interactive ${isExpanded ? 'expanded' : ''}">
                 <div>
+                    <!-- Top Thumbnail Banner -->
                     <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-border mb-4">
                         <img src="${resolveAsset(p.imageUrl)}" alt="${p.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border backdrop-blur-md ${badgeStyle}">
-                            ${highlightMatch(p.domain, searchQuery)}
-                        </span>
-                        ${p.duration ? `
-                            <span class="absolute bottom-2.5 left-3 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-bold font-mono text-white flex items-center gap-1.5">
-                                <i class="ph-fill ph-video text-blue-400 text-xs"></i> ${p.duration}
-                            </span>
-                        ` : ''}
-                    </div>
-                    <h2 class="font-bold text-white group-hover:text-gray-200 transition-colors leading-snug mb-1.5">
-                        ${highlightMatch(p.title, searchQuery)}
-                    </h2>
-                    <p class="text-xs text-textMuted line-clamp-2 leading-relaxed mb-4">
-                        ${highlightMatch(p.summary, searchQuery)}
-                    </p>
-                </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent"></div>
 
-                <div class="flex items-center justify-between pt-3 border-t border-border/60 mt-auto">
-                    <div class="flex flex-wrap gap-1">
-                        ${(p.tags || []).slice(0, 2).map(t => `<span class="px-2 py-0.5 rounded bg-base border border-border text-[10px] text-gray-300">${highlightMatch(t, searchQuery)}</span>`).join('')}
+                        <!-- Top Overlay Badges: Domain & Year -->
+                        <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border backdrop-blur-md ${badgeStyle}">
+                                ${highlightMatch(p.domain, searchQuery)}
+                            </span>
+                            <span class="px-2.5 py-0.5 rounded-lg bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-bold text-white">
+                                ${highlightMatch(p.year, searchQuery)}
+                            </span>
+                        </div>
+
+                        <!-- Bottom Overlay Badge: Video Count / Highlight Badge -->
+                        <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2">
+                            ${p.duration ? `
+                                <span class="px-2.5 py-1 rounded-lg bg-black/85 backdrop-blur-md border border-white/15 text-[10px] font-bold font-mono text-white flex items-center gap-1.5">
+                                    <i class="ph-fill ph-video text-blue-400 text-xs"></i> ${highlightMatch(p.duration, searchQuery)}
+                                </span>
+                            ` : `
+                                <span class="px-2.5 py-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/10 text-[10px] font-bold text-gray-200">
+                                    ${highlightMatch(p.badge, searchQuery)}
+                                </span>
+                            `}
+                        </div>
                     </div>
-                    <div class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                        <i class="ph-bold ph-arrow-up-right text-sm"></i>
+
+                    <!-- Title, Subtitle & Expand/Collapse Chevron -->
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h2 class="md:text-[17px] font-bold text-white group-hover:text-gray-200 transition-colors leading-snug">
+                                ${highlightMatch(p.title, searchQuery)}
+                            </h2>
+                            <p class="text-[11px] font-bold text-gray-400 mt-0.5">
+                                ${highlightMatch(p.subtitle, searchQuery)}
+                            </p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full border border-border bg-base flex items-center justify-center shrink-0 mt-0.5 group-hover:border-gray-400 transition-colors">
+                            <i class="ph ph-caret-down text-sm text-white chevron-icon transition-transform duration-300"></i>
+                        </div>
+                    </div>
+
+                    <!-- Overview First Summary -->
+                    <p class="text-xs text-textMuted leading-relaxed mt-3">
+                        ${highlightMatch(p.overview, searchQuery)}
+                    </p>
+
+                    <!-- Used Tech Stack Tags -->
+                    <div class="flex flex-wrap gap-1.5 mt-3.5">
+                        ${(p.tags || []).map(t => `<span class="px-2 py-0.5 rounded-md bg-base border border-border text-[10px] text-gray-300">${highlightMatch(t, searchQuery)}</span>`).join('')}
+                    </div>
+
+                    <!-- Details on Demand Drawer -->
+                    <div class="details-grid">
+                        <div class="overflow-hidden">
+                            <div class="pt-4 mt-4 border-t border-border/80 flex flex-col gap-3">
+                                <p class="text-[10px] uppercase tracking-widest text-textMuted font-bold">Key Points & Technical Breakdown</p>
+                                <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-300 leading-relaxed">
+                                    ${(p.details || []).map(d => `<li>${highlightMatch(d, searchQuery)}</li>`).join('')}
+                                </ul>
+
+                                ${p.ultimateGoal ? `
+                                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200">
+                                        <span class="font-bold text-white uppercase tracking-wider text-[10px] block mb-0.5">Ultimate Goal</span>
+                                        ${highlightMatch(p.ultimateGoal, searchQuery)}
+                                    </div>
+                                ` : ''}
+
+                                ${(p.links && p.links.length > 0) ? `
+                                    <div class="flex flex-wrap gap-2 pt-1">
+                                        ${p.links.map((lnk, idx) => `
+                                            <a href="${lnk.url}" ${lnk.internal ? '' : 'target="_blank" rel="noopener"'} onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg ${idx === 0 ? 'bg-white text-black hover:bg-gray-200' : 'bg-base border border-border text-white hover:bg-white/10'} text-xs font-bold transition-colors interactive">
+                                                <i class="ph-bold ${lnk.icon || 'ph-arrow-up-right'}"></i>
+                                                <span>${lnk.label}</span>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </article>`;
@@ -745,12 +1202,12 @@ function initProjectsPage(allData) {
         projectsGrid.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('click', () => {
                 const id = card.getAttribute('data-proj-id');
-                const target = normalizedProjects.find(item => item.id === id);
-                if (!target) return;
-                if (target.targetUrl) {
-                    window.location.href = target.targetUrl;
+                if (card.classList.contains('expanded')) {
+                    card.classList.remove('expanded');
+                    expandedIds.delete(id);
                 } else {
-                    openProjectModal(target);
+                    card.classList.add('expanded');
+                    expandedIds.add(id);
                 }
             });
         });
@@ -771,12 +1228,28 @@ function initProjectsPage(allData) {
         });
     }
 
+    if (toggleAllBtn) {
+        toggleAllBtn.addEventListener('click', () => {
+            allExpanded = !allExpanded;
+            if (allExpanded) {
+                normalizedProjects.forEach(p => expandedIds.add(p.id));
+                toggleAllText.textContent = 'Collapse All';
+                toggleAllIcon.className = 'ph ph-arrows-in-line-vertical';
+            } else {
+                expandedIds.clear();
+                toggleAllText.textContent = 'Expand All';
+                toggleAllIcon.className = 'ph ph-arrows-out-line-vertical';
+            }
+            renderProjects();
+        });
+    }
+
     renderFilterButtons();
     renderProjects();
 }
 
 // ============================================================================
-// 7. PAGE CONTROLLER: TECH STACK ARSENAL (pages/stack.html)
+// 8. PAGE CONTROLLER: TECH STACK ARSENAL (pages/stack.html)
 // ============================================================================
 function initStackPage(allData) {
     const stackGrid = document.getElementById('stack-bento-grid');
@@ -789,8 +1262,8 @@ function initStackPage(allData) {
         { id: 'engines', label: 'Engines & 3D' },
         { id: 'ai', label: 'AI & Visualization' },
         { id: 'code', label: 'Languages & Web' },
-        { id: 'design', label: 'Design & UI' },
-        { id: 'workflow', label: 'Hardware & Workflow' }
+        { id: 'design', label: 'Media & Design' },
+        { id: 'workflow', label: 'DevOps & Hardware' }
     ];
 
     let activeCategory = 'all';
@@ -847,8 +1320,8 @@ function initStackPage(allData) {
             <a href="${href}" ${href.startsWith('http') ? 'target="_blank" rel="noopener"' : ''} class="bento-card p-5 md:p-6 flex flex-col justify-between gap-4 group interactive">
                 <div>
                     <div class="flex items-start justify-between gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            <i class="ph-fill ${item.icon || 'ph-cube'} ${item.color || 'text-black'} text-2xl"></i>
+                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 p-2.5">
+                            ${renderStackIconGraphic(item, 'w-full h-full', 'text-2xl')}
                         </div>
                         <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-border text-[10px] font-bold uppercase tracking-wider text-gray-300">
                             ${highlightMatch(item.level || 'Proficient', searchQuery)}
@@ -892,7 +1365,7 @@ function initStackPage(allData) {
 }
 
 // ============================================================================
-// 8. PAGE CONTROLLER: CONTACT (pages/contact.html)
+// 9. PAGE CONTROLLER: CONTACT (pages/contact.html)
 // ============================================================================
 function initContactPage(allData) {
     const contactForm = document.getElementById('contact-form');
@@ -953,7 +1426,7 @@ function initContactPage(allData) {
 }
 
 // ============================================================================
-// 9. MASTER PORTFOLIO INITIALIZER
+// 10. MASTER PORTFOLIO INITIALIZER
 // ============================================================================
 async function loadAndRenderPortfolio() {
     try {
@@ -1090,7 +1563,7 @@ async function loadAndRenderPortfolio() {
             }
         }
 
-        // 4. Home Page Marquees, Full Stack Widget & Featured Card
+        // 4. Home Page Marquees, Full Stack Widget (with Official Brand Logos) & Featured Card
         const buildMarqueeBlock = (items) => {
             if (!items || items.length === 0) return '';
             const half = Math.ceil(items.length / 2);
@@ -1112,14 +1585,14 @@ async function loadAndRenderPortfolio() {
         const acadMarquee = document.getElementById('academic-marquee');
         if (acadMarquee) acadMarquee.innerHTML = buildMarqueeBlock(projects.filter(p => p.category === 'academic')).repeat(2);
 
-        // Render ALL Stack Items in #stack-container (on index.html and ast.html)
+        // Render ALL Stack Items with Official Brand Logos in #stack-container (index.html & ast.html)
         const stackContainer = document.getElementById('stack-container');
         if (stackContainer) {
             const fullStack = getUnifiedStack(allData);
-            stackContainer.className = "flex flex-wrap items-center justify-center gap-y-2 relative z-10 mt-6 px-2 w-full";
+            stackContainer.className = "flex flex-wrap items-center justify-center gap-y-2 relative z-10 mt-6 px-3 w-full";
             stackContainer.innerHTML = fullStack.map((s, i) => `
-                <span class="group/icon relative w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-[12px] bg-white flex items-center justify-center shadow-xl border-2 md:border-[3px] border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 hover:!z-50 interactive flex-shrink-0" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-10px' : '0'};">
-                    <i class="ph-fill ${s.icon} ${s.color || 'text-black'} text-lg md:text-xl group-hover/icon:rotate-12 transition-transform duration-300"></i>
+                <span class="group/icon relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-[11px] bg-white flex items-center justify-center shadow-xl border-2 border-card transition-all duration-300 hover:-translate-y-2 hover:scale-110 hover:!z-50 interactive flex-shrink-0 p-1.5" style="z-index: ${50 - i}; margin-left: ${i > 0 ? '-9px' : '0'};">
+                    ${renderStackIconGraphic(s, 'w-full h-full', 'md:text-lg')}
                     <span class="absolute -top-9 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg whitespace-nowrap z-50">${s.name}</span>
                 </span>
             `).join('');
@@ -1143,7 +1616,7 @@ async function loadAndRenderPortfolio() {
 }
 
 // ============================================================================
-// 10. CLOCK, DROPDOWN MENU & DELEGATED CURSOR
+// 11. CLOCK, DROPDOWN MENU & DELEGATED CURSOR
 // ============================================================================
 function updateClock() {
     const clockEl = document.getElementById('clock');
