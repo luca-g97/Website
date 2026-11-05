@@ -764,18 +764,16 @@
       "subCategory": "publications",
       "year": "2025 – Present",
       "imageUrl": "images/LudaViz.png",
-      "badge": "CHI '26 & FDG '26",
+      "badge": "CHI '26",
       "overview": "FWF-funded pioneer PhD research investigating Ludic and Diegetic Visualizations in video games and player behavior analytics at FH Hagenberg and the University of Regensburg.",
       "tags": ["Ludic Visualization", "Diegetic UI", "CHI '26", "FDG '26", "Player Analytics"],
       "ultimateGoal": "Bridging Information Visualization and Game Design to make complex behavioral and systemic data intuitively tangible inside interactive worlds.",
       "details": [
         "PhD Student & Researcher in the FWF-funded LudaViz pioneer project at FH Hagenberg and the University of Regensburg.",
-        "CHI '26 Publication (Barcelona, Spain): \"How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite's Swarm Visualization\" (DOI: 10.1145/3772363.3799313).",
-        "FDG '26 Publication (Copenhagen, Denmark): \"Transient Gear, Persistent Impact: A Mixed-Methods Study with Design Implications for Transient Game Systems\" examining weapon durability in Zelda: Breath of the Wild and deriving six HCI design patterns (DOI: 10.1145/3815598.3815601)."
+        "CHI '26 Publication (Barcelona, Spain): \"How Players Recognize and Interpret Diegetic Visualizations – The Case of Fortnite's Swarm Visualization\" (DOI: 10.1145/3772363.3799313)."
       ],
       "links": [
-        { "label": "CHI '26 Paper (DOI)", "url": "https://doi.org/10.1145/3772363.3799313", "icon": "ph-article" },
-        { "label": "FDG '26 Paper (DOI)", "url": "https://doi.org/10.1145/3815598.3815601", "icon": "ph-article" }
+        { "label": "Project-Website", "url": "https://ludaviz.games.cg.jku.at/", "icon": "ph-article" }
       ]
     },
     {
@@ -840,6 +838,10 @@
         "Built an interactive Google Colab & PyTorch application to rapidly evaluate a self-created white-box explainability method across different datasets and models on consumer hardware.",
         "Demonstrated ~95% similarity/accuracy on the MNIST dataset (50,000 training images; Cosine Similarity: 0.9599, Pearson Correlation: 0.9581, Kendall's Tau: 0.88) using only the 42 / 10,000 most influential training sources.",
         "Culminated in the M.Sc. Master's Thesis: \"A White-Box Approach to Scalable AI-Explainability: High-Fidelity kNN-Analysis via Compressed LLM-Activations\" (Final Grade: 1.49)."
+      ],
+      "links": [
+        { "label": "Denied Master Thesis", "url": "https://drive.google.com/file/d/1d9Fx8_JSFgRnMc6BF3D_jZihlivSZMiF/view?usp=drive_link", "icon": "ph-download-simple" },
+        { "label": "Official Master Thesis", "url": "https://drive.google.com/file/d/1pyCJlbJz33aBmu7czyg_2eCJGvMiIoFg/view?usp=drive_link", "icon": "ph-download-simple" }
       ]
     },
     {
@@ -857,6 +859,9 @@
       "details": [
         "Designed and engineered an immersive real-time fishing simulator combining a physical boat cockpit and custom sensor-equipped fishing rod with a 3D water environment.",
         "Programmed the real-time hardware-software telemetry bridge between Arduino microcontrollers and Unreal Engine gameplay physics."
+      ],
+      "links": [
+        { "label": "Demo Video", "url": "https://youtu.be/rDEh-LyTlkM", "icon": "ph-video" }
       ]
     },
     {
@@ -874,6 +879,9 @@
       "details": [
         "Developed and trained Reinforcement Learning agents in Unity to autonomously balance gas, brake, angular momentum, and fuel collection across an ~8,750m ground map.",
         "Configured custom reward shaping and parallel training environments (22x AI-Gas speedups) while tracking policy convergence in TensorBoard."
+      ],
+      "links": [
+        { "label": "Demo Video", "url": "https://youtu.be/ZVQjc3EVdd8", "icon": "ph-video" }
       ]
     },
     {
@@ -892,6 +900,9 @@
       "details": [
         "Co-authored \"Climate Report (Final Submission)\" with Hanna Rodler and Lukas Schmalzer for FH OÖ Information Visualization (Edited May 20, 2024).",
         "Designed and programmed interactive D3.js charts and scrollytelling visualizations to communicate complex climate and catastrophe datasets clearly."
+      ],
+      "links": [
+        { "label": "Documentation", "url": "https://observablehq.com/@fhooe-infovis/climate-report", "icon": "ph-article" }
       ]
     },
     {
@@ -908,6 +919,9 @@
       "tags": ["Unreal Engine", "3D Environment", "Game Engineering"],
       "details": [
         "Designed atmospheric lighting, shaders, and interactive gameplay systems as part of the M.Sc. Interactive Media curriculum at FH OÖ."
+      ],
+      "links": [
+        { "label": "Demo Video", "url": "https://youtu.be/6PMk4Ri7Jxc", "icon": "ph-video" }
       ]
     },
     {
@@ -924,6 +938,9 @@
       "tags": ["Motion Capturing", "Unreal Engine", "Blender", "Skeletal Rigging"],
       "details": [
         "Recorded, cleaned, and retargeted full-body optical motion capture data onto custom 3D skeletal meshes for real-time interactive scenes."
+      ],
+      "links": [
+        { "label": "Demo Video", "url": "https://youtu.be/KTOENs2S6hg", "icon": "ph-video" }
       ]
     },
     {
@@ -941,6 +958,10 @@
       "details": [
         "Engineered local 4-player split/shared-camera multiplayer gameplay on a dynamic tilting arena platform surrounded by a stylized medieval village.",
         "Modelled, textured, and animated custom 3D character and environment assets in Blender and integrated them into Unreal Engine."
+      ],
+      "links": [
+        { "label": "Showcase Video", "url": "https://youtu.be/18Xdfwj90O8", "icon": "ph-video" },
+        { "label": "Gameplay Video", "url": "https://youtu.be/o8Gitprc17g", "icon": "ph-video" }
       ]
     },
     {
@@ -958,6 +979,9 @@
       "details": [
         "Investigated and benchmarked 13 different state-of-the-art AI object detection models (including zero-shot text queries such as \"deer shape\") on thermal imagery.",
         "Built the automated evaluation pipeline in Python and Google Colab to compare precision, recall, and inference speed for wildlife rescue applications."
+      ],
+      "links": [
+        { "label": "Documentation", "url": "https://drive.google.com/file/d/1C0G8EP2wazp3Urz8kWnhM7hXiZ7zMk72/view?usp=sharing", "icon": "ph-article" }
       ]
     },
     {
@@ -976,6 +1000,9 @@
         "Co-authored with Larissa Schäfer, Philipp Thayer, and Tobias Kothbauer at FH Hagenberg.",
         "Constructed an analog \"booklet\" prototype with paper drawing surfaces across 4 hinge radii (2mm, 6mm, 12mm, 24mm) to programmatically measure Drag Time and Movement Variability (MV).",
         "Evaluated quantitative pen trajectories and NASA-TLX workload scores using Java, HTML/CSS, and Jamovi, proving that hinge radius significantly impacts movement variability."
+      ],
+      "links": [
+        { "label": "Documentation", "url": "https://drive.google.com/file/d/1HSQF97Hq591fJjpIXFt-UIY0eNPgWB-k/view?usp=sharing", "icon": "ph-article" }
       ]
     },
     {
@@ -995,7 +1022,12 @@
         "Covers the 80% most common web hacks step-by-step for every knowledge level hands-on, complete with progressive hints (\"Tipp 1–3\") and guided solutions.",
         "Contains ~80 faked websites (such as streaming and login portals) inside a safe, self-contained Docker container environment to practice exploiting vulnerabilities.",
         "Displays the exact line of source code that causes or prevents each security gap to bridge understanding between software developers and everyday users."
+      ],
+      "links": [
+        { "label": "Bachelor Thesis", "url": "https://drive.google.com/file/d/1TmHJg9C_Fn3bk32Yn_JWaaSyDmcrS5DU/view?usp=sharing", "icon": "ph-download-simple" },
+        { "label": "Docker Container", "url": "https://hub.docker.com/r/lucag97/bachelor-thesis", "icon": "ph-article" }
       ]
+      
     },
     {
       "id": "proj_grinch",
@@ -1059,6 +1091,9 @@
       "details": [
         "Programmed cross-platform mobile application logic and rendering using Java, native C++, and the Android Debug Bridge (ADB).",
         "Implemented real-time entity movement, collision detection, and live diagnostic HUD metrics running smoothly at ~60 FPS on mobile devices."
+      ],
+      "links": [
+        { "label": "Demo Video (Timestamps)", "url": "https://www.youtube.com/watch?v=Ulz2e1DPkvQ", "icon": "ph-video" }
       ]
     },
     {
@@ -1081,8 +1116,7 @@
       ],
       "links": [
         { "label": "Steam Store Page", "url": "https://store.steampowered.com/app/1440090/Viewergames_Racing", "icon": "ph-steam-logo" },
-        { "label": "Debug Demo Video", "url": "https://youtu.be/eVwQtH2dIXo", "icon": "ph-video" },
-        { "label": "1-in-1000 Bug Debug View", "url": "https://youtu.be/JhzRDU6Xyf8", "icon": "ph-bug" }
+        { "label": "Debug Demo Video", "url": "https://youtu.be/eVwQtH2dIXo", "icon": "ph-video" }
       ]
     }
   ],
