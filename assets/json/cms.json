@@ -271,7 +271,7 @@
       "icon": "ph-article",
       "accent": "bg-amber-500/20 text-amber-300 border-amber-500/30",
       "dotColor": "bg-amber-400",
-      "period": "08/2026",
+      "period": "11/2026",
       "location": "York, United Kingdom",
       "title": "Echoes of Play: Towards Diegetic Visualizations of Player Behavioral Data",
       "organization": "CHI Play (Annual Symposium on Computer-Human Interaction in Play)",
@@ -719,7 +719,7 @@
       "imageUrl": "images/LudaViz.png",
       "badge": "CHI '26",
       "overview": "FWF-funded pioneer PhD research investigating Ludic and Diegetic Visualizations in video games and player behavior analytics at FH Hagenberg and the University of Regensburg.",
-      "tags": ["Ludic Visualization", "Diegetic UI", "CHI '26", "FDG '26", "Player Analytics"],
+      "tags": ["Ludic Visualization", "Diegetic UI", "CHI '26", "Player Analytics"],
       "ultimateGoal": "Bridging Information Visualization and Game Design to make complex behavioral and systemic data intuitively tangible inside interactive worlds.",
       "details": [
         "PhD Student & Researcher in the FWF-funded LudaViz pioneer project at FH Hagenberg and the University of Regensburg.",

@@ -17,7 +17,7 @@ if (canvas) {
                 dark: 1,
                 diffuse: 1.2,
                 mapSamples: 20000,
-                mapBrightness: 6,
+                mapBrightness: 15,
                 baseColor: [0.08, 0.08, 0.08],
                 markerColor: [0.7, 0.1, 0.1], // Hagenberg Red
                 glowColor: [0.03, 0.03, 0.03],
