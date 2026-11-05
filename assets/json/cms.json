@@ -53,8 +53,7 @@
       "featured": true,
       "role": "3D Game Engine • C++ & Blueprints",
       "level": "Expert / Lecturer",
-      "description": "Used for naturace VR, AST 3D Chess-Party & Darts, Fishing Simulator, Party Time, and The Untold Truth of the Grinch.",
-      "link": "pages/ast.html"
+      "description": "Used for naturace VR, AST 3D Chess-Party & Darts, Fishing Simulator, Party Time, and The Untold Truth of the Grinch."
     },
     {
       "name": "Unity",
@@ -65,8 +64,7 @@
       "featured": true,
       "role": "Multiplayer Games & RL Agents",
       "level": "Advanced",
-      "description": "Used for Viewergames Racing/Arcade (Spaceflower UG), Amico Farkle, and Hill-Climb-Racing Reinforcement Learning.",
-      "link": "pages/interactive.html"
+      "description": "Used for Viewergames Racing/Arcade (Spaceflower UG), Amico Farkle, and Hill-Climb-Racing Reinforcement Learning."
     },
     {
       "name": "C++",
@@ -77,8 +75,7 @@
       "featured": true,
       "role": "Systems, Engine Plugins & Algorithms",
       "level": "Expert",
-      "description": "Plain C++ Console-Chess, Stockfish UCI pipe integration, custom UE4/UE5 spherical coordinate plugins, and Android NDK.",
-      "link": "pages/ast.html"
+      "description": "Plain C++ Console-Chess, Stockfish UCI pipe integration, custom UE4/UE5 spherical coordinate plugins, and Android NDK."
     },
     {
       "name": "Python",
@@ -89,8 +86,7 @@
       "featured": true,
       "role": "Explainable AI & Computer Vision",
       "level": "Expert",
-      "description": "Primary language for M.Sc. Thesis on White-Box LLM Explainability (kNN activation analysis) and BAMBI thermal object detection.",
-      "link": "pages/academic.html"
+      "description": "Primary language for M.Sc. Thesis on White-Box LLM Explainability (kNN activation analysis) and BAMBI thermal object detection."
     },
     {
       "name": "PyTorch",
@@ -101,8 +97,7 @@
       "featured": true,
       "role": "Deep Learning & Activation Tracing",
       "level": "M.Sc. Specialization",
-      "description": "Retracing AI-generated text and MNIST predictions (~95% accuracy with 42/10,000 sources) via compressed neural activations.",
-      "link": "pages/academic.html"
+      "description": "Retracing AI-generated text and MNIST predictions (~95% accuracy with 42/10,000 sources) via compressed neural activations."
     },
     {
       "name": "C#",
@@ -113,8 +108,7 @@
       "featured": true,
       "role": "Unity Gameplay & ML-Agents Scripting",
       "level": "Advanced",
-      "description": "Architected AI car waypoint systems, 12 real-time viewer items, ghost mode, and RL agent reward loops in Unity.",
-      "link": "pages/interactive.html"
+      "description": "Architected AI car waypoint systems, 12 real-time viewer items, ghost mode, and RL agent reward loops in Unity."
     },
     {
       "name": "Blender",
@@ -125,8 +119,7 @@
       "featured": true,
       "role": "3D Modelling, Modifiers & Animation",
       "level": "Advanced",
-      "description": "NASA-textured 3D Earth & 9 animated animal species (naturace), procedural city houses (Grinch), and Party Time assets.",
-      "link": "pages/interactive.html"
+      "description": "NASA-textured 3D Earth & 9 animated animal species (naturace), procedural city houses (Grinch), and Party Time assets."
     },
     {
       "name": "JavaScript",
@@ -137,8 +130,7 @@
       "featured": true,
       "role": "Interactive Web, D3.js & Twitch Extensions",
       "level": "Advanced",
-      "description": "Real-time Twitch viewer extensions, cybersecurity training web apps, D3.js climate visualizations, and this procedural portfolio.",
-      "link": "index.html"
+      "description": "Real-time Twitch viewer extensions, cybersecurity training web apps, D3.js climate visualizations, and this procedural portfolio."
     },
     {
       "name": "Java",
@@ -149,8 +141,7 @@
       "featured": false,
       "role": "Android/iOS Apps & Custom Tooling",
       "level": "Advanced",
-      "description": "Cross-platform mobile app development, custom Twitch map-implementation tooling, and foldable device HCI evaluation.",
-      "link": "pages/interactive.html"
+      "description": "Cross-platform mobile app development, custom Twitch map-implementation tooling, and foldable device HCI evaluation."
     },
     {
       "name": "HTML5 & CSS3",
@@ -161,8 +152,7 @@
       "featured": false,
       "role": "Frontend Architecture & UI Styling",
       "level": "Advanced",
-      "description": "Responsive Bento interfaces, ~80 simulated web environments for cybersecurity training, and HCI experiment interfaces.",
-      "link": "index.html"
+      "description": "Responsive Bento interfaces, ~80 simulated web environments for cybersecurity training, and HCI experiment interfaces."
     },
     {
       "name": "D3.js & Observable",
@@ -173,8 +163,7 @@
       "featured": false,
       "role": "Information & Scientific Visualization",
       "level": "PhD / M.Sc. Focus",
-      "description": "Interactive data visualizations for the Climate Change & Catastrophes report and LudaViz player behavior analytics.",
-      "link": "pages/academic.html"
+      "description": "Interactive data visualizations for the Climate Change & Catastrophes report and LudaViz player behavior analytics."
     },
     {
       "name": "Google Colab",
@@ -185,8 +174,7 @@
       "featured": false,
       "role": "Cloud GPU Notebooks & AI Benchmarks",
       "level": "Daily Driver",
-      "description": "Rapid experimentation for activation-based LLM explainability and benchmarking 13 object detection models (BAMBI).",
-      "link": "pages/academic.html"
+      "description": "Rapid experimentation for activation-based LLM explainability and benchmarking 13 object detection models (BAMBI)."
     },
     {
       "name": "TensorBoard & ML-Agents",
@@ -197,8 +185,7 @@
       "featured": false,
       "role": "Reinforcement Learning Telemetry",
       "level": "Proficient",
-      "description": "Training and evaluating autonomous driving agents in Hill-Climb-Racing across 8,750m procedural maps.",
-      "link": "pages/interactive.html"
+      "description": "Training and evaluating autonomous driving agents in Hill-Climb-Racing across 8,750m procedural maps."
     },
     {
       "name": "Docker",
@@ -209,8 +196,7 @@
       "featured": false,
       "role": "Containerized Sandboxes & Deployment",
       "level": "Proficient",
-      "description": "Containerized ~80 vulnerable web applications for safe hands-on hacking in the B.Eng. Cybersecurity Thesis.",
-      "link": "pages/interactive.html"
+      "description": "Containerized ~80 vulnerable web applications for safe hands-on hacking in the B.Eng. Cybersecurity Thesis."
     },
     {
       "name": "PHP & SQL",
@@ -221,20 +207,7 @@
       "featured": false,
       "role": "Backend & Security Lab Scripting",
       "level": "Proficient",
-      "description": "Server-side logic and vulnerability/patch demonstrations for the Try-It-Yourself Cybersecurity application.",
-      "link": "pages/interactive.html"
-    },
-    {
-      "name": "Go (Golang)",
-      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
-      "icon": "ph-hard-drives",
-      "color": "text-cyan-500",
-      "category": "code",
-      "featured": false,
-      "role": "Real-Time Multiplayer Backend",
-      "level": "Working Knowledge",
-      "description": "High-concurrency backend services connecting Twitch extension viewer actions with Unity in Viewergames Racing.",
-      "link": "pages/interactive.html"
+      "description": "Server-side logic and vulnerability/patch demonstrations for the Try-It-Yourself Cybersecurity application."
     },
     {
       "name": "Arduino IDE & Hardware",
@@ -245,8 +218,7 @@
       "featured": false,
       "role": "Physical Computing & Simulators",
       "level": "Expert / Lab Tutor",
-      "description": "Microcontroller integration for the immersive Fishing Simulator, Physical Computing lab tutoring, and Siemens VDE test racks.",
-      "link": "pages/interactive.html"
+      "description": "Microcontroller integration for the immersive Fishing Simulator, Physical Computing lab tutoring, and Siemens VDE test racks."
     },
     {
       "name": "Git & GitHub",
@@ -269,20 +241,7 @@
       "featured": false,
       "role": "Video Editing, Trailers & Courseware",
       "level": "Advanced",
-      "description": "Post-production and sound design for the naturace VR trailer, project demo videos, and 11 prerecorded AST lectures.",
-      "link": "pages/ast.html"
-    },
-    {
-      "name": "React",
-      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-      "icon": "ph-atom",
-      "color": "text-purple-600",
-      "category": "code",
-      "featured": false,
-      "role": "Component UI & Web Applications",
-      "level": "Proficient",
-      "description": "Modular front-end interfaces, interactive visualizations, and state-driven web applications.",
-      "link": "index.html"
+      "description": "Post-production and sound design for the naturace VR trailer, project demo videos, and 11 prerecorded AST lectures."
     },
     {
       "name": "Figma",
@@ -293,32 +252,7 @@
       "featured": false,
       "role": "UI/UX & Visualization Prototyping",
       "level": "Advanced",
-      "description": "Wireframing interactive dashboards, diegetic UI concepts, and scientific figure layouts.",
-      "link": "pages/academic.html"
-    },
-    {
-      "name": "Framer",
-      "logoUrl": "https://cdn.simpleicons.org/framer/0055FF",
-      "icon": "ph-framer-logo",
-      "color": "text-black",
-      "category": "design",
-      "featured": false,
-      "role": "Interactive Web & Motion Systems",
-      "level": "Advanced",
-      "description": "Bento-grid layout architecture, rapid interactive prototyping, and micro-interactions.",
-      "link": "index.html"
-    },
-    {
-      "name": "Slack",
-      "logoUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/slack/slack-original.svg",
-      "icon": "ph-slack-logo",
-      "color": "text-black",
-      "category": "workflow",
-      "featured": false,
-      "role": "Team & Research Communication",
-      "level": "Daily Driver",
-      "description": "Real-time academic group coordination, LudaViz research channels, and student mentoring.",
-      "link": "pages/contact.html"
+      "description": "Wireframing interactive dashboards, diegetic UI concepts, and scientific figure layouts."
     }
   ],
   "cvCategories": [
@@ -330,6 +264,25 @@
     { "id": "leadership", "label": "Service & Teaching" }
   ],
   "cvEntries": [
+    {
+      "id": "pub-chiplay-2026",
+      "category": "publications",
+      "categoryLabel": "Publication",
+      "icon": "ph-article",
+      "accent": "bg-amber-500/20 text-amber-300 border-amber-500/30",
+      "dotColor": "bg-amber-400",
+      "period": "08/2026",
+      "location": "York, United Kingdom",
+      "title": "Echoes of Play: Towards Diegetic Visualizations of Player Behavioral Data",
+      "organization": "CHI Play (Annual Symposium on Computer-Human Interaction in Play)",
+      "badge": "DOI: 10.1145/3800965.3834671",
+      "link": "https://doi.org/10.1145/3800965.3834671",
+      "overview": "Extended Abstract for the Doctoral Consortium about a categorization of Post-Mortem Representations in Video Games.",
+      "tags": ["HCI", "Doctoral Consortium", "PhD-Journey", "Post-Mortem Representations"],
+      "details": [
+        "Overview over the planned PhD as part of the LudaViz team and a brief Showcase of a Categorization of Post-Mortem Representations in Video Games"
+      ]
+    },
     {
       "id": "pub-fdg-2026",
       "category": "publications",
